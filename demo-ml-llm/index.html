@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hur AI Lär Sig - Nästa Ord-prediktion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 40px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        h1 span {
+            color: #4fc3f7;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #8892b0;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #4fc3f7;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        /* Sentence display */
+        .sentence-display {
+            flex-shrink: 0;
+        }
+
+        .sentence {
+            font-size: 2rem;
+            line-height: 1.6;
+            color: #fff;
+        }
+
+        .sentence .context {
+            color: #ccd6f6;
+        }
+
+        .sentence .blank {
+            display: inline-block;
+            min-width: 140px;
+            border-bottom: 4px solid #4fc3f7;
+            margin: 0 8px;
+            text-align: center;
+            color: #4fc3f7;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .sentence .blank.correct {
+            color: #64ffda;
+            border-color: #64ffda;
+        }
+
+        /* Prediction bars */
+        .predictions-card {
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .predictions {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow: hidden;
+            justify-content: center;
+        }
+
+        .prediction-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .word-label {
+            width: 100px;
+            font-size: 1.3rem;
+            text-align: right;
+            color: #8892b0;
+            font-weight: 500;
+        }
+
+        .word-label.target {
+            color: #64ffda;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4fc3f7, #7c4dff);
+            border-radius: 8px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 2px;
+        }
+
+        .bar.target {
+            background: linear-gradient(90deg, #64ffda, #00bfa5);
+        }
+
+        .probability {
+            width: 70px;
+            font-size: 1.2rem;
+            color: #ccd6f6;
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Right panel - Training visualization */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Training loop visualization */
+        .training-loop {
+            flex-shrink: 0;
+        }
+
+        .loop-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .loop-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.4;
+            transition: all 0.4s ease;
+        }
+
+        .loop-step.active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .step-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(79, 195, 247, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid rgba(79, 195, 247, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        .loop-step.active .step-icon {
+            background: rgba(79, 195, 247, 0.4);
+            border-color: #4fc3f7;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.4);
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #8892b0;
+            text-align: center;
+            max-width: 80px;
+        }
+
+        .loop-arrow {
+            font-size: 1.5rem;
+            color: #4fc3f7;
+            opacity: 0.5;
+        }
+
+        /* Loss chart */
+        .loss-card {
+            flex: 1 1 auto;
+            min-height: 180px;
+            max-height: 280px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chart-container {
+            flex: 1;
+            position: relative;
+            min-height: 0;
+            height: 100%;
+        }
+
+        .chart-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .loss-value {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            font-weight: 300;
+            color: #ff7043;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .loss-label {
+            font-size: 0.8rem;
+            color: #8892b0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding-top: 10px;
+            flex-shrink: 0;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-train {
+            background: linear-gradient(135deg, #4fc3f7, #7c4dff);
+            color: #fff;
+        }
+
+        .btn-train:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(79, 195, 247, 0.4);
+        }
+
+        .btn-train:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-auto {
+            background: rgba(100, 255, 218, 0.2);
+            color: #64ffda;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-auto:hover {
+            background: rgba(100, 255, 218, 0.3);
+        }
+
+        .btn-auto.running {
+            background: rgba(255, 112, 67, 0.2);
+            color: #ff7043;
+            border-color: rgba(255, 112, 67, 0.3);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 10px 0;
+            flex-shrink: 0;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 300;
+            color: #4fc3f7;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #8892b0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Info box */
+        .info-box {
+            background: rgba(100, 255, 218, 0.1);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: auto;
+            flex-shrink: 0;
+        }
+
+        .info-box p {
+            font-size: 1rem;
+            color: #a8b2d1;
+            line-height: 1.5;
+        }
+
+        .info-box strong {
+            color: #64ffda;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .pulse {
+            animation: pulse 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hur <span>AI</span> Lär Sig</h1>
+            <p class="subtitle">Modellen lär sig förutsäga nästa ord genom att träna på text</p>
+        </header>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="card sentence-display">
+                    <div class="card-title">Träningsdata</div>
+                    <div class="sentence">
+                        <span class="context" id="context-before"></span>
+                        <span class="blank" id="prediction-display">?</span>
+                        <span class="context" id="context-after"></span>
+                    </div>
+                </div>
+
+                <div class="card predictions-card">
+                    <div class="card-title">Modellens Gissningar</div>
+                    <div class="predictions" id="predictions">
+                        <!-- Generated by JS -->
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <p><strong>Kärnidén:</strong> AI-modeller som ChatGPT och Claude bygger på detta: träna en modell att förutsäga nästa ord, miljarder gånger, på enorma mängder text. Ingen kodar in regler för hand – modellen <strong>lär sig mönster från data</strong>.</p>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="card training-loop">
+                    <div class="card-title">Träningsloopen</div>
+                    <div class="loop-steps">
+                        <div class="loop-step" id="step-predict">
+                            <div class="step-icon">🎯</div>
+                            <div class="step-label">Gissa nästa ord</div>
+                        </div>
+                        <div class="loop-arrow">→</div>
+                        <div class="loop-step" id="step-compare">
+                            <div class="step-icon">⚖️</div>
+                            <div class="step-label">Jämför med facit</div>
+                        </div>
+                        <div class="loop-arrow">→</div>
+                        <div class="loop-step" id="step-adjust">
+                            <div class="step-icon">🔧</div>
+                            <div class="step-label">Justera vikter</div>
+                        </div>
+                        <div class="loop-arrow">→</div>
+                        <div class="loop-step" id="step-repeat">
+                            <div class="step-icon">🔄</div>
+                            <div class="step-label">Upprepa</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card loss-card">
+                    <div class="card-title">Träningsfel (Loss)</div>
+                    <div class="chart-container">
+                        <canvas id="lossChart" class="chart-canvas"></canvas>
+                        <div class="loss-value">
+                            <span id="current-loss">2.30</span>
+                            <div class="loss-label">Nuvarande fel</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="iteration-count">0</div>
+                        <div class="stat-label">Träningssteg</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="accuracy">0%</div>
+                        <div class="stat-label">Konfidens rätt ord</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <button class="btn-train" id="btn-train">Träna ett steg</button>
+                    <button class="btn-auto" id="btn-auto">Auto-träna</button>
+                    <button class="btn-reset" id="btn-reset">Börja om</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Training examples
+        const examples = [
+            { before: "Solen skiner på", target: "himlen", after: "idag.", alternatives: ["bordet", "katten", "himlen", "boken", "stolen"] },
+            { before: "Katten sover på", target: "soffan", after: ".", alternatives: ["soffan", "taket", "mattan", "molnet", "havet"] },
+            { before: "Jag dricker", target: "kaffe", after: "på morgonen.", alternatives: ["stenar", "kaffe", "bilar", "moln", "musik"] },
+            { before: "Fågeln flyger över", target: "träden", after: ".", alternatives: ["träden", "golvet", "tanken", "tiden", "smaken"] },
+            { before: "Barnen leker i", target: "parken", after: ".", alternatives: ["parken", "molnen", "tystnaden", "teorin", "historien"] }
+        ];
+
+        let currentExample = 0;
+        let probabilities = {};
+        let iteration = 0;
+        let lossHistory = [];
+        let isAutoTraining = false;
+        let autoTrainInterval = null;
+        let currentStep = 0;
+
+        // Initialize
+        function init() {
+            loadExample(currentExample);
+            initProbabilities();
+            updateDisplay();
+            drawLossChart();
+        }
+
+        function loadExample(index) {
+            const ex = examples[index];
+            document.getElementById('context-before').textContent = ex.before + " ";
+            document.getElementById('context-after').textContent = " " + ex.after;
+        }
+
+        function initProbabilities() {
+            const ex = examples[currentExample];
+            probabilities = {};
+            // Start with roughly equal probabilities (with small random variations)
+            ex.alternatives.forEach(word => {
+                probabilities[word] = 0.15 + Math.random() * 0.1;
+            });
+            // Normalize
+            normalize();
+        }
+
+        function normalize() {
+            const sum = Object.values(probabilities).reduce((a, b) => a + b, 0);
+            for (let word in probabilities) {
+                probabilities[word] /= sum;
+            }
+        }
+
+        function updateDisplay() {
+            const ex = examples[currentExample];
+            const predictionsDiv = document.getElementById('predictions');
+            predictionsDiv.innerHTML = '';
+
+            // Sort by probability
+            const sorted = Object.entries(probabilities).sort((a, b) => b[1] - a[1]);
+            const topPrediction = sorted[0][0];
+
+            // Update blank display
+            const blank = document.getElementById('prediction-display');
+            blank.textContent = topPrediction;
+            blank.className = 'blank' + (topPrediction === ex.target ? ' correct' : '');
+
+            // Create bars
+            sorted.forEach(([word, prob]) => {
+                const isTarget = word === ex.target;
+                const row = document.createElement('div');
+                row.className = 'prediction-row';
+                row.innerHTML = `
+                    <div class="word-label ${isTarget ? 'target' : ''}">${word}</div>
+                    <div class="bar-container">
+                        <div class="bar ${isTarget ? 'target' : ''}" style="width: ${prob * 100}%"></div>
+                    </div>
+                    <div class="probability">${(prob * 100).toFixed(1)}%</div>
+                `;
+                predictionsDiv.appendChild(row);
+            });
+
+            // Update stats
+            document.getElementById('iteration-count').textContent = iteration;
+            document.getElementById('accuracy').textContent = (probabilities[ex.target] * 100).toFixed(1) + '%';
+
+            // Calculate and display loss
+            const loss = calculateLoss();
+            document.getElementById('current-loss').textContent = loss.toFixed(2);
+        }
+
+        function calculateLoss() {
+            const ex = examples[currentExample];
+            // Cross-entropy loss: -log(p_correct)
+            const p = Math.max(probabilities[ex.target], 0.001);
+            return -Math.log(p);
+        }
+
+        function trainStep() {
+            const ex = examples[currentExample];
+
+            // Simulate gradient descent step
+            const learningRate = 0.15;
+
+            // Increase probability of correct answer
+            const targetProb = probabilities[ex.target];
+            const gradient = 1 - targetProb; // Simplified gradient
+            probabilities[ex.target] += learningRate * gradient;
+
+            // Decrease others proportionally
+            const decrease = learningRate * gradient / (ex.alternatives.length - 1);
+            for (let word in probabilities) {
+                if (word !== ex.target) {
+                    probabilities[word] = Math.max(0.01, probabilities[word] - decrease);
+                }
+            }
+
+            normalize();
+
+            // Record loss
+            const loss = calculateLoss();
+            lossHistory.push(loss);
+
+            iteration++;
+            updateDisplay();
+            drawLossChart();
+        }
+
+        async function animateTrainingStep() {
+            const steps = ['step-predict', 'step-compare', 'step-adjust', 'step-repeat'];
+
+            document.querySelectorAll('.loop-step').forEach(s => s.classList.remove('active'));
+
+            for (let i = 0; i < steps.length; i++) {
+                document.querySelectorAll('.loop-step').forEach(s => s.classList.remove('active'));
+                document.getElementById(steps[i]).classList.add('active');
+
+                if (i === 2) { // Adjust step
+                    trainStep();
+                }
+
+                await sleep(200);
+            }
+
+            document.querySelectorAll('.loop-step').forEach(s => s.classList.remove('active'));
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        function drawLossChart() {
+            const canvas = document.getElementById('lossChart');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size
+            canvas.width = canvas.offsetWidth * 2;
+            canvas.height = canvas.offsetHeight * 2;
+            ctx.scale(2, 2);
+
+            const width = canvas.offsetWidth;
+            const height = canvas.offsetHeight;
+            const padding = 40;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Draw axes
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Draw labels
+            ctx.fillStyle = '#8892b0';
+            ctx.font = '12px Segoe UI';
+            ctx.fillText('Högt', padding - 35, padding + 10);
+            ctx.fillText('Lågt', padding - 35, height - padding);
+            ctx.fillText('Träningssteg →', width/2 - 40, height - 10);
+
+            if (lossHistory.length < 2) return;
+
+            // Draw loss curve
+            const maxLoss = Math.max(...lossHistory, 2.5);
+            const minLoss = 0;
+
+            ctx.strokeStyle = '#ff7043';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+
+            lossHistory.forEach((loss, i) => {
+                const x = padding + (i / Math.max(lossHistory.length - 1, 1)) * (width - 2 * padding);
+                const y = padding + ((maxLoss - loss) / (maxLoss - minLoss)) * (height - 2 * padding);
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+
+            ctx.stroke();
+
+            // Draw current point
+            if (lossHistory.length > 0) {
+                const lastX = padding + ((lossHistory.length - 1) / Math.max(lossHistory.length - 1, 1)) * (width - 2 * padding);
+                const lastY = padding + ((maxLoss - lossHistory[lossHistory.length - 1]) / (maxLoss - minLoss)) * (height - 2 * padding);
+
+                ctx.fillStyle = '#ff7043';
+                ctx.beginPath();
+                ctx.arc(lastX, lastY, 6, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function reset() {
+            stopAutoTrain();
+            iteration = 0;
+            lossHistory = [];
+            currentExample = (currentExample + 1) % examples.length;
+            loadExample(currentExample);
+            initProbabilities();
+            updateDisplay();
+            drawLossChart();
+        }
+
+        function toggleAutoTrain() {
+            if (isAutoTraining) {
+                stopAutoTrain();
+            } else {
+                startAutoTrain();
+            }
+        }
+
+        function startAutoTrain() {
+            isAutoTraining = true;
+            document.getElementById('btn-auto').textContent = 'Stoppa';
+            document.getElementById('btn-auto').classList.add('running');
+            document.getElementById('btn-train').disabled = true;
+
+            autoTrainInterval = setInterval(async () => {
+                if (probabilities[examples[currentExample].target] > 0.95) {
+                    stopAutoTrain();
+                    return;
+                }
+                await animateTrainingStep();
+            }, 400);
+        }
+
+        function stopAutoTrain() {
+            isAutoTraining = false;
+            document.getElementById('btn-auto').textContent = 'Auto-träna';
+            document.getElementById('btn-auto').classList.remove('running');
+            document.getElementById('btn-train').disabled = false;
+
+            if (autoTrainInterval) {
+                clearInterval(autoTrainInterval);
+                autoTrainInterval = null;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('btn-train').addEventListener('click', animateTrainingStep);
+        document.getElementById('btn-auto').addEventListener('click', toggleAutoTrain);
+        document.getElementById('btn-reset').addEventListener('click', reset);
+
+        // Handle window resize
+        window.addEventListener('resize', drawLossChart);
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>
