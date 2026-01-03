@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Kodning & Agent Benchmarks - Utveckling över tid</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #8b8b9a;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card:nth-child(1) .stat-value { color: #00d4ff; }
+        .stat-card:nth-child(2) .stat-value { color: #7c3aed; }
+        .stat-card:nth-child(3) .stat-value { color: #10b981; }
+        .stat-card:nth-child(4) .stat-value { color: #f472b6; }
+
+        .stat-label {
+            color: #8b8b9a;
+            font-size: 0.9rem;
+        }
+
+        .chart-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .chart-description {
+            color: #8b8b9a;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+        }
+
+        .timeline-section {
+            margin-top: 3rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #00d4ff, #7c3aed, #f472b6);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: calc(50% + 30px);
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: calc(50% + 30px);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.2rem;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: #7c3aed;
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -38px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -38px;
+        }
+
+        .timeline-date {
+            color: #00d4ff;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-title {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .timeline-desc {
+            color: #8b8b9a;
+            font-size: 0.9rem;
+        }
+
+        .legend-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(0, 212, 255, 0.2));
+            border: 1px solid rgba(124, 58, 237, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .insight-title {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .insight-list {
+            list-style: none;
+        }
+
+        .insight-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: #c0c0d0;
+        }
+
+        .insight-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #00d4ff;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #6b6b7a;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .timeline::before { left: 20px; }
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 50px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+            .timeline-content::before,
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -38px;
+                right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Kodning & Agent Benchmarks</h1>
+            <p class="subtitle">Utvecklingen 2021–2025: Från 0% till 96% på bara fyra år</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">0% → 96%</div>
+                <div class="stat-label">HumanEval (GPT-3 → o1)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">~2% → 81%</div>
+                <div class="stat-label">SWE-bench Verified</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">15% → 75%</div>
+                <div class="stat-label">GAIA (AI vs 92% Human)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">4 år</div>
+                <div class="stat-label">Tid för denna revolution</div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2 class="chart-title">Kodgenerering: HumanEval Benchmark</h2>
+            <p class="chart-description">Pass@1 resultat över tid. Visar hur AI gått från att inte kunna lösa ett enda problem till att överträffa de flesta programmerare.</p>
+            <div class="chart-container">
+                <canvas id="humanEvalChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2 class="chart-title">Software Engineering: SWE-bench</h2>
+            <p class="chart-description">Förmågan att lösa riktiga GitHub-issues. Ett mycket svårare test än isolerad kodgenerering.</p>
+            <div class="chart-container">
+                <canvas id="sweBenchChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2 class="chart-title">Agent & Tool Use: GAIA Benchmark</h2>
+            <p class="chart-description">Generell AI-assistentförmåga: resonemang, webbsökning, och verktygsanvändning kombinerat.</p>
+            <div class="chart-container">
+                <canvas id="gaiaChart"></canvas>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h2 class="chart-title">Jämförelse: Alla Benchmarks</h2>
+            <p class="chart-description">Normaliserad vy som visar den gemensamma trenden uppåt över alla mätningar.</p>
+            <div class="chart-container">
+                <canvas id="combinedChart"></canvas>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <h2 class="chart-title" style="text-align: center; margin-bottom: 2rem;">Viktiga Milstolpar</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Juli 2021</div>
+                        <div class="timeline-title">Codex & HumanEval lanseras</div>
+                        <div class="timeline-desc">OpenAI introducerar Codex med 28.8% på HumanEval. GPT-3 klarar 0%.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">November 2022</div>
+                        <div class="timeline-title">ChatGPT förändrar allt</div>
+                        <div class="timeline-desc">ChatGPT lanseras och visar att AI kan vara en användbar kodningsassistent.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mars 2023</div>
+                        <div class="timeline-title">GPT-4 sätter ny standard</div>
+                        <div class="timeline-desc">GPT-4 når 67% på HumanEval, ett enormt språng från tidigare modeller.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Oktober 2023</div>
+                        <div class="timeline-title">SWE-bench introduceras</div>
+                        <div class="timeline-desc">Nytt benchmark för riktiga software engineering-uppgifter. Tidiga modeller klarar bara ~2%.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mars 2024</div>
+                        <div class="timeline-title">Claude 3 Opus</div>
+                        <div class="timeline-desc">Anthropic släpper Claude 3-familjen. Opus når ~22% på SWE-bench.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Juni 2024</div>
+                        <div class="timeline-title">Claude 3.5 Sonnet dominerar</div>
+                        <div class="timeline-desc">Blir den mest använda modellen för kodningsagenter. ~43% på SWE-bench.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">September 2024</div>
+                        <div class="timeline-title">OpenAI o1 - Reasoning breakthrough</div>
+                        <div class="timeline-desc">o1-preview når 96.3% på HumanEval genom extended thinking.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2025</div>
+                        <div class="timeline-title">80%+ på SWE-bench</div>
+                        <div class="timeline-desc">Claude 4.5 Opus når 80.9%, GPT-5.1 och Gemini 3 Pro ligger nära bakom.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3 class="insight-title">Viktiga Insikter</h3>
+            <ul class="insight-list">
+                <li><strong>Exponentiell förbättring:</strong> HumanEval gick från 0% till 96% på ~3.5 år (234% förbättring från Codex)</li>
+                <li><strong>Benchmark-mättnad:</strong> HumanEval är nu nästan "löst" - nya svårare benchmarks behövs</li>
+                <li><strong>Från kod till engineering:</strong> Fokus har skiftat från isolerad kodgenerering till att lösa riktiga problem</li>
+                <li><strong>Agent-paradigmet:</strong> 2024-2025 handlar om AI som kan använda verktyg, inte bara generera text</li>
+                <li><strong>Konsistens är svårt:</strong> TAU-bench visar att även SOTA-modeller bara klarar ~50% av uppgifter konsistent över 8 försök</li>
+                <li><strong>Kostnad vs Förmåga:</strong> Bättre modeller kostar ~$200-400 per SWE-bench-körning</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Data sammanställd från <a href="https://www.swebench.com/">SWE-bench</a>,
+            <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/technical-performance">Stanford AI Index</a>,
+            <a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard">GAIA Leaderboard</a>, och
+            <a href="https://github.com/sierra-research/tau-bench">TAU-bench</a></p>
+            <p style="margin-top: 0.5rem;">Genererad januari 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Color palette
+        const colors = {
+            cyan: '#00d4ff',
+            purple: '#7c3aed',
+            green: '#10b981',
+            pink: '#f472b6',
+            orange: '#f59e0b',
+            red: '#ef4444'
+        };
+
+        // Common chart options
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#e0e0e0',
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(20, 20, 40, 0.95)',
+                    titleColor: '#fff',
+                    bodyColor: '#e0e0e0',
+                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    borderWidth: 1,
+                    padding: 12,
+                    displayColors: true
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM yyyy'
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    ticks: {
+                        color: '#8b8b9a'
+                    }
+                },
+                y: {
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    ticks: {
+                        color: '#8b8b9a',
+                        callback: value => value + '%'
+                    }
+                }
+            }
+        };
+
+        // HumanEval Chart
+        const humanEvalCtx = document.getElementById('humanEvalChart').getContext('2d');
+        new Chart(humanEvalCtx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'HumanEval Pass@1',
+                    data: [
+                        { x: '2021-07-01', y: 0, model: 'GPT-3' },
+                        { x: '2021-07-15', y: 28.8, model: 'Codex' },
+                        { x: '2021-08-01', y: 37.7, model: 'Codex-S' },
+                        { x: '2022-03-01', y: 47, model: 'InstructGPT' },
+                        { x: '2022-11-15', y: 48, model: 'ChatGPT (3.5)' },
+                        { x: '2023-03-14', y: 67, model: 'GPT-4' },
+                        { x: '2023-06-01', y: 73.2, model: 'WizardCoder 34B' },
+                        { x: '2023-08-01', y: 76, model: 'Code Llama 34B' },
+                        { x: '2023-11-01', y: 85.7, model: 'GPT-4 Turbo' },
+                        { x: '2024-03-01', y: 84.9, model: 'Claude 3 Opus' },
+                        { x: '2024-06-01', y: 92, model: 'Claude 3.5 Sonnet' },
+                        { x: '2024-09-12', y: 96.3, model: 'o1-preview' },
+                        { x: '2024-12-01', y: 95, model: 'Gemini 2.0' },
+                        { x: '2025-02-01', y: 93.7, model: 'Claude 3.7 Sonnet' },
+                        { x: '2025-11-01', y: 95.5, model: 'Claude 4.5 Opus' }
+                    ],
+                    borderColor: colors.cyan,
+                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 6,
+                    pointHoverRadius: 10,
+                    pointBackgroundColor: colors.cyan
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${point.model}: ${point.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // SWE-bench Chart
+        const sweBenchCtx = document.getElementById('sweBenchChart').getContext('2d');
+        new Chart(sweBenchCtx, {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        label: 'SWE-bench (original)',
+                        data: [
+                            { x: '2023-10-01', y: 1.96, model: 'GPT-4 baseline' },
+                            { x: '2024-04-01', y: 12.5, model: 'SWE-agent + GPT-4' },
+                            { x: '2024-04-15', y: 22, model: 'Claude 3 Opus' },
+                            { x: '2024-06-01', y: 33.6, model: 'Devin' },
+                            { x: '2024-07-01', y: 45, model: 'Claude 3.5 Sonnet' }
+                        ],
+                        borderColor: colors.purple,
+                        backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: colors.purple
+                    },
+                    {
+                        label: 'SWE-bench Verified',
+                        data: [
+                            { x: '2024-08-01', y: 33.2, model: 'GPT-4o (baseline)' },
+                            { x: '2024-08-15', y: 48.9, model: 'Claude 3.5 Sonnet' },
+                            { x: '2024-10-01', y: 53, model: 'o1-preview' },
+                            { x: '2024-11-01', y: 56, model: 'Devlo + Claude 3.5' },
+                            { x: '2025-01-01', y: 63.8, model: 'o1 + TRAE' },
+                            { x: '2025-06-01', y: 75.2, model: 'Claude 4 Sonnet' },
+                            { x: '2025-11-01', y: 80.9, model: 'Claude 4.5 Opus' },
+                            { x: '2025-11-15', y: 77.4, model: 'Gemini 3 Pro' },
+                            { x: '2025-12-01', y: 75.4, model: 'GPT-5.2' }
+                        ],
+                        borderColor: colors.green,
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: colors.green
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${context.dataset.label} - ${point.model}: ${point.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // GAIA Chart
+        const gaiaCtx = document.getElementById('gaiaChart').getContext('2d');
+        new Chart(gaiaCtx, {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        label: 'GAIA (AI Performance)',
+                        data: [
+                            { x: '2023-11-01', y: 15, model: 'GPT-4 + plugins' },
+                            { x: '2024-03-01', y: 28, model: 'Magentic-1' },
+                            { x: '2024-06-01', y: 38, model: 'Various agents' },
+                            { x: '2024-09-01', y: 52, model: 'Langfun Agent' },
+                            { x: '2024-12-01', y: 65, model: 'Deep Research' },
+                            { x: '2025-06-01', y: 75, model: 'H2O.ai Agent' }
+                        ],
+                        borderColor: colors.pink,
+                        backgroundColor: 'rgba(244, 114, 182, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: colors.pink
+                    },
+                    {
+                        label: 'Human Baseline',
+                        data: [
+                            { x: '2023-11-01', y: 92 },
+                            { x: '2025-06-01', y: 92 }
+                        ],
+                        borderColor: 'rgba(255, 255, 255, 0.5)',
+                        borderDash: [10, 5],
+                        pointRadius: 0,
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                if (point.model) {
+                                    return `${point.model}: ${point.y}%`;
+                                }
+                                return `Human baseline: ${point.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Combined Chart
+        const combinedCtx = document.getElementById('combinedChart').getContext('2d');
+        new Chart(combinedCtx, {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        label: 'HumanEval',
+                        data: [
+                            { x: '2021-07-01', y: 0 },
+                            { x: '2021-07-15', y: 28.8 },
+                            { x: '2022-11-15', y: 48 },
+                            { x: '2023-03-14', y: 67 },
+                            { x: '2023-11-01', y: 85.7 },
+                            { x: '2024-06-01', y: 92 },
+                            { x: '2024-09-12', y: 96.3 },
+                            { x: '2025-11-01', y: 95.5 }
+                        ],
+                        borderColor: colors.cyan,
+                        tension: 0.3,
+                        pointRadius: 4
+                    },
+                    {
+                        label: 'SWE-bench Verified',
+                        data: [
+                            { x: '2024-08-01', y: 33.2 },
+                            { x: '2024-08-15', y: 48.9 },
+                            { x: '2024-10-01', y: 53 },
+                            { x: '2025-01-01', y: 63.8 },
+                            { x: '2025-06-01', y: 75.2 },
+                            { x: '2025-11-01', y: 80.9 }
+                        ],
+                        borderColor: colors.green,
+                        tension: 0.3,
+                        pointRadius: 4
+                    },
+                    {
+                        label: 'GAIA',
+                        data: [
+                            { x: '2023-11-01', y: 15 },
+                            { x: '2024-03-01', y: 28 },
+                            { x: '2024-06-01', y: 38 },
+                            { x: '2024-09-01', y: 52 },
+                            { x: '2024-12-01', y: 65 },
+                            { x: '2025-06-01', y: 75 }
+                        ],
+                        borderColor: colors.pink,
+                        tension: 0.3,
+                        pointRadius: 4
+                    }
+                ]
+            },
+            options: commonOptions
+        });
+    </script>
+</body>
+</html>
