@@ -1,0 +1,119 @@
+[
+  {"period": "2024-01", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 248000},
+  {"period": "2024-01", "kostnadsstalle": "1000", "konto": "7020", "budget": 78000, "utfall": 77500},
+  {"period": "2024-01", "kostnadsstalle": "1000", "konto": "5010", "budget": 45000, "utfall": 45000},
+  {"period": "2024-01", "kostnadsstalle": "1000", "konto": "6070", "budget": 15000, "utfall": 18200},
+
+  {"period": "2024-01", "kostnadsstalle": "1110", "konto": "7010", "budget": 180000, "utfall": 175000},
+  {"period": "2024-01", "kostnadsstalle": "1110", "konto": "7020", "budget": 56000, "utfall": 54500},
+  {"period": "2024-01", "kostnadsstalle": "1110", "konto": "6070", "budget": 25000, "utfall": 28000},
+
+  {"period": "2024-01", "kostnadsstalle": "1210", "konto": "7010", "budget": 120000, "utfall": 118000},
+  {"period": "2024-01", "kostnadsstalle": "1210", "konto": "7050", "budget": 35000, "utfall": 42000},
+
+  {"period": "2024-01", "kostnadsstalle": "1310", "konto": "7010", "budget": 220000, "utfall": 225000},
+  {"period": "2024-01", "kostnadsstalle": "1310", "konto": "6070", "budget": 85000, "utfall": 92000},
+
+  {"period": "2024-01", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 842000},
+  {"period": "2024-01", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 262000},
+  {"period": "2024-01", "kostnadsstalle": "2110", "konto": "4030", "budget": 45000, "utfall": 52000},
+  {"period": "2024-01", "kostnadsstalle": "2110", "konto": "5010", "budget": 120000, "utfall": 120000},
+  {"period": "2024-01", "kostnadsstalle": "2110", "konto": "5020", "budget": 35000, "utfall": 38000},
+  {"period": "2024-01", "kostnadsstalle": "2110", "konto": "4020", "budget": 75000, "utfall": 72000},
+
+  {"period": "2024-01", "kostnadsstalle": "2120", "konto": "7010", "budget": 720000, "utfall": 715000},
+  {"period": "2024-01", "kostnadsstalle": "2120", "konto": "7020", "budget": 224000, "utfall": 223000},
+  {"period": "2024-01", "kostnadsstalle": "2120", "konto": "4030", "budget": 38000, "utfall": 41000},
+  {"period": "2024-01", "kostnadsstalle": "2120", "konto": "5010", "budget": 95000, "utfall": 95000},
+
+  {"period": "2024-01", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 1020000},
+  {"period": "2024-01", "kostnadsstalle": "3110", "konto": "7020", "budget": 305000, "utfall": 318000},
+  {"period": "2024-01", "kostnadsstalle": "3110", "konto": "5010", "budget": 180000, "utfall": 180000},
+  {"period": "2024-01", "kostnadsstalle": "3110", "konto": "4020", "budget": 125000, "utfall": 132000},
+
+  {"period": "2024-01", "kostnadsstalle": "4200", "konto": "7010", "budget": 420000, "utfall": 415000},
+  {"period": "2024-01", "kostnadsstalle": "4200", "konto": "4010", "budget": 180000, "utfall": 195000},
+  {"period": "2024-01", "kostnadsstalle": "4200", "konto": "6030", "budget": 65000, "utfall": 58000},
+
+  {"period": "2024-02", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 252000},
+  {"period": "2024-02", "kostnadsstalle": "1000", "konto": "7020", "budget": 78000, "utfall": 78600},
+  {"period": "2024-02", "kostnadsstalle": "1000", "konto": "5010", "budget": 45000, "utfall": 45000},
+  {"period": "2024-02", "kostnadsstalle": "1000", "konto": "6070", "budget": 15000, "utfall": 14500},
+
+  {"period": "2024-02", "kostnadsstalle": "1110", "konto": "7010", "budget": 180000, "utfall": 182000},
+  {"period": "2024-02", "kostnadsstalle": "1110", "konto": "7020", "budget": 56000, "utfall": 56700},
+  {"period": "2024-02", "kostnadsstalle": "1110", "konto": "6070", "budget": 25000, "utfall": 24000},
+
+  {"period": "2024-02", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 855000},
+  {"period": "2024-02", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 266500},
+  {"period": "2024-02", "kostnadsstalle": "2110", "konto": "4030", "budget": 45000, "utfall": 43000},
+  {"period": "2024-02", "kostnadsstalle": "2110", "konto": "5010", "budget": 120000, "utfall": 120000},
+  {"period": "2024-02", "kostnadsstalle": "2110", "konto": "5020", "budget": 35000, "utfall": 42000},
+  {"period": "2024-02", "kostnadsstalle": "2110", "konto": "4020", "budget": 75000, "utfall": 78000},
+
+  {"period": "2024-02", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 995000},
+  {"period": "2024-02", "kostnadsstalle": "3110", "konto": "7020", "budget": 305000, "utfall": 310000},
+  {"period": "2024-02", "kostnadsstalle": "3110", "konto": "5010", "budget": 180000, "utfall": 180000},
+  {"period": "2024-02", "kostnadsstalle": "3110", "konto": "4020", "budget": 125000, "utfall": 128000},
+
+  {"period": "2024-03", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 249000},
+  {"period": "2024-03", "kostnadsstalle": "1000", "konto": "7020", "budget": 78000, "utfall": 77600},
+  {"period": "2024-03", "kostnadsstalle": "1000", "konto": "5010", "budget": 45000, "utfall": 45000},
+
+  {"period": "2024-03", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 848000},
+  {"period": "2024-03", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 264000},
+  {"period": "2024-03", "kostnadsstalle": "2110", "konto": "4030", "budget": 45000, "utfall": 48000},
+  {"period": "2024-03", "kostnadsstalle": "2110", "konto": "5020", "budget": 35000, "utfall": 32000},
+  {"period": "2024-03", "kostnadsstalle": "2110", "konto": "4020", "budget": 75000, "utfall": 74000},
+
+  {"period": "2024-03", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 985000},
+  {"period": "2024-03", "kostnadsstalle": "3110", "konto": "7020", "budget": 305000, "utfall": 307000},
+  {"period": "2024-03", "kostnadsstalle": "3110", "konto": "4020", "budget": 125000, "utfall": 130000},
+
+  {"period": "2024-04", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 251000},
+  {"period": "2024-04", "kostnadsstalle": "1000", "konto": "7020", "budget": 78000, "utfall": 78200},
+
+  {"period": "2024-04", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 860000},
+  {"period": "2024-04", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 268000},
+  {"period": "2024-04", "kostnadsstalle": "2110", "konto": "4030", "budget": 45000, "utfall": 44000},
+  {"period": "2024-04", "kostnadsstalle": "2110", "konto": "4020", "budget": 75000, "utfall": 76000},
+
+  {"period": "2024-04", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 1010000},
+  {"period": "2024-04", "kostnadsstalle": "3110", "konto": "7020", "budget": 305000, "utfall": 315000},
+
+  {"period": "2024-05", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 248500},
+  {"period": "2024-05", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 845000},
+  {"period": "2024-05", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 263000},
+  {"period": "2024-05", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 990000},
+
+  {"period": "2024-06", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 245000},
+  {"period": "2024-06", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 720000},
+  {"period": "2024-06", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 224000},
+  {"period": "2024-06", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 970000},
+
+  {"period": "2024-07", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 180000},
+  {"period": "2024-07", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 320000},
+  {"period": "2024-07", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 920000},
+
+  {"period": "2024-08", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 252000},
+  {"period": "2024-08", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 870000},
+  {"period": "2024-08", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 271000},
+  {"period": "2024-08", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 995000},
+
+  {"period": "2024-09", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 255000},
+  {"period": "2024-09", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 865000},
+  {"period": "2024-09", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 1005000},
+
+  {"period": "2024-10", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 253000},
+  {"period": "2024-10", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 858000},
+  {"period": "2024-10", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 992000},
+
+  {"period": "2024-11", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 251000},
+  {"period": "2024-11", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 855000},
+  {"period": "2024-11", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 988000},
+
+  {"period": "2024-12", "kostnadsstalle": "1000", "konto": "7010", "budget": 250000, "utfall": 260000},
+  {"period": "2024-12", "kostnadsstalle": "2110", "konto": "7010", "budget": 850000, "utfall": 875000},
+  {"period": "2024-12", "kostnadsstalle": "2110", "konto": "7020", "budget": 265000, "utfall": 273000},
+  {"period": "2024-12", "kostnadsstalle": "3110", "konto": "7010", "budget": 980000, "utfall": 1015000}
+]

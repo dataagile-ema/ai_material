@@ -1,0 +1,310 @@
+{
+  "id": "storstad-kommun",
+  "namn": "Storstad Kommun",
+  "typ": "root",
+  "chef": "Maria Lindberg",
+  "enheter": [
+    {
+      "id": "stab",
+      "namn": "Stabsfunktioner",
+      "typ": "kategori",
+      "enheter": [
+        {
+          "id": "stab-ekonomi",
+          "namn": "Ekonomiavdelningen",
+          "typ": "stab",
+          "chef": "Anna Andersson",
+          "enheter": [
+            {
+              "id": "stab-ekonomi-redovisning",
+              "namn": "Redovisning",
+              "typ": "enhet",
+              "chef": "Erik Johansson"
+            },
+            {
+              "id": "stab-ekonomi-budget",
+              "namn": "Budget & Analys",
+              "typ": "enhet",
+              "chef": "Lisa Bergström"
+            },
+            {
+              "id": "stab-ekonomi-inkop",
+              "namn": "Inköp & Upphandling",
+              "typ": "enhet",
+              "chef": "Peter Nilsson"
+            }
+          ]
+        },
+        {
+          "id": "stab-hr",
+          "namn": "HR-avdelningen",
+          "typ": "stab",
+          "chef": "Karin Svensson",
+          "enheter": [
+            {
+              "id": "stab-hr-rekrytering",
+              "namn": "Rekrytering",
+              "typ": "enhet",
+              "chef": "Jonas Ekström"
+            },
+            {
+              "id": "stab-hr-arbetsmiljo",
+              "namn": "Arbetsmiljö & Hälsa",
+              "typ": "enhet",
+              "chef": "Sara Lindqvist"
+            },
+            {
+              "id": "stab-hr-lon",
+              "namn": "Lön & Pension",
+              "typ": "enhet",
+              "chef": "Mikael Holm"
+            }
+          ]
+        },
+        {
+          "id": "stab-it",
+          "namn": "IT-avdelningen",
+          "typ": "stab",
+          "chef": "Fredrik Gustafsson",
+          "enheter": [
+            {
+              "id": "stab-it-drift",
+              "namn": "Drift & Support",
+              "typ": "enhet",
+              "chef": "Emma Karlsson"
+            },
+            {
+              "id": "stab-it-utveckling",
+              "namn": "Utveckling",
+              "typ": "enhet",
+              "chef": "Anders Berg"
+            },
+            {
+              "id": "stab-it-sakerhet",
+              "namn": "IT-säkerhet",
+              "typ": "enhet",
+              "chef": "Oscar Lund"
+            }
+          ]
+        },
+        {
+          "id": "stab-kommunikation",
+          "namn": "Kommunikation",
+          "typ": "stab",
+          "chef": "Helena Strand"
+        }
+      ]
+    },
+    {
+      "id": "karn",
+      "namn": "Kärnverksamhet",
+      "typ": "kategori",
+      "enheter": [
+        {
+          "id": "karn-utbildning",
+          "namn": "Utbildningsförvaltningen",
+          "typ": "forvaltning",
+          "chef": "Bengt Olsson",
+          "enheter": [
+            {
+              "id": "karn-utbildning-admin",
+              "namn": "Administration",
+              "typ": "enhet",
+              "chef": "Ingrid Persson"
+            },
+            {
+              "id": "karn-utbildning-grund-nord",
+              "namn": "Grundskola Nord",
+              "typ": "enhet",
+              "chef": "Ulf Danielsson",
+              "enheter": [
+                {
+                  "id": "karn-skola-bjorkbacken",
+                  "namn": "Björkbackens skola",
+                  "typ": "skola",
+                  "chef": "Eva Martinsson"
+                },
+                {
+                  "id": "karn-skola-tallhojden",
+                  "namn": "Tallhöjdens skola",
+                  "typ": "skola",
+                  "chef": "Magnus Björk"
+                }
+              ]
+            },
+            {
+              "id": "karn-utbildning-grund-syd",
+              "namn": "Grundskola Syd",
+              "typ": "enhet",
+              "chef": "Christina Löfgren",
+              "enheter": [
+                {
+                  "id": "karn-skola-solvangen",
+                  "namn": "Solvångens skola",
+                  "typ": "skola",
+                  "chef": "Thomas Eriksson"
+                },
+                {
+                  "id": "karn-skola-ekangen",
+                  "namn": "Ekängens skola",
+                  "typ": "skola",
+                  "chef": "Annika Ström"
+                }
+              ]
+            },
+            {
+              "id": "karn-utbildning-gymnasium",
+              "namn": "Gymnasiet",
+              "typ": "enhet",
+              "chef": "Lars Månsson",
+              "enheter": [
+                {
+                  "id": "karn-gymnasium-natur",
+                  "namn": "Naturvetenskapliga programmet",
+                  "typ": "program",
+                  "chef": "Kerstin Åberg"
+                },
+                {
+                  "id": "karn-gymnasium-samhall",
+                  "namn": "Samhällsvetenskapliga programmet",
+                  "typ": "program",
+                  "chef": "Robert Dahl"
+                },
+                {
+                  "id": "karn-gymnasium-teknik",
+                  "namn": "Teknikprogrammet",
+                  "typ": "program",
+                  "chef": "Mats Hedlund"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "karn-social",
+          "namn": "Socialförvaltningen",
+          "typ": "forvaltning",
+          "chef": "Margareta Sundberg",
+          "enheter": [
+            {
+              "id": "karn-social-admin",
+              "namn": "Administration",
+              "typ": "enhet",
+              "chef": "Hans Lindgren"
+            },
+            {
+              "id": "karn-social-aldreomsorg",
+              "namn": "Äldreomsorg",
+              "typ": "enhet",
+              "chef": "Birgitta Wallin",
+              "enheter": [
+                {
+                  "id": "karn-aldreboende-solglanten",
+                  "namn": "Solgläntan äldreboende",
+                  "typ": "boende",
+                  "chef": "Gunilla Falk"
+                },
+                {
+                  "id": "karn-aldreboende-skogsbo",
+                  "namn": "Skogsbo äldreboende",
+                  "typ": "boende",
+                  "chef": "Lennart Ek"
+                },
+                {
+                  "id": "karn-hemtjanst",
+                  "namn": "Hemtjänst",
+                  "typ": "enhet",
+                  "chef": "Monica Larsson"
+                }
+              ]
+            },
+            {
+              "id": "karn-social-ifo",
+              "namn": "Individ & Familj",
+              "typ": "enhet",
+              "chef": "Stefan Nordin",
+              "enheter": [
+                {
+                  "id": "karn-social-barn",
+                  "namn": "Barn & Ungdom",
+                  "typ": "enhet",
+                  "chef": "Ulrika Sandberg"
+                },
+                {
+                  "id": "karn-social-vuxen",
+                  "namn": "Vuxenenheten",
+                  "typ": "enhet",
+                  "chef": "Johan Berglund"
+                }
+              ]
+            },
+            {
+              "id": "karn-social-lss",
+              "namn": "LSS & Funktionsstöd",
+              "typ": "enhet",
+              "chef": "Camilla Öberg"
+            }
+          ]
+        },
+        {
+          "id": "karn-samhallsbyggnad",
+          "namn": "Samhällsbyggnadsförvaltningen",
+          "typ": "forvaltning",
+          "chef": "Henrik Lindström",
+          "enheter": [
+            {
+              "id": "karn-samhall-planbygg",
+              "namn": "Plan & Bygg",
+              "typ": "enhet",
+              "chef": "Anette Sjögren"
+            },
+            {
+              "id": "karn-samhall-gata",
+              "namn": "Gata & Park",
+              "typ": "enhet",
+              "chef": "Karl-Erik Månsson"
+            },
+            {
+              "id": "karn-samhall-miljo",
+              "namn": "Miljö & Hälsa",
+              "typ": "enhet",
+              "chef": "Susanne Löf"
+            },
+            {
+              "id": "karn-samhall-fastighet",
+              "namn": "Fastighetsenheten",
+              "typ": "enhet",
+              "chef": "Bo Lindkvist"
+            }
+          ]
+        },
+        {
+          "id": "karn-kultur",
+          "namn": "Kultur & Fritid",
+          "typ": "forvaltning",
+          "chef": "Elisabeth Norberg",
+          "enheter": [
+            {
+              "id": "karn-kultur-bibliotek",
+              "namn": "Bibliotek",
+              "typ": "enhet",
+              "chef": "Kristina Åström"
+            },
+            {
+              "id": "karn-kultur-fritid",
+              "namn": "Fritidsanläggningar",
+              "typ": "enhet",
+              "chef": "Anders Holmberg"
+            },
+            {
+              "id": "karn-kultur-evenemang",
+              "namn": "Evenemang & Turism",
+              "typ": "enhet",
+              "chef": "Nina Sandström"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+.tree-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.tree-nav-header {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 0.75rem;
+}
+
+.tree-nav-header h3 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tree-nav-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.tree-node {
+  user-select: none;
+}
+
+.tree-node-content {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  padding-right: 0.75rem;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.tree-node-content:hover {
+  background: #edf2f7;
+}
+
+.tree-node-content.selected {
+  background: #e6f2ff;
+  color: #1a365d;
+  font-weight: 500;
+}
+
+.tree-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: #718096;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.tree-toggle:hover {
+  color: #2d3748;
+}
+
+.tree-toggle-placeholder {
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.tree-icon {
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.tree-label {
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tree-children {
+  margin-left: 0;
+}

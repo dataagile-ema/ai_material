@@ -1,0 +1,55 @@
+[
+  { "kod": "1000", "namn": "Kommunledning", "enhetId": "storstad-kommun" },
+
+  { "kod": "1100", "namn": "Ekonomiavdelningen", "enhetId": "stab-ekonomi" },
+  { "kod": "1110", "namn": "Redovisning", "enhetId": "stab-ekonomi-redovisning" },
+  { "kod": "1120", "namn": "Budget & Analys", "enhetId": "stab-ekonomi-budget" },
+  { "kod": "1130", "namn": "Inköp & Upphandling", "enhetId": "stab-ekonomi-inkop" },
+
+  { "kod": "1200", "namn": "HR-avdelningen", "enhetId": "stab-hr" },
+  { "kod": "1210", "namn": "Rekrytering", "enhetId": "stab-hr-rekrytering" },
+  { "kod": "1220", "namn": "Arbetsmiljö & Hälsa", "enhetId": "stab-hr-arbetsmiljo" },
+  { "kod": "1230", "namn": "Lön & Pension", "enhetId": "stab-hr-lon" },
+
+  { "kod": "1300", "namn": "IT-avdelningen", "enhetId": "stab-it" },
+  { "kod": "1310", "namn": "Drift & Support", "enhetId": "stab-it-drift" },
+  { "kod": "1320", "namn": "Utveckling", "enhetId": "stab-it-utveckling" },
+  { "kod": "1330", "namn": "IT-säkerhet", "enhetId": "stab-it-sakerhet" },
+
+  { "kod": "1400", "namn": "Kommunikation", "enhetId": "stab-kommunikation" },
+
+  { "kod": "2000", "namn": "Utbildningsförvaltningen", "enhetId": "karn-utbildning" },
+  { "kod": "2010", "namn": "Utbildning Administration", "enhetId": "karn-utbildning-admin" },
+  { "kod": "2100", "namn": "Grundskola Nord", "enhetId": "karn-utbildning-grund-nord" },
+  { "kod": "2110", "namn": "Björkbackens skola", "enhetId": "karn-skola-bjorkbacken" },
+  { "kod": "2120", "namn": "Tallhöjdens skola", "enhetId": "karn-skola-tallhojden" },
+  { "kod": "2200", "namn": "Grundskola Syd", "enhetId": "karn-utbildning-grund-syd" },
+  { "kod": "2210", "namn": "Solvångens skola", "enhetId": "karn-skola-solvangen" },
+  { "kod": "2220", "namn": "Ekängens skola", "enhetId": "karn-skola-ekangen" },
+  { "kod": "2300", "namn": "Gymnasiet", "enhetId": "karn-utbildning-gymnasium" },
+  { "kod": "2310", "namn": "Naturvetenskapliga programmet", "enhetId": "karn-gymnasium-natur" },
+  { "kod": "2320", "namn": "Samhällsvetenskapliga programmet", "enhetId": "karn-gymnasium-samhall" },
+  { "kod": "2330", "namn": "Teknikprogrammet", "enhetId": "karn-gymnasium-teknik" },
+
+  { "kod": "3000", "namn": "Socialförvaltningen", "enhetId": "karn-social" },
+  { "kod": "3010", "namn": "Social Administration", "enhetId": "karn-social-admin" },
+  { "kod": "3100", "namn": "Äldreomsorg", "enhetId": "karn-social-aldreomsorg" },
+  { "kod": "3110", "namn": "Solgläntan äldreboende", "enhetId": "karn-aldreboende-solglanten" },
+  { "kod": "3120", "namn": "Skogsbo äldreboende", "enhetId": "karn-aldreboende-skogsbo" },
+  { "kod": "3130", "namn": "Hemtjänst", "enhetId": "karn-hemtjanst" },
+  { "kod": "3200", "namn": "Individ & Familj", "enhetId": "karn-social-ifo" },
+  { "kod": "3210", "namn": "Barn & Ungdom", "enhetId": "karn-social-barn" },
+  { "kod": "3220", "namn": "Vuxenenheten", "enhetId": "karn-social-vuxen" },
+  { "kod": "3300", "namn": "LSS & Funktionsstöd", "enhetId": "karn-social-lss" },
+
+  { "kod": "4000", "namn": "Samhällsbyggnadsförvaltningen", "enhetId": "karn-samhallsbyggnad" },
+  { "kod": "4100", "namn": "Plan & Bygg", "enhetId": "karn-samhall-planbygg" },
+  { "kod": "4200", "namn": "Gata & Park", "enhetId": "karn-samhall-gata" },
+  { "kod": "4300", "namn": "Miljö & Hälsa", "enhetId": "karn-samhall-miljo" },
+  { "kod": "4400", "namn": "Fastighetsenheten", "enhetId": "karn-samhall-fastighet" },
+
+  { "kod": "5000", "namn": "Kultur & Fritid", "enhetId": "karn-kultur" },
+  { "kod": "5100", "namn": "Bibliotek", "enhetId": "karn-kultur-bibliotek" },
+  { "kod": "5200", "namn": "Fritidsanläggningar", "enhetId": "karn-kultur-fritid" },
+  { "kod": "5300", "namn": "Evenemang & Turism", "enhetId": "karn-kultur-evenemang" }
+]
