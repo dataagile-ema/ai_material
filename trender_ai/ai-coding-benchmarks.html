@@ -1401,7 +1401,7 @@
                     },
                     y: {
                         min: 0,
-                        max: 320,
+                        max: 300,
                         grid: {
                             color: 'rgba(255, 255, 255, 0.05)'
                         },
@@ -1410,13 +1410,12 @@
                             stepSize: 60,
                             callback: function(value) {
                                 if (value === 0) return '0';
-                                if (value < 60) return value + ' min';
-                                return (value / 60).toFixed(0) + ' tim';
+                                return (value / 60) + ' tim';
                             }
                         },
                         title: {
                             display: true,
-                            text: 'Time Horizon (minuter)',
+                            text: 'Time Horizon',
                             color: '#8b8b9a'
                         }
                     }
