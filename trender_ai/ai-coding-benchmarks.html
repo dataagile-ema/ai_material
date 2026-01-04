@@ -531,6 +531,26 @@
             </div>
         </div>
 
+        <!-- TAU-bench Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title">Konsistens: TAU-bench (pass^k)</h2>
+                    <p class="chart-description">Hur pålitliga är AI-agenter? pass^k mäter om modellen lyckas k gånger i rad - ett hårt test på konsistens.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('taubench-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om TAU-bench
+                </button>
+            </div>
+            <div class="chart-container">
+                <canvas id="tauBenchChart"></canvas>
+            </div>
+        </div>
+
         <!-- METR Time Horizon Section -->
         <div class="chart-section">
             <div class="chart-header">
@@ -646,6 +666,7 @@
             <a href="https://www.swebench.com/" target="_blank">SWE-bench</a>,
             <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank">METR</a>,
             <a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard" target="_blank">GAIA</a>,
+            <a href="https://github.com/sierra-research/tau-bench" target="_blank">TAU-bench</a>,
             <a href="https://github.com/openai/human-eval" target="_blank">HumanEval</a>, och
             <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/technical-performance" target="_blank">Stanford AI Index</a></p>
             <p style="margin-top: 0.5rem;">Genererad januari 2026</p>
@@ -836,6 +857,79 @@
                         <line x1="10" y1="14" x2="21" y2="3"/>
                     </svg>
                     GAIA Leaderboard (HuggingFace)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAU-bench Modal -->
+    <div class="modal-overlay" id="taubench-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">TAU-bench</h3>
+                <button class="modal-close" onclick="closeModal('taubench-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är TAU-bench?</h4>
+                    <p>TAU-bench (Tool-Agent-User benchmark) är ett benchmark skapat av Sierra i juni 2024 för att testa AI-agenters <strong>konsistens och pålitlighet</strong> i verklighetstrogna kundtjänstscenarier. Till skillnad från andra benchmarks mäter det inte bara om en agent <em>kan</em> lyckas, utan om den lyckas <em>varje gång</em>.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Domäner</h4>
+                    <ul>
+                        <li><strong>Retail</strong> - E-handelskundtjänst (enklare)</li>
+                        <li><strong>Airline</strong> - Flygbolags kundtjänst (svårare)</li>
+                        <li><strong>Telecom</strong> - Telekomkundtjänst (nytt i TAU2, svårast)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Nyckelmetrik: pass^k</h4>
+                    <p>Medan <strong>pass@k</strong> ("minst ett av k försök lyckas") är standard, introducerar TAU-bench <strong>pass^k</strong> ("alla k försök lyckas"). Detta är ett mycket hårdare test:</p>
+                    <ul>
+                        <li>En modell med 90% pass@1 har bara 43% pass^8</li>
+                        <li>Formeln: pass^k = p^k (exponentiellt avtagande)</li>
+                        <li>Visar att även "bra" modeller är opålitliga vid upprepad användning</li>
+                    </ul>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">&lt;50%</div>
+                        <div class="modal-stat-label">GPT-4o pass@1 (2024)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~25%</div>
+                        <div class="modal-stat-label">GPT-4o pass^8</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~97%</div>
+                        <div class="modal-stat-label">GPT-5 pass@1 (2025)</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför viktigt?</h4>
+                    <p>I produktion räcker det inte att en AI-agent "ibland" fungerar. TAU-bench avslöjar hur opålitliga även toppmodeller är - GPT-4o lyckades bara 25% av gångerna när samma uppgift upprepades 8 gånger. Anthropic har anammat pass^k i sina model cards som ett viktigt pålitlighetsmått.</p>
+                </div>
+
+                <a href="https://sierra.ai/blog/tau-bench-shaping-development-evaluation-agents" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    Sierra: TAU-bench Blog
+                </a>
+                <br>
+                <a href="https://github.com/sierra-research/tau-bench" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    GitHub: sierra-research/tau-bench
                 </a>
             </div>
         </div>
@@ -1169,6 +1263,66 @@
                                     return `${point.model}: ${point.y}%`;
                                 }
                                 return `Human baseline: ${point.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // TAU-bench Chart
+        const tauBenchCtx = document.getElementById('tauBenchChart').getContext('2d');
+        new Chart(tauBenchCtx, {
+            type: 'line',
+            data: {
+                datasets: [
+                    {
+                        label: 'pass@1 (Retail)',
+                        data: [
+                            { x: '2024-06-01', y: 50, model: 'GPT-4o' },
+                            { x: '2024-10-01', y: 62, model: 'Claude 3.5 Sonnet' },
+                            { x: '2025-02-01', y: 74, model: 'GPT-4.1' },
+                            { x: '2025-03-01', y: 78, model: 'Claude 3.7 Sonnet' },
+                            { x: '2025-09-01', y: 85, model: 'Claude 4 Sonnet' },
+                            { x: '2025-12-01', y: 97, model: 'GPT-5' }
+                        ],
+                        borderColor: colors.cyan,
+                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        fill: false,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: colors.cyan
+                    },
+                    {
+                        label: 'pass^8 (Retail)',
+                        data: [
+                            { x: '2024-06-01', y: 25, model: 'GPT-4o' },
+                            { x: '2024-10-01', y: 35, model: 'Claude 3.5 Sonnet' },
+                            { x: '2025-02-01', y: 42, model: 'GPT-4.1' },
+                            { x: '2025-03-01', y: 48, model: 'Claude 3.7 Sonnet' },
+                            { x: '2025-09-01', y: 58, model: 'Claude 4 Sonnet' },
+                            { x: '2025-12-01', y: 78, model: 'GPT-5' }
+                        ],
+                        borderColor: colors.red,
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        fill: false,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: colors.red,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${context.dataset.label} - ${point.model}: ${point.y}%`;
                             }
                         }
                     }
