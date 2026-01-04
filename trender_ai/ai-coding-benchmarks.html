@@ -47,7 +47,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 1.5rem;
             margin-bottom: 3rem;
         }
@@ -68,7 +68,7 @@
         }
 
         .stat-value {
-            font-size: 2.5rem;
+            font-size: 2rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
@@ -77,6 +77,7 @@
         .stat-card:nth-child(2) .stat-value { color: #7c3aed; }
         .stat-card:nth-child(3) .stat-value { color: #10b981; }
         .stat-card:nth-child(4) .stat-value { color: #f472b6; }
+        .stat-card:nth-child(5) .stat-value { color: #f59e0b; }
 
         .stat-label {
             color: #8b8b9a;
@@ -89,6 +90,15 @@
             border-radius: 20px;
             padding: 2rem;
             margin-bottom: 2rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .chart-title {
@@ -106,6 +116,182 @@
         .chart-container {
             position: relative;
             height: 400px;
+        }
+
+        /* Info Button Styles */
+        .info-btn {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(0, 212, 255, 0.3));
+            border: 1px solid rgba(124, 58, 237, 0.5);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .info-btn:hover {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.5), rgba(0, 212, 255, 0.5));
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .info-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 1;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section h4 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-section p, .modal-section li {
+            color: #c0c0d0;
+            line-height: 1.6;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-section li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .modal-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #7c3aed;
+        }
+
+        .modal-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.2));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            color: #00d4ff;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .modal-link:hover {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(124, 58, 237, 0.3));
+            transform: translateY(-2px);
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .modal-stat {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #7c3aed;
+        }
+
+        .modal-stat-label {
+            font-size: 0.85rem;
+            color: #8b8b9a;
+            margin-top: 0.3rem;
         }
 
         .timeline-section {
@@ -188,29 +374,6 @@
             font-size: 0.9rem;
         }
 
-        .legend-section {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
-        }
-
         .insight-box {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(0, 212, 255, 0.2));
             border: 1px solid rgba(124, 58, 237, 0.3);
@@ -237,7 +400,7 @@
         }
 
         .insight-list li::before {
-            content: '→';
+            content: '\2192';
             position: absolute;
             left: 0;
             color: #00d4ff;
@@ -272,6 +435,9 @@
                 left: -38px;
                 right: auto;
             }
+            .chart-header {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -279,54 +445,115 @@
     <div class="container">
         <header>
             <h1>AI Kodning & Agent Benchmarks</h1>
-            <p class="subtitle">Utvecklingen 2021–2025: Från 0% till 96% på bara fyra år</p>
+            <p class="subtitle">Utvecklingen 2019-2025: Exponentiell tillväxt i AI-förmågor</p>
         </header>
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-value">0% → 96%</div>
-                <div class="stat-label">HumanEval (GPT-3 → o1)</div>
+                <div class="stat-value">0% &rarr; 96%</div>
+                <div class="stat-label">HumanEval (GPT-3 &rarr; o1)</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">~2% → 81%</div>
+                <div class="stat-value">~2% &rarr; 81%</div>
                 <div class="stat-label">SWE-bench Verified</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">15% → 75%</div>
-                <div class="stat-label">GAIA (AI vs 92% Human)</div>
+                <div class="stat-value">15% &rarr; 75%</div>
+                <div class="stat-label">GAIA (vs 92% Human)</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">4 år</div>
-                <div class="stat-label">Tid för denna revolution</div>
+                <div class="stat-value">2 min &rarr; 5 tim</div>
+                <div class="stat-label">METR Time Horizon</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">~7 mån</div>
+                <div class="stat-label">Fördubblingstid</div>
             </div>
         </div>
 
+        <!-- HumanEval Section -->
         <div class="chart-section">
-            <h2 class="chart-title">Kodgenerering: HumanEval Benchmark</h2>
-            <p class="chart-description">Pass@1 resultat över tid. Visar hur AI gått från att inte kunna lösa ett enda problem till att överträffa de flesta programmerare.</p>
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title">Kodgenerering: HumanEval Benchmark</h2>
+                    <p class="chart-description">Pass@1 resultat över tid. Visar hur AI gått från att inte kunna lösa ett enda problem till att överträffa de flesta programmerare.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('humaneval-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om HumanEval
+                </button>
+            </div>
             <div class="chart-container">
                 <canvas id="humanEvalChart"></canvas>
             </div>
         </div>
 
+        <!-- SWE-bench Section -->
         <div class="chart-section">
-            <h2 class="chart-title">Software Engineering: SWE-bench</h2>
-            <p class="chart-description">Förmågan att lösa riktiga GitHub-issues. Ett mycket svårare test än isolerad kodgenerering.</p>
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title">Software Engineering: SWE-bench</h2>
+                    <p class="chart-description">Förmågan att lösa riktiga GitHub-issues. Ett mycket svårare test än isolerad kodgenerering.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('swebench-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om SWE-bench
+                </button>
+            </div>
             <div class="chart-container">
                 <canvas id="sweBenchChart"></canvas>
             </div>
         </div>
 
+        <!-- GAIA Section -->
         <div class="chart-section">
-            <h2 class="chart-title">Agent & Tool Use: GAIA Benchmark</h2>
-            <p class="chart-description">Generell AI-assistentförmåga: resonemang, webbsökning, och verktygsanvändning kombinerat.</p>
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title">Agent & Tool Use: GAIA Benchmark</h2>
+                    <p class="chart-description">Generell AI-assistentförmåga: resonemang, webbsökning, och verktygsanvändning kombinerat.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('gaia-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om GAIA
+                </button>
+            </div>
             <div class="chart-container">
                 <canvas id="gaiaChart"></canvas>
             </div>
         </div>
 
+        <!-- METR Time Horizon Section -->
         <div class="chart-section">
-            <h2 class="chart-title">Jämförelse: Alla Benchmarks</h2>
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title">Uppgiftslängd: METR Time Horizon</h2>
+                    <p class="chart-description">Hur långa uppgifter (mätt i mänsklig tid) kan AI klara med 50% framgång? Exponentiell tillväxt med ~7 månaders fördubblingstid.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('metr-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om METR
+                </button>
+            </div>
+            <div class="chart-container">
+                <canvas id="metrChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Combined Chart -->
+        <div class="chart-section">
+            <h2 class="chart-title">Jämförelse: Alla Benchmarks (normaliserat)</h2>
             <p class="chart-description">Normaliserad vy som visar den gemensamma trenden uppåt över alla mätningar.</p>
             <div class="chart-container">
                 <canvas id="combinedChart"></canvas>
@@ -387,9 +614,16 @@
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="timeline-date">2025</div>
-                        <div class="timeline-title">80%+ på SWE-bench</div>
-                        <div class="timeline-desc">Claude 4.5 Opus når 80.9%, GPT-5.1 och Gemini 3 Pro ligger nära bakom.</div>
+                        <div class="timeline-date">Mars 2025</div>
+                        <div class="timeline-title">METR publicerar Time Horizon-analys</div>
+                        <div class="timeline-desc">Visar exponentiell tillväxt i uppgiftslängd med ~7 månaders fördubblingstid.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">November 2025</div>
+                        <div class="timeline-title">80%+ på SWE-bench, ~5h time horizon</div>
+                        <div class="timeline-desc">Claude 4.5 Opus når 80.9% på SWE-bench och ~5 timmars time horizon på METR.</div>
                     </div>
                 </div>
             </div>
@@ -401,22 +635,319 @@
                 <li><strong>Exponentiell förbättring:</strong> HumanEval gick från 0% till 96% på ~3.5 år (234% förbättring från Codex)</li>
                 <li><strong>Benchmark-mättnad:</strong> HumanEval är nu nästan "löst" - nya svårare benchmarks behövs</li>
                 <li><strong>Från kod till engineering:</strong> Fokus har skiftat från isolerad kodgenerering till att lösa riktiga problem</li>
+                <li><strong>Time Horizon fördubblas var 7:e månad:</strong> Om trenden håller i sig kan AI klara månadslånga projekt före 2030</li>
                 <li><strong>Agent-paradigmet:</strong> 2024-2025 handlar om AI som kan använda verktyg, inte bara generera text</li>
-                <li><strong>Konsistens är svårt:</strong> TAU-bench visar att även SOTA-modeller bara klarar ~50% av uppgifter konsistent över 8 försök</li>
-                <li><strong>Kostnad vs Förmåga:</strong> Bättre modeller kostar ~$200-400 per SWE-bench-körning</li>
+                <li><strong>Konsistens är svårt:</strong> 80%-time horizon är mycket kortare än 50%-horizon, modeller är opålitliga på långa uppgifter</li>
             </ul>
         </div>
 
         <footer>
-            <p>Data sammanställd från <a href="https://www.swebench.com/">SWE-bench</a>,
-            <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/technical-performance">Stanford AI Index</a>,
-            <a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard">GAIA Leaderboard</a>, och
-            <a href="https://github.com/sierra-research/tau-bench">TAU-bench</a></p>
+            <p>Data sammanställd från
+            <a href="https://www.swebench.com/" target="_blank">SWE-bench</a>,
+            <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank">METR</a>,
+            <a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard" target="_blank">GAIA</a>,
+            <a href="https://github.com/openai/human-eval" target="_blank">HumanEval</a>, och
+            <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/technical-performance" target="_blank">Stanford AI Index</a></p>
             <p style="margin-top: 0.5rem;">Genererad januari 2026</p>
         </footer>
     </div>
 
+    <!-- Modals -->
+
+    <!-- HumanEval Modal -->
+    <div class="modal-overlay" id="humaneval-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">HumanEval Benchmark</h3>
+                <button class="modal-close" onclick="closeModal('humaneval-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är HumanEval?</h4>
+                    <p>HumanEval är ett benchmark-dataset utvecklat av OpenAI 2021 för att utvärdera stora språkmodellers förmåga att generera kod. Det introducerades tillsammans med Codex-modellen som driver GitHub Copilot.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Hur fungerar det?</h4>
+                    <ul>
+                        <li><strong>164 handskrivna programmeringsproblem</strong> i Python</li>
+                        <li>Varje problem innehåller en funktionssignatur och docstring</li>
+                        <li>Modellen ska generera funktionskroppen</li>
+                        <li>Genomsnitt 7.7 enhetstester per problem för verifiering</li>
+                        <li>Täcker strängmanipulation, listhantering, algoritmer och matematik</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Mätmetoden: pass@k</h4>
+                    <p><strong>pass@1</strong> mäter sannolikheten att en enda genererad lösning är korrekt. <strong>pass@10</strong> och <strong>pass@100</strong> mäter sannolikheten att minst en av k försök är korrekt. Detta speglar hur programmerare faktiskt arbetar - vi itererar och förfinar.</p>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">164</div>
+                        <div class="modal-stat-label">Problem</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">0% &rarr; 96%</div>
+                        <div class="modal-stat-label">Framsteg 2021-2024</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~3.5 år</div>
+                        <div class="modal-stat-label">Till mättnad</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <p>HumanEval testar bara enkel funktionsgenerering, inte verklig software engineering. Benchmarket är nu nästan "löst" med 96%+ resultat, vilket gör det svårt att skilja mellan toppmodeller.</p>
+                </div>
+
+                <a href="https://github.com/openai/human-eval" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    GitHub: openai/human-eval
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SWE-bench Modal -->
+    <div class="modal-overlay" id="swebench-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">SWE-bench</h3>
+                <button class="modal-close" onclick="closeModal('swebench-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är SWE-bench?</h4>
+                    <p>SWE-bench är ett benchmark för att utvärdera språkmodeller på verkliga software engineering-uppgifter. Till skillnad från HumanEval som testar isolerad kodgenerering, kräver SWE-bench att modellen löser riktiga GitHub-issues i stora kodbaser.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Hur fungerar det?</h4>
+                    <ul>
+                        <li><strong>2,294 uppgifter</strong> från riktiga GitHub pull requests</li>
+                        <li>Baserat på 12 populära Python-repositorier</li>
+                        <li>Modellen får issue-texten och ska generera en patch</li>
+                        <li>Verifieras genom att köra "fail-to-pass" tester</li>
+                        <li>Kräver navigation i stora kodbaser, inte bara skriva ny kod</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>SWE-bench Verified</h4>
+                    <p>I augusti 2024 släppte OpenAI SWE-bench Verified - en delmängd av 500 problem som mänskliga experter har validerat som lösbara. Detta ger mer pålitliga mätningar och är nu standardversionen.</p>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">2,294</div>
+                        <div class="modal-stat-label">Uppgifter (original)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">500</div>
+                        <div class="modal-stat-label">Verified subset</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">80.9%</div>
+                        <div class="modal-stat-label">SOTA (nov 2025)</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför är det viktigt?</h4>
+                    <p>SWE-bench representerar skiftet från "kan modellen koda?" till "kan modellen vara ingenjör?". Det testar verkliga förmågor som att förstå stora kodbaser, identifiera rätt filer att ändra, och producera korrekta patchar.</p>
+                </div>
+
+                <a href="https://www.swebench.com/" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    swebench.com - Officiell leaderboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- GAIA Modal -->
+    <div class="modal-overlay" id="gaia-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">GAIA Benchmark</h3>
+                <button class="modal-close" onclick="closeModal('gaia-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är GAIA?</h4>
+                    <p>GAIA (General AI Assistants) är ett benchmark skapat av Meta-FAIR, HuggingFace och AutoGPT-teamet för att testa generella AI-assistentförmågor. Filosofin är unik: frågorna är <em>enkla för människor</em> men <em>svåra för AI</em>.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Vad testas?</h4>
+                    <ul>
+                        <li><strong>Resonemang</strong> - logiskt tänkande över flera steg</li>
+                        <li><strong>Webbsökning</strong> - hitta och syntetisera information</li>
+                        <li><strong>Verktygsanvändning</strong> - använda externa verktyg korrekt</li>
+                        <li><strong>Multimodalitet</strong> - hantera bilder, dokument, etc.</li>
+                        <li><strong>466 frågor</strong> med entydiga svar</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Svårighetsgrader</h4>
+                    <ul>
+                        <li><strong>Nivå 1:</strong> Kräver &lt;5 steg</li>
+                        <li><strong>Nivå 2:</strong> Kräver 5-10 steg</li>
+                        <li><strong>Nivå 3:</strong> Kan kräva upp till 50 steg</li>
+                    </ul>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">92%</div>
+                        <div class="modal-stat-label">Mänsklig baseline</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">15%</div>
+                        <div class="modal-stat-label">GPT-4 (2023)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">75%</div>
+                        <div class="modal-stat-label">Bästa agent (2025)</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför viktigt?</h4>
+                    <p>GAIA mäter hur nära AI är att fungera som en verklig generell assistent. Gapet mellan mänsklig (92%) och AI-prestanda visar att vi fortfarande har en bit kvar, särskilt för uppgifter som kräver robust resonemang och verktygsanvändning.</p>
+                </div>
+
+                <a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    GAIA Leaderboard (HuggingFace)
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- METR Modal -->
+    <div class="modal-overlay" id="metr-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">METR Time Horizon</h3>
+                <button class="modal-close" onclick="closeModal('metr-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är METR Time Horizon?</h4>
+                    <p>METR (Model Evaluation and Threat Research) mäter AI-förmåga på ett unikt sätt: <strong>hur långa uppgifter</strong> (i mänsklig tid) kan en AI-agent slutföra autonomt? Time Horizon är den uppgiftslängd där modellen har 50% chans att lyckas.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Hur mäts det?</h4>
+                    <ul>
+                        <li><strong>180+ uppgifter</strong> inom ML, cybersäkerhet, och software engineering</li>
+                        <li>Uppgifterna tar människor mellan 1 minut och 8+ timmar</li>
+                        <li>Mäter P50 (50% framgång) och P80 (80% framgång) time horizons</li>
+                        <li>Benchmarks: HCAST, SWAA, RE-Bench</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Den exponentiella trenden</h4>
+                    <p>METR visar att time horizon har <strong>fördubblats ungefär var 7:e månad</strong> de senaste 6 åren. Under 2024-2025 har takten accelererat till fördubbling var 4:e månad.</p>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~2 min</div>
+                        <div class="modal-stat-label">GPT-2 (2019)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~1 tim</div>
+                        <div class="modal-stat-label">Claude 3.7 (2025)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~5 tim</div>
+                        <div class="modal-stat-label">Claude 4.5 Opus</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Framtidsprognoser</h4>
+                    <ul>
+                        <li>Om trenden fortsätter: <strong>veckolånga uppgifter</strong> möjliga inom 2-4 år</li>
+                        <li>Före 2030: potentiellt <strong>månadslånga projekt</strong> autonomt</li>
+                        <li>OBS: P80-horizon är mycket kortare (~27 min för Opus 4.5) - pålitlighet är fortfarande en utmaning</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför viktigt?</h4>
+                    <p>Time Horizon är kanske det mest intuitiva måttet på AI-agentförmåga. Det svarar direkt på frågan "hur mycket kan AI göra själv?" och visar tydligt den exponentiella utvecklingen mot mer autonoma system.</p>
+                </div>
+
+                <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    METR: Measuring AI Ability to Complete Long Tasks
+                </a>
+                <br>
+                <a href="https://theaidigest.org/time-horizons" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    AI Digest: A New Moore's Law for AI Agents
+                </a>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+
         // Color palette
         const colors = {
             cyan: '#00d4ff',
@@ -645,6 +1176,99 @@
             }
         });
 
+        // METR Time Horizon Chart (logarithmic scale for minutes)
+        const metrCtx = document.getElementById('metrChart').getContext('2d');
+        new Chart(metrCtx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'METR Time Horizon (P50)',
+                    data: [
+                        { x: '2019-02-14', y: 2.4, model: 'GPT-2', display: '2.4 min' },
+                        { x: '2020-05-28', y: 9, model: 'davinci-002', display: '9 min' },
+                        { x: '2022-03-15', y: 36, model: 'GPT-3.5 Turbo Instruct', display: '36 min' },
+                        { x: '2023-03-14', y: 55, model: 'GPT-4', display: '55 min' },
+                        { x: '2023-11-06', y: 85, model: 'GPT-4 (1106)', display: '1h 25min' },
+                        { x: '2024-06-20', y: 60, model: 'Claude 3.5 Sonnet', display: '1h' },
+                        { x: '2024-10-22', y: 90, model: 'Claude 3.5 Sonnet (Oct)', display: '1.5h' },
+                        { x: '2025-02-24', y: 120, model: 'Claude 3.7 Sonnet', display: '2h' },
+                        { x: '2025-06-01', y: 137, model: 'GPT-5', display: '2h 17min' },
+                        { x: '2025-11-24', y: 289, model: 'Claude 4.5 Opus', display: '4h 49min' }
+                    ],
+                    borderColor: colors.orange,
+                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 8,
+                    pointHoverRadius: 12,
+                    pointBackgroundColor: colors.orange
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#e0e0e0',
+                            font: { size: 12 }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(20, 20, 40, 0.95)',
+                        titleColor: '#fff',
+                        bodyColor: '#e0e0e0',
+                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        borderWidth: 1,
+                        padding: 12,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${point.model}: ${point.display}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'month',
+                            displayFormats: {
+                                month: 'MMM yyyy'
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)'
+                        },
+                        ticks: {
+                            color: '#8b8b9a'
+                        }
+                    },
+                    y: {
+                        type: 'logarithmic',
+                        min: 1,
+                        max: 500,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.05)'
+                        },
+                        ticks: {
+                            color: '#8b8b9a',
+                            callback: function(value) {
+                                if (value < 60) return value + ' min';
+                                return (value / 60).toFixed(0) + ' tim';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Time Horizon (log skala)',
+                            color: '#8b8b9a'
+                        }
+                    }
+                }
+            }
+        });
+
         // Combined Chart
         const combinedCtx = document.getElementById('combinedChart').getContext('2d');
         new Chart(combinedCtx, {
@@ -694,6 +1318,22 @@
                         borderColor: colors.pink,
                         tension: 0.3,
                         pointRadius: 4
+                    },
+                    {
+                        label: 'METR (normaliserat)',
+                        data: [
+                            { x: '2019-02-14', y: 0.8 },
+                            { x: '2020-05-28', y: 3 },
+                            { x: '2022-03-15', y: 12 },
+                            { x: '2023-03-14', y: 18 },
+                            { x: '2024-06-20', y: 20 },
+                            { x: '2025-02-24', y: 40 },
+                            { x: '2025-11-24', y: 96 }
+                        ],
+                        borderColor: colors.orange,
+                        tension: 0.3,
+                        pointRadius: 4,
+                        borderDash: [5, 5]
                     }
                 ]
             },
