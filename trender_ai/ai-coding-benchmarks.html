@@ -553,8 +553,8 @@
 
         <!-- Combined Chart -->
         <div class="chart-section">
-            <h2 class="chart-title">Jämförelse: Alla Benchmarks (normaliserat)</h2>
-            <p class="chart-description">Normaliserad vy som visar den gemensamma trenden uppåt över alla mätningar.</p>
+            <h2 class="chart-title">Jämförelse: Procent-baserade Benchmarks</h2>
+            <p class="chart-description">Jämför framsteg över tid för benchmarks som mäter andel lösta uppgifter (%). METR exkluderat då det mäter tid.</p>
             <div class="chart-container">
                 <canvas id="combinedChart"></canvas>
             </div>
@@ -1338,22 +1338,6 @@
                         borderColor: colors.pink,
                         tension: 0.3,
                         pointRadius: 4
-                    },
-                    {
-                        label: 'METR (normaliserat)',
-                        data: [
-                            { x: '2019-02-14', y: 0.8 },
-                            { x: '2020-05-28', y: 3 },
-                            { x: '2022-03-15', y: 12 },
-                            { x: '2023-03-14', y: 18 },
-                            { x: '2024-06-20', y: 20 },
-                            { x: '2025-02-24', y: 40 },
-                            { x: '2025-11-24', y: 96 }
-                        ],
-                        borderColor: colors.orange,
-                        tension: 0.3,
-                        pointRadius: 4,
-                        borderDash: [5, 5]
                     }
                 ]
             },
