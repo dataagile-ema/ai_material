@@ -511,26 +511,6 @@
             </div>
         </div>
 
-        <!-- SWE-bench Pro Section -->
-        <div class="chart-section">
-            <div class="chart-header">
-                <div>
-                    <h2 class="chart-title">Avancerad SE: SWE-bench Pro</h2>
-                    <p class="chart-description">Svårare variant med multi-språk och längre uppgifter. Även toppmodeller ligger under 60%.</p>
-                </div>
-                <button class="info-btn" onclick="openModal('swebench-modal')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4M12 8h.01"/>
-                    </svg>
-                    Om SWE-bench
-                </button>
-            </div>
-            <div class="chart-container">
-                <canvas id="sweBenchProChart"></canvas>
-            </div>
-        </div>
-
         <!-- TAU-bench Section -->
         <div class="chart-section">
             <div class="chart-header">
@@ -1148,6 +1128,26 @@
                         tension: 0.3,
                         pointRadius: 6,
                         pointBackgroundColor: colors.green
+                    },
+                    {
+                        label: 'SWE-bench Pro',
+                        data: [
+                            { x: '2024-11-01', y: 5, model: 'GPT-4o' },
+                            { x: '2025-05-01', y: 14, model: 'Gemini 2.5 Pro' },
+                            { x: '2025-05-15', y: 18, model: 'Claude Sonnet 4' },
+                            { x: '2025-08-01', y: 23, model: 'GPT-5' },
+                            { x: '2025-08-15', y: 23, model: 'Claude Opus 4.1' },
+                            { x: '2025-10-01', y: 43, model: 'Gemini 3 Pro' },
+                            { x: '2025-11-01', y: 46, model: 'Claude Opus 4.5' },
+                            { x: '2025-11-15', y: 46, model: 'Claude Sonnet 4.5' },
+                            { x: '2025-12-11', y: 55.6, model: 'GPT-5.2 Thinking' }
+                        ],
+                        borderColor: colors.orange,
+                        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 6,
+                        pointBackgroundColor: colors.orange
                     }
                 ]
             },
@@ -1161,50 +1161,6 @@
                             label: function(context) {
                                 const point = context.raw;
                                 return `${context.dataset.label} - ${point.model}: ${point.y}%`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
-        // SWE-bench Pro Chart
-        const sweBenchProCtx = document.getElementById('sweBenchProChart').getContext('2d');
-        new Chart(sweBenchProCtx, {
-            type: 'line',
-            data: {
-                datasets: [{
-                    label: 'SWE-bench Pro',
-                    data: [
-                        { x: '2024-11-01', y: 5, model: 'GPT-4o' },
-                        { x: '2025-05-01', y: 14, model: 'Gemini 2.5 Pro' },
-                        { x: '2025-05-15', y: 18, model: 'Claude Sonnet 4' },
-                        { x: '2025-08-01', y: 23, model: 'GPT-5' },
-                        { x: '2025-08-15', y: 23, model: 'Claude Opus 4.1' },
-                        { x: '2025-10-01', y: 43, model: 'Gemini 3 Pro' },
-                        { x: '2025-11-01', y: 46, model: 'Claude Opus 4.5' },
-                        { x: '2025-11-15', y: 46, model: 'Claude Sonnet 4.5' },
-                        { x: '2025-12-11', y: 55.6, model: 'GPT-5.2 Thinking' }
-                    ],
-                    borderColor: colors.purple,
-                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
-                    fill: true,
-                    tension: 0.3,
-                    pointRadius: 6,
-                    pointHoverRadius: 10,
-                    pointBackgroundColor: colors.purple
-                }]
-            },
-            options: {
-                ...commonOptions,
-                plugins: {
-                    ...commonOptions.plugins,
-                    tooltip: {
-                        ...commonOptions.plugins.tooltip,
-                        callbacks: {
-                            label: function(context) {
-                                const point = context.raw;
-                                return `${point.model}: ${point.y}%`;
                             }
                         }
                     }
