@@ -1176,7 +1176,7 @@
             }
         });
 
-        // METR Time Horizon Chart (logarithmic scale for minutes)
+        // METR Time Horizon Chart (linear scale for minutes)
         const metrCtx = document.getElementById('metrChart').getContext('2d');
         new Chart(metrCtx, {
             type: 'line',
@@ -1246,22 +1246,23 @@
                         }
                     },
                     y: {
-                        type: 'logarithmic',
-                        min: 1,
-                        max: 500,
+                        min: 0,
+                        max: 320,
                         grid: {
                             color: 'rgba(255, 255, 255, 0.05)'
                         },
                         ticks: {
                             color: '#8b8b9a',
+                            stepSize: 60,
                             callback: function(value) {
+                                if (value === 0) return '0';
                                 if (value < 60) return value + ' min';
                                 return (value / 60).toFixed(0) + ' tim';
                             }
                         },
                         title: {
                             display: true,
-                            text: 'Time Horizon (log skala)',
+                            text: 'Time Horizon (minuter)',
                             color: '#8b8b9a'
                         }
                     }
