@@ -458,8 +458,8 @@
                 <div class="stat-label">SWE-bench Verified</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">15% &rarr; 75%</div>
-                <div class="stat-label">GAIA (vs 92% Human)</div>
+                <div class="stat-value">50% &rarr; 97%</div>
+                <div class="stat-label">TAU-bench pass@1</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value">2 min &rarr; 5 tim</div>
@@ -508,26 +508,6 @@
             </div>
             <div class="chart-container">
                 <canvas id="sweBenchChart"></canvas>
-            </div>
-        </div>
-
-        <!-- GAIA Section -->
-        <div class="chart-section">
-            <div class="chart-header">
-                <div>
-                    <h2 class="chart-title">Agent & Tool Use: GAIA Benchmark</h2>
-                    <p class="chart-description">Generell AI-assistentförmåga: resonemang, webbsökning, och verktygsanvändning kombinerat.</p>
-                </div>
-                <button class="info-btn" onclick="openModal('gaia-modal')">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 16v-4M12 8h.01"/>
-                    </svg>
-                    Om GAIA
-                </button>
-            </div>
-            <div class="chart-container">
-                <canvas id="gaiaChart"></canvas>
             </div>
         </div>
 
@@ -665,7 +645,6 @@
             <p>Data sammanställd från
             <a href="https://www.swebench.com/" target="_blank">SWE-bench</a>,
             <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank">METR</a>,
-            <a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard" target="_blank">GAIA</a>,
             <a href="https://github.com/sierra-research/tau-bench" target="_blank">TAU-bench</a>,
             <a href="https://github.com/openai/human-eval" target="_blank">HumanEval</a>, och
             <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/technical-performance" target="_blank">Stanford AI Index</a></p>
@@ -792,71 +771,6 @@
                         <line x1="10" y1="14" x2="21" y2="3"/>
                     </svg>
                     swebench.com - Officiell leaderboard
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- GAIA Modal -->
-    <div class="modal-overlay" id="gaia-modal" onclick="closeModalOnOverlay(event)">
-        <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">GAIA Benchmark</h3>
-                <button class="modal-close" onclick="closeModal('gaia-modal')">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-section">
-                    <h4>Vad är GAIA?</h4>
-                    <p>GAIA (General AI Assistants) är ett benchmark skapat av Meta-FAIR, HuggingFace och AutoGPT-teamet för att testa generella AI-assistentförmågor. Filosofin är unik: frågorna är <em>enkla för människor</em> men <em>svåra för AI</em>.</p>
-                </div>
-
-                <div class="modal-section">
-                    <h4>Vad testas?</h4>
-                    <ul>
-                        <li><strong>Resonemang</strong> - logiskt tänkande över flera steg</li>
-                        <li><strong>Webbsökning</strong> - hitta och syntetisera information</li>
-                        <li><strong>Verktygsanvändning</strong> - använda externa verktyg korrekt</li>
-                        <li><strong>Multimodalitet</strong> - hantera bilder, dokument, etc.</li>
-                        <li><strong>466 frågor</strong> med entydiga svar</li>
-                    </ul>
-                </div>
-
-                <div class="modal-section">
-                    <h4>Svårighetsgrader</h4>
-                    <ul>
-                        <li><strong>Nivå 1:</strong> Kräver &lt;5 steg</li>
-                        <li><strong>Nivå 2:</strong> Kräver 5-10 steg</li>
-                        <li><strong>Nivå 3:</strong> Kan kräva upp till 50 steg</li>
-                    </ul>
-                </div>
-
-                <div class="modal-stats">
-                    <div class="modal-stat">
-                        <div class="modal-stat-value">92%</div>
-                        <div class="modal-stat-label">Mänsklig baseline</div>
-                    </div>
-                    <div class="modal-stat">
-                        <div class="modal-stat-value">15%</div>
-                        <div class="modal-stat-label">GPT-4 (2023)</div>
-                    </div>
-                    <div class="modal-stat">
-                        <div class="modal-stat-value">75%</div>
-                        <div class="modal-stat-label">Bästa agent (2025)</div>
-                    </div>
-                </div>
-
-                <div class="modal-section">
-                    <h4>Varför viktigt?</h4>
-                    <p>GAIA mäter hur nära AI är att fungera som en verklig generell assistent. Gapet mellan mänsklig (92%) och AI-prestanda visar att vi fortfarande har en bit kvar, särskilt för uppgifter som kräver robust resonemang och verktygsanvändning.</p>
-                </div>
-
-                <a href="https://huggingface.co/spaces/gaia-benchmark/leaderboard" target="_blank" class="modal-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15 3 21 3 21 9"/>
-                        <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    GAIA Leaderboard (HuggingFace)
                 </a>
             </div>
         </div>
@@ -1052,6 +966,10 @@
             red: '#ef4444'
         };
 
+        // Common x-axis range for all charts
+        const xAxisMin = '2021-01-01';
+        const xAxisMax = '2026-01-01';
+
         // Common chart options
         const commonOptions = {
             responsive: true,
@@ -1076,10 +994,12 @@
             scales: {
                 x: {
                     type: 'time',
+                    min: xAxisMin,
+                    max: xAxisMax,
                     time: {
-                        unit: 'month',
+                        unit: 'quarter',
                         displayFormats: {
-                            month: 'MMM yyyy'
+                            quarter: 'MMM yyyy'
                         }
                     },
                     grid: {
@@ -1214,62 +1134,6 @@
             }
         });
 
-        // GAIA Chart
-        const gaiaCtx = document.getElementById('gaiaChart').getContext('2d');
-        new Chart(gaiaCtx, {
-            type: 'line',
-            data: {
-                datasets: [
-                    {
-                        label: 'GAIA (AI Performance)',
-                        data: [
-                            { x: '2023-11-01', y: 15, model: 'GPT-4 + plugins' },
-                            { x: '2024-03-01', y: 28, model: 'Magentic-1' },
-                            { x: '2024-06-01', y: 38, model: 'Various agents' },
-                            { x: '2024-09-01', y: 52, model: 'Langfun Agent' },
-                            { x: '2024-12-01', y: 65, model: 'Deep Research' },
-                            { x: '2025-06-01', y: 75, model: 'H2O.ai Agent' }
-                        ],
-                        borderColor: colors.pink,
-                        backgroundColor: 'rgba(244, 114, 182, 0.1)',
-                        fill: true,
-                        tension: 0.3,
-                        pointRadius: 6,
-                        pointBackgroundColor: colors.pink
-                    },
-                    {
-                        label: 'Human Baseline',
-                        data: [
-                            { x: '2023-11-01', y: 92 },
-                            { x: '2025-06-01', y: 92 }
-                        ],
-                        borderColor: 'rgba(255, 255, 255, 0.5)',
-                        borderDash: [10, 5],
-                        pointRadius: 0,
-                        fill: false
-                    }
-                ]
-            },
-            options: {
-                ...commonOptions,
-                plugins: {
-                    ...commonOptions.plugins,
-                    tooltip: {
-                        ...commonOptions.plugins.tooltip,
-                        callbacks: {
-                            label: function(context) {
-                                const point = context.raw;
-                                if (point.model) {
-                                    return `${point.model}: ${point.y}%`;
-                                }
-                                return `Human baseline: ${point.y}%`;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-
         // TAU-bench Chart
         const tauBenchCtx = document.getElementById('tauBenchChart').getContext('2d');
         new Chart(tauBenchCtx, {
@@ -1386,10 +1250,12 @@
                 scales: {
                     x: {
                         type: 'time',
+                        min: xAxisMin,
+                        max: xAxisMax,
                         time: {
-                            unit: 'month',
+                            unit: 'quarter',
                             displayFormats: {
-                                month: 'MMM yyyy'
+                                quarter: 'MMM yyyy'
                             }
                         },
                         grid: {
@@ -1460,14 +1326,14 @@
                         pointRadius: 4
                     },
                     {
-                        label: 'GAIA',
+                        label: 'TAU-bench pass@1',
                         data: [
-                            { x: '2023-11-01', y: 15 },
-                            { x: '2024-03-01', y: 28 },
-                            { x: '2024-06-01', y: 38 },
-                            { x: '2024-09-01', y: 52 },
-                            { x: '2024-12-01', y: 65 },
-                            { x: '2025-06-01', y: 75 }
+                            { x: '2024-06-01', y: 50 },
+                            { x: '2024-10-01', y: 62 },
+                            { x: '2025-02-01', y: 74 },
+                            { x: '2025-03-01', y: 78 },
+                            { x: '2025-09-01', y: 85 },
+                            { x: '2025-12-01', y: 97 }
                         ],
                         borderColor: colors.pink,
                         tension: 0.3,
