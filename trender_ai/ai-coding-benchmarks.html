@@ -635,7 +635,7 @@
             <div class="chart-header">
                 <div>
                     <h2 class="chart-title">Modellöversikt</h2>
-                    <p class="chart-description">Välj en modell för att se dess prestanda på alla benchmarks jämfört med bästa resultat.</p>
+                    <p class="chart-description">Välj en modell för att se dess prestanda på alla benchmarks. METR visas som procent av SOTA (289 min = 100%).</p>
                 </div>
                 <div class="model-selector">
                     <label for="modelSelect" style="color: #8b8b9a; margin-right: 0.5rem;">Välj modell:</label>
@@ -661,7 +661,7 @@
                     </select>
                 </div>
             </div>
-            <div class="chart-container" style="height: 350px;">
+            <div class="chart-container" style="height: 400px;">
                 <canvas id="modelCompareChart"></canvas>
             </div>
             <div id="modelInfo" class="model-info-box"></div>
@@ -1634,14 +1634,34 @@
 
         function createModelChart(modelKey) {
             const model = modelData[modelKey];
-            const benchmarks = ['humaneval', 'swebench_verified', 'swebench_pro', 'taubench'];
+            const benchmarks = ['humaneval', 'swebench_verified', 'swebench_pro', 'taubench', 'metr'];
 
-            const labels = benchmarks.map(b => benchmarkLabels[b]);
-            const data = benchmarks.map(b => model[b]);
-            const bestData = benchmarks.map(b => bestScores[b].value);
+            const labels = benchmarks.map(b => {
+                if (b === 'metr') return 'METR (% av SOTA)';
+                return benchmarkLabels[b];
+            });
+
+            // For METR, convert to percentage of SOTA (289 min = 100%)
+            const data = benchmarks.map(b => {
+                if (model[b] === null) return null;
+                if (b === 'metr') {
+                    return Math.round((model[b] / bestScores[b].value) * 100 * 10) / 10;
+                }
+                return model[b];
+            });
+
+            const bestData = benchmarks.map(b => {
+                if (b === 'metr') return 100; // SOTA is always 100%
+                return bestScores[b].value;
+            });
+
             const backgroundColors = benchmarks.map(b => {
                 if (model[b] === null) return 'rgba(100, 100, 100, 0.3)';
-                if (model[b] >= bestScores[b].value) return 'rgba(16, 185, 129, 0.8)';
+                if (b === 'metr') {
+                    if (model[b] >= bestScores[b].value) return 'rgba(16, 185, 129, 0.8)';
+                } else {
+                    if (model[b] >= bestScores[b].value) return 'rgba(16, 185, 129, 0.8)';
+                }
                 return benchmarkColors[b] + 'cc';
             });
 
@@ -1718,10 +1738,28 @@
                             callbacks: {
                                 label: function(context) {
                                     const value = context.raw;
+                                    const benchmarkKey = benchmarks[context.dataIndex];
                                     if (value === null) return 'Ingen data';
+
                                     if (context.dataset.label === 'SOTA' && context.dataset.sotaModels) {
                                         const modelName = context.dataset.sotaModels[context.dataIndex];
+                                        if (benchmarkKey === 'metr') {
+                                            const mins = bestScores.metr.value;
+                                            const hours = Math.floor(mins / 60);
+                                            const m = mins % 60;
+                                            return `SOTA: ${hours}h ${m}m (${modelName})`;
+                                        }
                                         return `SOTA: ${value}% (${modelName})`;
+                                    }
+
+                                    if (benchmarkKey === 'metr') {
+                                        const actualMins = model[benchmarkKey];
+                                        if (actualMins) {
+                                            const hours = Math.floor(actualMins / 60);
+                                            const m = actualMins % 60;
+                                            const timeStr = hours > 0 ? `${hours}h ${m}m` : `${m} min`;
+                                            return `${context.dataset.label}: ${value}% (${timeStr})`;
+                                        }
                                     }
                                     return `${context.dataset.label}: ${value}%`;
                                 }
