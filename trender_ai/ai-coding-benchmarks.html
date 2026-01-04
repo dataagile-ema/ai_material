@@ -658,6 +658,15 @@
                             <option value="gemini25pro">Gemini 2.5 Pro (2025)</option>
                             <option value="gemini3pro">Gemini 3 Pro (2025)</option>
                         </optgroup>
+                        <optgroup label="Open Source">
+                            <option value="gpt_oss_120b">GPT-OSS 120B (OpenAI, 2025)</option>
+                            <option value="gpt_oss_20b">GPT-OSS 20B (OpenAI, 2025)</option>
+                            <option value="llama31_405b">Llama 3.1 405B (Meta, 2024)</option>
+                            <option value="llama33_70b">Llama 3.3 70B (Meta, 2024)</option>
+                            <option value="deepseek_v3">DeepSeek V3 (2024)</option>
+                            <option value="qwen25_coder">Qwen 2.5 Coder 32B (Alibaba, 2024)</option>
+                            <option value="mistral_large">Mistral Large 2 (2024)</option>
+                        </optgroup>
                     </select>
                 </div>
             </div>
@@ -1600,6 +1609,76 @@
                 swebench_pro: 43,
                 taubench: 88,
                 metr: 200
+            },
+            llama31_405b: {
+                name: 'Llama 3.1 405B',
+                date: 'Jul 2024',
+                company: 'Meta (Open Source)',
+                humaneval: 89,
+                swebench_verified: 33,
+                swebench_pro: null,
+                taubench: 48,
+                metr: null
+            },
+            llama33_70b: {
+                name: 'Llama 3.3 70B',
+                date: 'Dec 2024',
+                company: 'Meta (Open Source)',
+                humaneval: 88.4,
+                swebench_verified: 37,
+                swebench_pro: null,
+                taubench: 52,
+                metr: null
+            },
+            deepseek_v3: {
+                name: 'DeepSeek V3',
+                date: 'Dec 2024',
+                company: 'DeepSeek (Open Source)',
+                humaneval: 91.6,
+                swebench_verified: 42,
+                swebench_pro: 8,
+                taubench: 58,
+                metr: 45
+            },
+            qwen25_coder: {
+                name: 'Qwen 2.5 Coder 32B',
+                date: 'Nov 2024',
+                company: 'Alibaba (Open Source)',
+                humaneval: 92.7,
+                swebench_verified: 38.5,
+                swebench_pro: null,
+                taubench: 55,
+                metr: null
+            },
+            mistral_large: {
+                name: 'Mistral Large 2',
+                date: 'Jul 2024',
+                company: 'Mistral (Open Source)',
+                humaneval: 84,
+                swebench_verified: 28,
+                swebench_pro: null,
+                taubench: 45,
+                metr: null
+            },
+            gpt_oss_120b: {
+                name: 'GPT-OSS 120B',
+                date: '2025',
+                company: 'OpenAI (Open Source)',
+                humaneval: 93,
+                swebench_verified: 58,
+                swebench_pro: 18,
+                taubench: 88,
+                metr: 95
+            },
+            gpt_oss_20b: {
+                name: 'GPT-OSS 20B',
+                date: '2025',
+                company: 'OpenAI (Open Source)',
+                humaneval: 87,
+                swebench_verified: 42,
+                swebench_pro: 10,
+                taubench: 72,
+                metr: 55
             }
         };
 
