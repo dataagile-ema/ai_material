@@ -439,6 +439,76 @@
                 flex-direction: column;
             }
         }
+
+        /* Model selector styles */
+        .model-selector select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            min-width: 250px;
+        }
+
+        .model-selector select:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        .model-selector select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .model-selector select option,
+        .model-selector select optgroup {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        .model-info-box {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .model-info-item {
+            text-align: center;
+        }
+
+        .model-info-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .model-info-value.best {
+            color: #10b981;
+        }
+
+        .model-info-value.na {
+            color: #6b6b7a;
+            font-size: 1rem;
+        }
+
+        .model-info-label {
+            font-size: 0.85rem;
+            color: #8b8b9a;
+            margin-top: 0.3rem;
+        }
+
+        .model-info-comparison {
+            font-size: 0.75rem;
+            color: #6b6b7a;
+            margin-top: 0.2rem;
+        }
     </style>
 </head>
 <body>
@@ -558,6 +628,43 @@
             <div class="chart-container">
                 <canvas id="combinedChart"></canvas>
             </div>
+        </div>
+
+        <!-- Model Comparison Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title">Modellöversikt</h2>
+                    <p class="chart-description">Välj en modell för att se dess prestanda på alla benchmarks jämfört med bästa resultat.</p>
+                </div>
+                <div class="model-selector">
+                    <label for="modelSelect" style="color: #8b8b9a; margin-right: 0.5rem;">Välj modell:</label>
+                    <select id="modelSelect" onchange="updateModelChart()">
+                        <optgroup label="OpenAI">
+                            <option value="gpt4">GPT-4 (Mar 2023)</option>
+                            <option value="gpt4o">GPT-4o (2024)</option>
+                            <option value="o1preview">o1-preview (Sep 2024)</option>
+                            <option value="gpt5">GPT-5 (2025)</option>
+                            <option value="gpt52" selected>GPT-5.2 Thinking (Dec 2025)</option>
+                        </optgroup>
+                        <optgroup label="Anthropic">
+                            <option value="claude3opus">Claude 3 Opus (Mar 2024)</option>
+                            <option value="claude35sonnet">Claude 3.5 Sonnet (Jun 2024)</option>
+                            <option value="claude37sonnet">Claude 3.7 Sonnet (Feb 2025)</option>
+                            <option value="claude4sonnet">Claude 4 Sonnet (2025)</option>
+                            <option value="claude45opus">Claude 4.5 Opus (Nov 2025)</option>
+                        </optgroup>
+                        <optgroup label="Google">
+                            <option value="gemini25pro">Gemini 2.5 Pro (2025)</option>
+                            <option value="gemini3pro">Gemini 3 Pro (2025)</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container" style="height: 350px;">
+                <canvas id="modelCompareChart"></canvas>
+            </div>
+            <div id="modelInfo" class="model-info-box"></div>
         </div>
 
         <div class="timeline-section">
@@ -1371,6 +1478,344 @@
             },
             options: commonOptions
         });
+
+        // Model comparison data
+        const modelData = {
+            gpt4: {
+                name: 'GPT-4',
+                date: 'Mars 2023',
+                company: 'OpenAI',
+                humaneval: 67,
+                swebench_verified: null,
+                swebench_pro: null,
+                taubench: null,
+                metr: 55
+            },
+            gpt4o: {
+                name: 'GPT-4o',
+                date: 'Maj 2024',
+                company: 'OpenAI',
+                humaneval: 88,
+                swebench_verified: 33.2,
+                swebench_pro: 5,
+                taubench: 50,
+                metr: null
+            },
+            o1preview: {
+                name: 'o1-preview',
+                date: 'Sep 2024',
+                company: 'OpenAI',
+                humaneval: 96.3,
+                swebench_verified: 53,
+                swebench_pro: null,
+                taubench: null,
+                metr: null
+            },
+            gpt5: {
+                name: 'GPT-5',
+                date: '2025',
+                company: 'OpenAI',
+                humaneval: 95,
+                swebench_verified: 72,
+                swebench_pro: 23,
+                taubench: 97,
+                metr: 137
+            },
+            gpt52: {
+                name: 'GPT-5.2 Thinking',
+                date: 'Dec 2025',
+                company: 'OpenAI',
+                humaneval: 96,
+                swebench_verified: 80.0,
+                swebench_pro: 55.6,
+                taubench: 98,
+                metr: null
+            },
+            claude3opus: {
+                name: 'Claude 3 Opus',
+                date: 'Mars 2024',
+                company: 'Anthropic',
+                humaneval: 84.9,
+                swebench_verified: null,
+                swebench_pro: null,
+                taubench: null,
+                metr: null
+            },
+            claude35sonnet: {
+                name: 'Claude 3.5 Sonnet',
+                date: 'Juni 2024',
+                company: 'Anthropic',
+                humaneval: 92,
+                swebench_verified: 48.9,
+                swebench_pro: null,
+                taubench: 62,
+                metr: 60
+            },
+            claude37sonnet: {
+                name: 'Claude 3.7 Sonnet',
+                date: 'Feb 2025',
+                company: 'Anthropic',
+                humaneval: 93.7,
+                swebench_verified: 62,
+                swebench_pro: null,
+                taubench: 78,
+                metr: 120
+            },
+            claude4sonnet: {
+                name: 'Claude 4 Sonnet',
+                date: '2025',
+                company: 'Anthropic',
+                humaneval: 94,
+                swebench_verified: 75.2,
+                swebench_pro: 18,
+                taubench: 85,
+                metr: 180
+            },
+            claude45opus: {
+                name: 'Claude 4.5 Opus',
+                date: 'Nov 2025',
+                company: 'Anthropic',
+                humaneval: 95.5,
+                swebench_verified: 80.9,
+                swebench_pro: 46,
+                taubench: 92,
+                metr: 289
+            },
+            gemini25pro: {
+                name: 'Gemini 2.5 Pro',
+                date: '2025',
+                company: 'Google',
+                humaneval: 90,
+                swebench_verified: 63,
+                swebench_pro: 14,
+                taubench: 70,
+                metr: null
+            },
+            gemini3pro: {
+                name: 'Gemini 3 Pro',
+                date: 'Nov 2025',
+                company: 'Google',
+                humaneval: 94,
+                swebench_verified: 77.4,
+                swebench_pro: 43,
+                taubench: 88,
+                metr: 200
+            }
+        };
+
+        // Best scores for comparison
+        const bestScores = {
+            humaneval: { value: 96.3, model: 'o1-preview' },
+            swebench_verified: { value: 80.9, model: 'Claude 4.5 Opus' },
+            swebench_pro: { value: 55.6, model: 'GPT-5.2 Thinking' },
+            taubench: { value: 98, model: 'GPT-5.2 Thinking' },
+            metr: { value: 289, model: 'Claude 4.5 Opus' }
+        };
+
+        const benchmarkLabels = {
+            humaneval: 'HumanEval',
+            swebench_verified: 'SWE-bench Verified',
+            swebench_pro: 'SWE-bench Pro',
+            taubench: 'TAU-bench pass@1',
+            metr: 'METR (minuter)'
+        };
+
+        const benchmarkColors = {
+            humaneval: colors.cyan,
+            swebench_verified: colors.green,
+            swebench_pro: colors.orange,
+            taubench: colors.pink,
+            metr: colors.purple
+        };
+
+        // Initialize model comparison chart
+        let modelCompareChart = null;
+        const modelCompareCtx = document.getElementById('modelCompareChart').getContext('2d');
+
+        function createModelChart(modelKey) {
+            const model = modelData[modelKey];
+            const benchmarks = ['humaneval', 'swebench_verified', 'swebench_pro', 'taubench'];
+
+            const labels = benchmarks.map(b => benchmarkLabels[b]);
+            const data = benchmarks.map(b => model[b]);
+            const bestData = benchmarks.map(b => bestScores[b].value);
+            const backgroundColors = benchmarks.map(b => {
+                if (model[b] === null) return 'rgba(100, 100, 100, 0.3)';
+                if (model[b] >= bestScores[b].value) return 'rgba(16, 185, 129, 0.8)';
+                return benchmarkColors[b] + 'cc';
+            });
+
+            if (modelCompareChart) {
+                modelCompareChart.destroy();
+            }
+
+            modelCompareChart = new Chart(modelCompareCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: model.name,
+                            data: data,
+                            backgroundColor: backgroundColors,
+                            borderColor: benchmarks.map(b => benchmarkColors[b]),
+                            borderWidth: 2,
+                            borderRadius: 6,
+                            barPercentage: 0.6
+                        },
+                        {
+                            label: 'SOTA',
+                            data: bestData,
+                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barPercentage: 0.6,
+                            sotaModels: benchmarks.map(b => bestScores[b].model)
+                        }
+                    ]
+                },
+                plugins: [{
+                    id: 'sotaLabels',
+                    afterDatasetsDraw: function(chart) {
+                        const ctx = chart.ctx;
+                        const meta = chart.getDatasetMeta(1); // SOTA dataset
+                        const sotaModels = chart.data.datasets[1].sotaModels;
+
+                        ctx.save();
+                        ctx.font = '11px Segoe UI, system-ui, sans-serif';
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                        ctx.textAlign = 'right';
+                        ctx.textBaseline = 'middle';
+
+                        meta.data.forEach((bar, index) => {
+                            const model = sotaModels[index];
+                            const x = bar.x - 8;
+                            const y = bar.y;
+                            ctx.fillText(model, x, y);
+                        });
+                        ctx.restore();
+                    }
+                }],
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#e0e0e0',
+                                font: { size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(20, 20, 40, 0.95)',
+                            titleColor: '#fff',
+                            bodyColor: '#e0e0e0',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    if (value === null) return 'Ingen data';
+                                    if (context.dataset.label === 'SOTA' && context.dataset.sotaModels) {
+                                        const modelName = context.dataset.sotaModels[context.dataIndex];
+                                        return `SOTA: ${value}% (${modelName})`;
+                                    }
+                                    return `${context.dataset.label}: ${value}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            min: 0,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#8b8b9a',
+                                callback: value => value + '%'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#e0e0e0',
+                                font: { size: 12 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateModelInfo(modelKey) {
+            const model = modelData[modelKey];
+            const infoBox = document.getElementById('modelInfo');
+
+            const items = [
+                { label: 'HumanEval', value: model.humaneval, best: bestScores.humaneval },
+                { label: 'SWE-bench Verified', value: model.swebench_verified, best: bestScores.swebench_verified },
+                { label: 'SWE-bench Pro', value: model.swebench_pro, best: bestScores.swebench_pro },
+                { label: 'TAU-bench', value: model.taubench, best: bestScores.taubench },
+                { label: 'METR Time Horizon', value: model.metr, best: bestScores.metr, isTime: true }
+            ];
+
+            infoBox.innerHTML = items.map(item => {
+                let valueClass = 'model-info-value';
+                let valueText, comparison;
+
+                if (item.value === null) {
+                    valueClass += ' na';
+                    valueText = 'N/A';
+                    comparison = 'Ingen data tillgänglig';
+                } else if (item.isTime) {
+                    if (item.value >= item.best.value) {
+                        valueClass += ' best';
+                    }
+                    const hours = Math.floor(item.value / 60);
+                    const mins = item.value % 60;
+                    valueText = hours > 0 ? `${hours}h ${mins}m` : `${mins} min`;
+                    const bestHours = Math.floor(item.best.value / 60);
+                    const bestMins = item.best.value % 60;
+                    const bestText = bestHours > 0 ? `${bestHours}h ${bestMins}m` : `${bestMins} min`;
+                    comparison = item.value >= item.best.value ?
+                        '🏆 SOTA' :
+                        `SOTA: ${bestText} (${item.best.model})`;
+                } else {
+                    if (item.value >= item.best.value) {
+                        valueClass += ' best';
+                    }
+                    valueText = item.value + '%';
+                    comparison = item.value >= item.best.value ?
+                        '🏆 SOTA' :
+                        `SOTA: ${item.best.value}% (${item.best.model})`;
+                }
+
+                return `
+                    <div class="model-info-item">
+                        <div class="${valueClass}">${valueText}</div>
+                        <div class="model-info-label">${item.label}</div>
+                        <div class="model-info-comparison">${comparison}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateModelChart() {
+            const select = document.getElementById('modelSelect');
+            const modelKey = select.value;
+            createModelChart(modelKey);
+            updateModelInfo(modelKey);
+        }
+
+        // Initialize with default selection
+        updateModelChart();
     </script>
 </body>
 </html>
