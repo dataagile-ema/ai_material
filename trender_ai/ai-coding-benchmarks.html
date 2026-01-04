@@ -665,7 +665,9 @@
                             <option value="llama33_70b">Llama 3.3 70B (Meta, 2024)</option>
                             <option value="deepseek_v3">DeepSeek V3 (2024)</option>
                             <option value="qwen25_coder">Qwen 2.5 Coder 32B (Alibaba, 2024)</option>
-                            <option value="mistral_large">Mistral Large 2 (2024)</option>
+                            <option value="mistral_large3">Mistral Large 3 (Dec 2025)</option>
+                            <option value="devstral2">Devstral 2 123B (Dec 2025)</option>
+                            <option value="devstral_small2">Devstral Small 2 24B (Dec 2025)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -1650,15 +1652,35 @@
                 taubench: 55,
                 metr: null
             },
-            mistral_large: {
-                name: 'Mistral Large 2',
-                date: 'Jul 2024',
+            mistral_large3: {
+                name: 'Mistral Large 3',
+                date: 'Dec 2025',
                 company: 'Mistral (Open Source)',
-                humaneval: 84,
-                swebench_verified: 28,
-                swebench_pro: null,
-                taubench: 45,
-                metr: null
+                humaneval: 92,
+                swebench_verified: 62,
+                swebench_pro: 28,
+                taubench: 78,
+                metr: 110
+            },
+            devstral2: {
+                name: 'Devstral 2 123B',
+                date: 'Dec 2025',
+                company: 'Mistral (Open Source)',
+                humaneval: 94,
+                swebench_verified: 72.2,
+                swebench_pro: 35,
+                taubench: 82,
+                metr: 130
+            },
+            devstral_small2: {
+                name: 'Devstral Small 2 24B',
+                date: 'Dec 2025',
+                company: 'Mistral (Open Source)',
+                humaneval: 88,
+                swebench_verified: 52,
+                swebench_pro: 15,
+                taubench: 65,
+                metr: 60
             },
             gpt_oss_120b: {
                 name: 'GPT-OSS 120B',
