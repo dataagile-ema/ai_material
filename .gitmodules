@@ -1,0 +1,3 @@
+[submodule "organisation-visualizer"]
+	path = organisation-visualizer
+	url = https://github.com/dataagile-ema/organisation-visualizer.git
