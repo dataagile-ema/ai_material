@@ -695,35 +695,7 @@
                 <div class="model-selector">
                     <label for="modelSelect" style="color: #8b8b9a; margin-right: 0.5rem;">Välj modell:</label>
                     <select id="modelSelect" onchange="updateModelChart()">
-                        <optgroup label="OpenAI">
-                            <option value="gpt4">GPT-4 (Mar 2023)</option>
-                            <option value="gpt4o">GPT-4o (2024)</option>
-                            <option value="o1preview">o1-preview (Sep 2024)</option>
-                            <option value="gpt5">GPT-5 (2025)</option>
-                            <option value="gpt52" selected>GPT-5.2 Thinking (Dec 2025)</option>
-                        </optgroup>
-                        <optgroup label="Anthropic">
-                            <option value="claude3opus">Claude 3 Opus (Mar 2024)</option>
-                            <option value="claude35sonnet">Claude 3.5 Sonnet (Jun 2024)</option>
-                            <option value="claude37sonnet">Claude 3.7 Sonnet (Feb 2025)</option>
-                            <option value="claude4sonnet">Claude 4 Sonnet (2025)</option>
-                            <option value="claude45opus">Claude 4.5 Opus (Nov 2025)</option>
-                        </optgroup>
-                        <optgroup label="Google">
-                            <option value="gemini25pro">Gemini 2.5 Pro (2025)</option>
-                            <option value="gemini3pro">Gemini 3 Pro (2025)</option>
-                        </optgroup>
-                        <optgroup label="Open Source">
-                            <option value="gpt_oss_120b">GPT-OSS 120B (OpenAI, 2025)</option>
-                            <option value="gpt_oss_20b">GPT-OSS 20B (OpenAI, 2025)</option>
-                            <option value="llama31_405b">Llama 3.1 405B (Meta, 2024)</option>
-                            <option value="llama33_70b">Llama 3.3 70B (Meta, 2024)</option>
-                            <option value="deepseek_v3">DeepSeek V3 (2024)</option>
-                            <option value="qwen25_coder">Qwen 2.5 Coder 32B (Alibaba, 2024)</option>
-                            <option value="mistral_large3">Mistral Large 3 (Dec 2025)</option>
-                            <option value="devstral2">Devstral 2 123B (Dec 2025)</option>
-                            <option value="devstral_small2">Devstral Small 2 24B (Dec 2025)</option>
-                        </optgroup>
+                        <!-- Options will be dynamically populated from JSON data -->
                     </select>
                 </div>
             </div>
@@ -1190,6 +1162,148 @@
             red: '#ef4444'
         };
 
+        // Data loader module - loads benchmark data from JSON file
+        const DataLoader = {
+            cache: null,
+
+            async loadBenchmarkData() {
+                if (this.cache) return this.cache;
+
+                const response = await fetch('./data/benchmark-data.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: Failed to load benchmark data`);
+                }
+
+                const data = await response.json();
+                this.cache = data;
+                return data;
+            },
+
+            transformToLegacyFormat(data) {
+                const modelData = {};
+                const bestScores = {};
+                const benchmarkLabels = {};
+                const benchmarkColors = {};
+
+                // Transform benchmarks
+                data.benchmarks.definitions.forEach(bench => {
+                    benchmarkLabels[bench.id] = bench.label;
+                    benchmarkColors[bench.id] = bench.color;
+                });
+
+                // Transform best scores
+                Object.keys(data.benchmarks.bestScores).forEach(benchId => {
+                    const best = data.benchmarks.bestScores[benchId];
+                    bestScores[benchId] = {
+                        value: best.value,
+                        model: best.modelName
+                    };
+                });
+
+                // Transform models
+                data.models.forEach(model => {
+                    modelData[model.id] = {
+                        name: model.name,
+                        date: model.date,
+                        company: model.company,
+                        humaneval: model.scores.humaneval?.value ?? null,
+                        swebench_verified: model.scores.swebench_verified?.value ?? null,
+                        swebench_pro: model.scores.swebench_pro?.value ?? null,
+                        taubench: model.scores.taubench?.value ?? null,
+                        metr: model.scores.metr?.value ?? null
+                    };
+                });
+
+                return { modelData, bestScores, benchmarkLabels, benchmarkColors };
+            }
+        };
+
+        // Generate model dropdown from JSON data
+        function generateModelDropdown(data) {
+            const select = document.getElementById('modelSelect');
+            select.innerHTML = '';
+
+            // Group models by company
+            const grouped = data.models.reduce((acc, model) => {
+                const companyId = model.companyId;
+                if (!acc[companyId]) acc[companyId] = [];
+                acc[companyId].push(model);
+                return acc;
+            }, {});
+
+            // Get proprietary companies dynamically from data
+            const proprietaryCompanies = data.companies
+                .filter(c => c.category === 'proprietary')
+                .map(c => c.id);
+
+            // Add proprietary companies as individual optgroups
+            proprietaryCompanies.forEach(companyId => {
+                if (!grouped[companyId]) return;
+                const company = data.companies.find(c => c.id === companyId);
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = company.name;
+
+                grouped[companyId]
+                    .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate))
+                    .forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.id;
+                        option.textContent = model.displayName;
+                        optgroup.appendChild(option);
+                    });
+
+                select.appendChild(optgroup);
+            });
+
+            // Get open source companies dynamically from data
+            const openSourceCompanies = data.companies
+                .filter(c => c.category === 'open_source')
+                .map(c => c.id);
+
+            // Open source group
+            const openSourceModels = openSourceCompanies.flatMap(companyId => grouped[companyId] || []);
+            if (openSourceModels.length > 0) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = 'Open Source';
+
+                openSourceModels
+                    .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate))
+                    .forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.id;
+                        option.textContent = model.displayName;
+                        optgroup.appendChild(option);
+                    });
+
+                select.appendChild(optgroup);
+            }
+        }
+
+        // Initialize application with async data loading
+        async function initializeApp() {
+            try {
+                // Load data
+                const jsonData = await DataLoader.loadBenchmarkData();
+                const legacy = DataLoader.transformToLegacyFormat(jsonData);
+
+                // Assign to global scope (backward compatibility)
+                window.modelData = legacy.modelData;
+                window.bestScores = legacy.bestScores;
+                window.benchmarkLabels = legacy.benchmarkLabels;
+                window.benchmarkColors = legacy.benchmarkColors;
+
+                // Generate dropdown
+                generateModelDropdown(jsonData);
+
+                // Initialize charts with first model
+                updateModelChart();
+
+            } catch (error) {
+                console.error('Failed to load benchmark data:', error);
+                alert('Kunde inte ladda benchmark-data. Kontrollera att filen finns och använd en webbserver (inte file://).');
+            }
+        }
+
         // Common x-axis range for all charts
         const xAxisMin = '2021-01-01';
         const xAxisMax = '2026-01-01';
@@ -1582,244 +1696,7 @@
             options: commonOptions
         });
 
-        // Model comparison data
-        const modelData = {
-            gpt4: {
-                name: 'GPT-4',
-                date: 'Mars 2023',
-                company: 'OpenAI',
-                humaneval: 67,
-                swebench_verified: null,
-                swebench_pro: null,
-                taubench: null,
-                metr: 55
-            },
-            gpt4o: {
-                name: 'GPT-4o',
-                date: 'Maj 2024',
-                company: 'OpenAI',
-                humaneval: 88,
-                swebench_verified: 33.2,
-                swebench_pro: 5,
-                taubench: 50,
-                metr: null
-            },
-            o1preview: {
-                name: 'o1-preview',
-                date: 'Sep 2024',
-                company: 'OpenAI',
-                humaneval: 96.3,
-                swebench_verified: 53,
-                swebench_pro: null,
-                taubench: null,
-                metr: null
-            },
-            gpt5: {
-                name: 'GPT-5',
-                date: '2025',
-                company: 'OpenAI',
-                humaneval: 95,
-                swebench_verified: 72,
-                swebench_pro: 23,
-                taubench: 97,
-                metr: 137
-            },
-            gpt52: {
-                name: 'GPT-5.2 Thinking',
-                date: 'Dec 2025',
-                company: 'OpenAI',
-                humaneval: 96,
-                swebench_verified: 80.0,
-                swebench_pro: 55.6,
-                taubench: 98,
-                metr: null
-            },
-            claude3opus: {
-                name: 'Claude 3 Opus',
-                date: 'Mars 2024',
-                company: 'Anthropic',
-                humaneval: 84.9,
-                swebench_verified: null,
-                swebench_pro: null,
-                taubench: null,
-                metr: null
-            },
-            claude35sonnet: {
-                name: 'Claude 3.5 Sonnet',
-                date: 'Juni 2024',
-                company: 'Anthropic',
-                humaneval: 92,
-                swebench_verified: 48.9,
-                swebench_pro: null,
-                taubench: 62,
-                metr: 60
-            },
-            claude37sonnet: {
-                name: 'Claude 3.7 Sonnet',
-                date: 'Feb 2025',
-                company: 'Anthropic',
-                humaneval: 93.7,
-                swebench_verified: 62,
-                swebench_pro: null,
-                taubench: 78,
-                metr: 120
-            },
-            claude4sonnet: {
-                name: 'Claude 4 Sonnet',
-                date: '2025',
-                company: 'Anthropic',
-                humaneval: 94,
-                swebench_verified: 75.2,
-                swebench_pro: 18,
-                taubench: 85,
-                metr: 180
-            },
-            claude45opus: {
-                name: 'Claude 4.5 Opus',
-                date: 'Nov 2025',
-                company: 'Anthropic',
-                humaneval: 95.5,
-                swebench_verified: 80.9,
-                swebench_pro: 46,
-                taubench: 92,
-                metr: 289
-            },
-            gemini25pro: {
-                name: 'Gemini 2.5 Pro',
-                date: '2025',
-                company: 'Google',
-                humaneval: 90,
-                swebench_verified: 63,
-                swebench_pro: 14,
-                taubench: 70,
-                metr: null
-            },
-            gemini3pro: {
-                name: 'Gemini 3 Pro',
-                date: 'Nov 2025',
-                company: 'Google',
-                humaneval: 94,
-                swebench_verified: 77.4,
-                swebench_pro: 43,
-                taubench: 88,
-                metr: 200
-            },
-            llama31_405b: {
-                name: 'Llama 3.1 405B',
-                date: 'Jul 2024',
-                company: 'Meta (Open Source)',
-                humaneval: 89,
-                swebench_verified: 33,
-                swebench_pro: null,
-                taubench: 48,
-                metr: null
-            },
-            llama33_70b: {
-                name: 'Llama 3.3 70B',
-                date: 'Dec 2024',
-                company: 'Meta (Open Source)',
-                humaneval: 88.4,
-                swebench_verified: 37,
-                swebench_pro: null,
-                taubench: 52,
-                metr: null
-            },
-            deepseek_v3: {
-                name: 'DeepSeek V3',
-                date: 'Dec 2024',
-                company: 'DeepSeek (Open Source)',
-                humaneval: 91.6,
-                swebench_verified: 42,
-                swebench_pro: 8,
-                taubench: 58,
-                metr: 45
-            },
-            qwen25_coder: {
-                name: 'Qwen 2.5 Coder 32B',
-                date: 'Nov 2024',
-                company: 'Alibaba (Open Source)',
-                humaneval: 92.7,
-                swebench_verified: 38.5,
-                swebench_pro: null,
-                taubench: 55,
-                metr: null
-            },
-            mistral_large3: {
-                name: 'Mistral Large 3',
-                date: 'Dec 2025',
-                company: 'Mistral (Open Source)',
-                humaneval: 92,
-                swebench_verified: 62,
-                swebench_pro: 28,
-                taubench: 78,
-                metr: 110
-            },
-            devstral2: {
-                name: 'Devstral 2 123B',
-                date: 'Dec 2025',
-                company: 'Mistral (Open Source)',
-                humaneval: 94,
-                swebench_verified: 72.2,
-                swebench_pro: 35,
-                taubench: 82,
-                metr: 130
-            },
-            devstral_small2: {
-                name: 'Devstral Small 2 24B',
-                date: 'Dec 2025',
-                company: 'Mistral (Open Source)',
-                humaneval: 88,
-                swebench_verified: 52,
-                swebench_pro: 15,
-                taubench: 65,
-                metr: 60
-            },
-            gpt_oss_120b: {
-                name: 'GPT-OSS 120B',
-                date: '2025',
-                company: 'OpenAI (Open Source)',
-                humaneval: 93,
-                swebench_verified: 58,
-                swebench_pro: 18,
-                taubench: 88,
-                metr: 95
-            },
-            gpt_oss_20b: {
-                name: 'GPT-OSS 20B',
-                date: '2025',
-                company: 'OpenAI (Open Source)',
-                humaneval: 87,
-                swebench_verified: 42,
-                swebench_pro: 10,
-                taubench: 72,
-                metr: 55
-            }
-        };
-
-        // Best scores for comparison
-        const bestScores = {
-            humaneval: { value: 96.3, model: 'o1-preview' },
-            swebench_verified: { value: 80.9, model: 'Claude 4.5 Opus' },
-            swebench_pro: { value: 55.6, model: 'GPT-5.2 Thinking' },
-            taubench: { value: 98, model: 'GPT-5.2 Thinking' },
-            metr: { value: 289, model: 'Claude 4.5 Opus' }
-        };
-
-        const benchmarkLabels = {
-            humaneval: 'HumanEval',
-            swebench_verified: 'SWE-bench Verified',
-            swebench_pro: 'SWE-bench Pro',
-            taubench: 'TAU-bench pass@1',
-            metr: 'METR (minuter)'
-        };
-
-        const benchmarkColors = {
-            humaneval: colors.cyan,
-            swebench_verified: colors.green,
-            swebench_pro: colors.orange,
-            taubench: colors.pink,
-            metr: colors.purple
-        };
+        // Model data is now loaded from JSON file via DataLoader
 
         // Initialize model comparison chart
         let modelCompareChart = null;
@@ -2045,8 +1922,12 @@
             updateModelInfo(modelKey);
         }
 
-        // Initialize with default selection
-        updateModelChart();
+        // Initialize application when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
     </script>
 </body>
 </html>

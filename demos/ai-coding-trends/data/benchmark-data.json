@@ -1,0 +1,705 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-05",
+    "description": "AI coding model benchmark data with source attribution"
+  },
+  "benchmarks": {
+    "definitions": [
+      {
+        "id": "humaneval",
+        "label": "HumanEval",
+        "color": "#00d4ff",
+        "unit": "percentage",
+        "sourceUrl": "https://github.com/openai/human-eval"
+      },
+      {
+        "id": "swebench_verified",
+        "label": "SWE-bench Verified",
+        "color": "#10b981",
+        "unit": "percentage",
+        "sourceUrl": "https://www.swebench.com/"
+      },
+      {
+        "id": "swebench_pro",
+        "label": "SWE-bench Pro",
+        "color": "#f59e0b",
+        "unit": "percentage",
+        "sourceUrl": "https://scale.com/leaderboard/swe_bench_pro_public"
+      },
+      {
+        "id": "taubench",
+        "label": "TAU-bench pass@1",
+        "color": "#f472b6",
+        "unit": "percentage",
+        "sourceUrl": "https://github.com/sierra-research/tau-bench"
+      },
+      {
+        "id": "metr",
+        "label": "METR (minuter)",
+        "color": "#7c3aed",
+        "unit": "minutes",
+        "sourceUrl": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+      }
+    ],
+    "bestScores": {
+      "humaneval": {
+        "value": 96.3,
+        "modelId": "o1preview",
+        "modelName": "o1-preview"
+      },
+      "swebench_verified": {
+        "value": 80.9,
+        "modelId": "claude45opus",
+        "modelName": "Claude 4.5 Opus"
+      },
+      "swebench_pro": {
+        "value": 55.6,
+        "modelId": "gpt52",
+        "modelName": "GPT-5.2 Thinking"
+      },
+      "taubench": {
+        "value": 98,
+        "modelId": "gpt52",
+        "modelName": "GPT-5.2 Thinking"
+      },
+      "metr": {
+        "value": 289,
+        "modelId": "claude45opus",
+        "modelName": "Claude 4.5 Opus"
+      }
+    }
+  },
+  "companies": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "category": "proprietary"
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "category": "proprietary"
+    },
+    {
+      "id": "google",
+      "name": "Google",
+      "category": "proprietary"
+    },
+    {
+      "id": "meta",
+      "name": "Meta (Open Source)",
+      "category": "open_source"
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek (Open Source)",
+      "category": "open_source"
+    },
+    {
+      "id": "alibaba",
+      "name": "Alibaba (Open Source)",
+      "category": "open_source"
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral (Open Source)",
+      "category": "open_source"
+    },
+    {
+      "id": "openai_oss",
+      "name": "OpenAI (Open Source)",
+      "category": "open_source"
+    }
+  ],
+  "models": [
+    {
+      "id": "gpt4",
+      "name": "GPT-4",
+      "displayName": "GPT-4 (Mars 2023)",
+      "date": "Mars 2023",
+      "releaseDate": "2023-03-14",
+      "companyId": "openai",
+      "company": "OpenAI",
+      "scores": {
+        "humaneval": {
+          "value": 67,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": null,
+        "swebench_pro": null,
+        "taubench": null,
+        "metr": {
+          "value": 55,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "gpt4o",
+      "name": "GPT-4o",
+      "displayName": "GPT-4o (Maj 2024)",
+      "date": "Maj 2024",
+      "releaseDate": "2024-05-13",
+      "companyId": "openai",
+      "company": "OpenAI",
+      "scores": {
+        "humaneval": {
+          "value": 88,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 33.2,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 5,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 50,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": null
+      }
+    },
+    {
+      "id": "o1preview",
+      "name": "o1-preview",
+      "displayName": "o1-preview (Sep 2024)",
+      "date": "Sep 2024",
+      "releaseDate": "2024-09-12",
+      "companyId": "openai",
+      "company": "OpenAI",
+      "scores": {
+        "humaneval": {
+          "value": 96.3,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 53,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": null,
+        "taubench": null,
+        "metr": null
+      }
+    },
+    {
+      "id": "gpt5",
+      "name": "GPT-5",
+      "displayName": "GPT-5 (2025)",
+      "date": "2025",
+      "releaseDate": "2025-01-01",
+      "companyId": "openai",
+      "company": "OpenAI",
+      "scores": {
+        "humaneval": {
+          "value": 95,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 72,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 23,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 97,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 137,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "gpt52",
+      "name": "GPT-5.2 Thinking",
+      "displayName": "GPT-5.2 Thinking (Dec 2025)",
+      "date": "Dec 2025",
+      "releaseDate": "2025-12-15",
+      "companyId": "openai",
+      "company": "OpenAI",
+      "scores": {
+        "humaneval": {
+          "value": 96,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 80,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 55.6,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 98,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": null
+      }
+    },
+    {
+      "id": "claude3opus",
+      "name": "Claude 3 Opus",
+      "displayName": "Claude 3 Opus (Mars 2024)",
+      "date": "Mars 2024",
+      "releaseDate": "2024-03-04",
+      "companyId": "anthropic",
+      "company": "Anthropic",
+      "scores": {
+        "humaneval": {
+          "value": 84.9,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": null,
+        "swebench_pro": null,
+        "taubench": null,
+        "metr": null
+      }
+    },
+    {
+      "id": "claude35sonnet",
+      "name": "Claude 3.5 Sonnet",
+      "displayName": "Claude 3.5 Sonnet (Juni 2024)",
+      "date": "Juni 2024",
+      "releaseDate": "2024-06-20",
+      "companyId": "anthropic",
+      "company": "Anthropic",
+      "scores": {
+        "humaneval": {
+          "value": 92,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 48.9,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": null,
+        "taubench": {
+          "value": 62,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 60,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "claude37sonnet",
+      "name": "Claude 3.7 Sonnet",
+      "displayName": "Claude 3.7 Sonnet (Feb 2025)",
+      "date": "Feb 2025",
+      "releaseDate": "2025-02-15",
+      "companyId": "anthropic",
+      "company": "Anthropic",
+      "scores": {
+        "humaneval": {
+          "value": 93.7,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 62,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": null,
+        "taubench": {
+          "value": 78,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 120,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "claude4sonnet",
+      "name": "Claude 4 Sonnet",
+      "displayName": "Claude 4 Sonnet (2025)",
+      "date": "2025",
+      "releaseDate": "2025-01-01",
+      "companyId": "anthropic",
+      "company": "Anthropic",
+      "scores": {
+        "humaneval": {
+          "value": 94,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 75.2,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 18,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 85,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 180,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "claude45opus",
+      "name": "Claude 4.5 Opus",
+      "displayName": "Claude 4.5 Opus (Nov 2025)",
+      "date": "Nov 2025",
+      "releaseDate": "2025-11-15",
+      "companyId": "anthropic",
+      "company": "Anthropic",
+      "scores": {
+        "humaneval": {
+          "value": 95.5,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 80.9,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 46,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 92,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 289,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "gemini25pro",
+      "name": "Gemini 2.5 Pro",
+      "displayName": "Gemini 2.5 Pro (2025)",
+      "date": "2025",
+      "releaseDate": "2025-01-01",
+      "companyId": "google",
+      "company": "Google",
+      "scores": {
+        "humaneval": {
+          "value": 90,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 63,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 14,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 70,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": null
+      }
+    },
+    {
+      "id": "gemini3pro",
+      "name": "Gemini 3 Pro",
+      "displayName": "Gemini 3 Pro (Nov 2025)",
+      "date": "Nov 2025",
+      "releaseDate": "2025-11-15",
+      "companyId": "google",
+      "company": "Google",
+      "scores": {
+        "humaneval": {
+          "value": 94,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 77.4,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 43,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 88,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 200,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "llama31_405b",
+      "name": "Llama 3.1 405B",
+      "displayName": "Llama 3.1 405B (Jul 2024)",
+      "date": "Jul 2024",
+      "releaseDate": "2024-07-23",
+      "companyId": "meta",
+      "company": "Meta (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 89,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 33,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": null,
+        "taubench": {
+          "value": 48,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": null
+      }
+    },
+    {
+      "id": "llama33_70b",
+      "name": "Llama 3.3 70B",
+      "displayName": "Llama 3.3 70B (Dec 2024)",
+      "date": "Dec 2024",
+      "releaseDate": "2024-12-10",
+      "companyId": "meta",
+      "company": "Meta (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 88.4,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 37,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": null,
+        "taubench": {
+          "value": 52,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": null
+      }
+    },
+    {
+      "id": "deepseek_v3",
+      "name": "DeepSeek V3",
+      "displayName": "DeepSeek V3 (Dec 2024)",
+      "date": "Dec 2024",
+      "releaseDate": "2024-12-10",
+      "companyId": "deepseek",
+      "company": "DeepSeek (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 91.6,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 42,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 8,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 58,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 45,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "qwen25_coder",
+      "name": "Qwen 2.5 Coder 32B",
+      "displayName": "Qwen 2.5 Coder 32B (Nov 2024)",
+      "date": "Nov 2024",
+      "releaseDate": "2024-11-15",
+      "companyId": "alibaba",
+      "company": "Alibaba (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 92.7,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 38.5,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": null,
+        "taubench": {
+          "value": 55,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": null
+      }
+    },
+    {
+      "id": "mistral_large3",
+      "name": "Mistral Large 3",
+      "displayName": "Mistral Large 3 (Dec 2025)",
+      "date": "Dec 2025",
+      "releaseDate": "2025-12-15",
+      "companyId": "mistral",
+      "company": "Mistral (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 92,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 62,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 28,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 78,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 110,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "devstral2",
+      "name": "Devstral 2 123B",
+      "displayName": "Devstral 2 123B (Dec 2025)",
+      "date": "Dec 2025",
+      "releaseDate": "2025-12-15",
+      "companyId": "mistral",
+      "company": "Mistral (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 94,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 72.2,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 35,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 82,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 130,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "devstral_small2",
+      "name": "Devstral Small 2 24B",
+      "displayName": "Devstral Small 2 24B (Dec 2025)",
+      "date": "Dec 2025",
+      "releaseDate": "2025-12-15",
+      "companyId": "mistral",
+      "company": "Mistral (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 88,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 52,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 15,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 65,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 60,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "gpt_oss_120b",
+      "name": "GPT-OSS 120B",
+      "displayName": "GPT-OSS 120B (2025)",
+      "date": "2025",
+      "releaseDate": "2025-01-01",
+      "companyId": "openai_oss",
+      "company": "OpenAI (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 93,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 58,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 18,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 88,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 95,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    },
+    {
+      "id": "gpt_oss_20b",
+      "name": "GPT-OSS 20B",
+      "displayName": "GPT-OSS 20B (2025)",
+      "date": "2025",
+      "releaseDate": "2025-01-01",
+      "companyId": "openai_oss",
+      "company": "OpenAI (Open Source)",
+      "scores": {
+        "humaneval": {
+          "value": 87,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": {
+          "value": 42,
+          "source": "https://www.swebench.com/"
+        },
+        "swebench_pro": {
+          "value": 10,
+          "source": "https://scale.com/leaderboard/swe_bench_pro_public"
+        },
+        "taubench": {
+          "value": 72,
+          "source": "https://github.com/sierra-research/tau-bench"
+        },
+        "metr": {
+          "value": 55,
+          "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+        }
+      }
+    }
+  ]
+}
