@@ -4,26 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Utveckling: En Tidslinje 1956-2025</title>
+    <link rel="stylesheet" href="../shared/demos-common.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
             min-height: 100vh;
-            color: #e0e0e0;
             padding: 2rem;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
         header {
@@ -33,15 +20,12 @@
 
         h1 {
             font-size: 2.5rem;
-            background: linear-gradient(90deg, #00d4ff, #7c3aed, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--color-accent);
             margin-bottom: 0.5rem;
         }
 
         .subtitle {
-            color: #8b8b9a;
+            color: var(--color-text-secondary);
             font-size: 1.1rem;
         }
 
@@ -64,7 +48,7 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.2);
+            box-shadow: 0 10px 40px rgba(123, 163, 176, 0.2);
         }
 
         .stat-value {
@@ -73,13 +57,13 @@
             margin-bottom: 0.5rem;
         }
 
-        .stat-card:nth-child(1) .stat-value { color: #00d4ff; }
-        .stat-card:nth-child(2) .stat-value { color: #7c3aed; }
-        .stat-card:nth-child(3) .stat-value { color: #10b981; }
-        .stat-card:nth-child(4) .stat-value { color: #f59e0b; }
+        .stat-card:nth-child(1) .stat-value { color: var(--color-chart-1); }
+        .stat-card:nth-child(2) .stat-value { color: var(--color-chart-2); }
+        .stat-card:nth-child(3) .stat-value { color: var(--color-chart-3); }
+        .stat-card:nth-child(4) .stat-value { color: var(--color-chart-5); }
 
         .stat-label {
-            color: #8b8b9a;
+            color: var(--color-text-secondary);
             font-size: 0.9rem;
         }
 
@@ -118,8 +102,8 @@
         }
 
         .btn.active {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(124, 58, 237, 0.3));
-            border-color: #00d4ff;
+            background: linear-gradient(135deg, rgba(123, 163, 176, 0.3), rgba(168, 156, 200, 0.3));
+            border-color: var(--color-chart-1);
         }
 
         .search-box {
@@ -138,7 +122,7 @@
         }
 
         .search-box input::placeholder {
-            color: #8b8b9a;
+            color: var(--color-text-secondary);
         }
 
         /* Timeline Section */
@@ -161,7 +145,7 @@
         }
 
         .timeline-description {
-            color: #8b8b9a;
+            color: var(--color-text-secondary);
             font-size: 0.95rem;
         }
 
@@ -181,7 +165,7 @@
 
         .year-label {
             font-size: 0.85rem;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             font-weight: 600;
         }
 
@@ -204,10 +188,10 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        .lane[data-category="research"] .lane-label { color: #00d4ff; border: 1px solid #00d4ff; }
-        .lane[data-category="products"] .lane-label { color: #7c3aed; border: 1px solid #7c3aed; }
-        .lane[data-category="benchmarks"] .lane-label { color: #10b981; border: 1px solid #10b981; }
-        .lane[data-category="tools"] .lane-label { color: #f59e0b; border: 1px solid #f59e0b; }
+        .lane[data-category="research"] .lane-label { color: var(--color-chart-1); border: 1px solid var(--color-chart-1); }
+        .lane[data-category="products"] .lane-label { color: var(--color-chart-2); border: 1px solid var(--color-chart-2); }
+        .lane[data-category="benchmarks"] .lane-label { color: var(--color-chart-3); border: 1px solid var(--color-chart-3); }
+        .lane[data-category="tools"] .lane-label { color: var(--color-chart-5); border: 1px solid var(--color-chart-5); }
 
         .lane.hidden {
             display: none;
@@ -232,10 +216,10 @@
             box-shadow: 0 0 20px currentColor;
         }
 
-        .event-marker[data-category="research"] { background-color: #00d4ff; }
-        .event-marker[data-category="products"] { background-color: #7c3aed; }
-        .event-marker[data-category="benchmarks"] { background-color: #10b981; }
-        .event-marker[data-category="tools"] { background-color: #f59e0b; }
+        .event-marker[data-category="research"] { background-color: var(--color-chart-1); }
+        .event-marker[data-category="products"] { background-color: var(--color-chart-2); }
+        .event-marker[data-category="benchmarks"] { background-color: var(--color-chart-3); }
+        .event-marker[data-category="tools"] { background-color: var(--color-chart-5); }
 
         .event-label {
             position: absolute;
@@ -270,7 +254,7 @@
         }
 
         .chart-description {
-            color: #8b8b9a;
+            color: var(--color-text-secondary);
             margin-bottom: 1.5rem;
             font-size: 0.95rem;
         }
@@ -351,11 +335,11 @@
         }
 
         .meta-label {
-            color: #8b8b9a;
+            color: var(--color-text-secondary);
         }
 
         .meta-value {
-            color: #00d4ff;
+            color: var(--color-chart-1);
             font-weight: 600;
         }
 
@@ -366,7 +350,7 @@
         .modal-section-title {
             font-size: 1.1rem;
             margin-bottom: 0.8rem;
-            color: #00d4ff;
+            color: var(--color-chart-1);
         }
 
         .modal-section-content {
@@ -383,7 +367,7 @@
         }
 
         .modal-sources a {
-            color: #00d4ff;
+            color: var(--color-chart-1);
             text-decoration: none;
             transition: color 0.3s;
             display: flex;
@@ -392,7 +376,7 @@
         }
 
         .modal-sources a:hover {
-            color: #7c3aed;
+            color: var(--color-chart-2);
         }
 
         .modal-tags {
@@ -402,9 +386,9 @@
         }
 
         .tag {
-            background: rgba(0, 212, 255, 0.2);
-            border: 1px solid rgba(0, 212, 255, 0.4);
-            color: #00d4ff;
+            background: rgba(123, 163, 176, 0.2);
+            border: 1px solid rgba(123, 163, 176, 0.4);
+            color: var(--color-chart-1);
             padding: 0.3rem 0.8rem;
             border-radius: 12px;
             font-size: 0.85rem;
@@ -417,9 +401,9 @@
         }
 
         .related-event-link {
-            background: rgba(124, 58, 237, 0.2);
-            border: 1px solid rgba(124, 58, 237, 0.4);
-            color: #7c3aed;
+            background: rgba(168, 156, 200, 0.2);
+            border: 1px solid rgba(168, 156, 200, 0.4);
+            color: var(--color-chart-2);
             padding: 0.3rem 0.8rem;
             border-radius: 8px;
             font-size: 0.85rem;
@@ -429,7 +413,7 @@
         }
 
         .related-event-link:hover {
-            background: rgba(124, 58, 237, 0.3);
+            background: rgba(168, 156, 200, 0.3);
             transform: translateY(-2px);
         }
 
@@ -888,13 +872,13 @@
                     x: new Date(d.date),
                     y: d.value
                 })),
-                borderColor: '#10b981',
+                borderColor: 'var(--color-chart-3)',
                 backgroundColor: 'rgba(16, 185, 129, 0.1)',
                 fill: true,
                 tension: 0.4,
                 pointRadius: 6,
                 pointHoverRadius: 8,
-                pointBackgroundColor: '#10b981',
+                pointBackgroundColor: 'var(--color-chart-3)',
                 pointBorderColor: '#fff',
                 pointBorderWidth: 2
             }];
@@ -907,7 +891,7 @@
                         { x: new Date(benchmark.timeSeriesData[0].date), y: benchmark.humanBaseline },
                         { x: new Date(benchmark.timeSeriesData[benchmark.timeSeriesData.length - 1].date), y: benchmark.humanBaseline }
                     ],
-                    borderColor: '#f59e0b',
+                    borderColor: 'var(--color-chart-5)',
                     borderDash: [5, 5],
                     fill: false,
                     pointRadius: 0
@@ -926,7 +910,7 @@
                             time: {
                                 unit: 'year'
                             },
-                            ticks: { color: '#8b8b9a' },
+                            ticks: { color: 'var(--color-text-secondary)' },
                             grid: { color: 'rgba(255, 255, 255, 0.05)' }
                         },
                         y: {
@@ -936,9 +920,9 @@
                             title: {
                                 display: true,
                                 text: benchmark.yAxisLabel,
-                                color: '#8b8b9a'
+                                color: 'var(--color-text-secondary)'
                             },
-                            ticks: { color: '#8b8b9a' },
+                            ticks: { color: 'var(--color-text-secondary)' },
                             grid: { color: 'rgba(255, 255, 255, 0.05)' }
                         }
                     },

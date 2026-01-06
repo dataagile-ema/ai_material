@@ -4,26 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-utveckling: Tidslinje 2017-2025</title>
+    <link rel="stylesheet" href="../shared/demos-common.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
-            color: #ffffff;
             min-height: 100vh;
             padding: 20px;
             position: relative;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
         }
 
         /* Header */
@@ -37,10 +24,7 @@
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 16px;
-            background: linear-gradient(135deg, #00d4ff, #7c3aed, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--color-accent);
         }
 
         .subtitle {
@@ -74,7 +58,7 @@
         .stat-value {
             font-size: 2.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            background: linear-gradient(135deg, var(--color-chart-1), var(--color-chart-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -126,7 +110,7 @@
         .search-box:focus {
             outline: none;
             background: rgba(255, 255, 255, 0.15);
-            border-color: #00d4ff;
+            border-color: var(--color-chart-1);
         }
 
         .search-box::placeholder {
@@ -204,7 +188,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #00d4ff;
+            background: var(--color-chart-1);
             cursor: pointer;
             box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
@@ -213,7 +197,7 @@
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #00d4ff;
+            background: var(--color-chart-1);
             cursor: pointer;
             border: none;
             box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
@@ -221,7 +205,7 @@
 
         .slider-value {
             min-width: 150px;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             font-weight: 600;
         }
 
@@ -281,7 +265,7 @@
             padding-right: 20px;
             font-size: 1.5rem;
             font-weight: 700;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             z-index: 2;
             margin-bottom: 30px;
         }
@@ -404,10 +388,10 @@
         .importance-badge {
             padding: 4px 12px;
             background: rgba(0, 212, 255, 0.2);
-            border: 1px solid #00d4ff;
+            border: 1px solid var(--color-chart-1);
             border-radius: 8px;
             font-size: 0.85rem;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             font-weight: 600;
         }
 
@@ -560,7 +544,7 @@
         .modal-section-title {
             font-size: 1.2rem;
             font-weight: 600;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             margin-bottom: 12px;
         }
 
@@ -586,7 +570,7 @@
         .metric-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             margin-bottom: 4px;
         }
 
@@ -610,7 +594,7 @@
         .person-chip {
             padding: 6px 14px;
             background: rgba(124, 58, 237, 0.2);
-            border: 1px solid #7c3aed;
+            border: 1px solid var(--color-chart-2);
             border-radius: 16px;
             color: #ffffff;
             font-size: 0.9rem;
@@ -635,7 +619,7 @@
 
         .related-chip:hover {
             background: rgba(255, 255, 255, 0.2);
-            border-color: #00d4ff;
+            border-color: var(--color-chart-1);
         }
 
         .sources-list {
@@ -647,7 +631,7 @@
         }
 
         .source-link {
-            color: #00d4ff;
+            color: var(--color-chart-1);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -656,7 +640,7 @@
         }
 
         .source-link:hover {
-            color: #7c3aed;
+            color: var(--color-chart-2);
             text-decoration: underline;
         }
 
@@ -688,15 +672,15 @@
         .acceleration-title {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #00d4ff;
+            color: var(--color-chart-1);
         }
 
         .acceleration-toggle {
             padding: 10px 20px;
             background: rgba(0, 212, 255, 0.2);
-            border: 1px solid #00d4ff;
+            border: 1px solid var(--color-chart-1);
             border-radius: 12px;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.95rem;
@@ -737,7 +721,7 @@
 
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.1);
-            border-left-color: #00d4ff;
+            border-left-color: var(--color-chart-1);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -951,11 +935,11 @@
     <script>
         // Category configuration
         const CATEGORIES = {
-            research: { label: 'Forskningsgenombrott', color: '#00d4ff', icon: '🔬' },
-            models: { label: 'Modellreleaser', color: '#7c3aed', icon: '🤖' },
+            research: { label: 'Forskningsgenombrott', color: 'var(--color-chart-1)', icon: '🔬' },
+            models: { label: 'Modellreleaser', color: 'var(--color-chart-2)', icon: '🤖' },
             products: { label: 'Produkter & Appar', color: '#f472b6', icon: '✨' },
-            benchmarks: { label: 'Benchmark-genombrott', color: '#10b981', icon: '📊' },
-            tools: { label: 'Verktyg & Standarder', color: '#f59e0b', icon: '🛠️' },
+            benchmarks: { label: 'Benchmark-genombrott', color: 'var(--color-chart-3)', icon: '📊' },
+            tools: { label: 'Verktyg & Standarder', color: 'var(--color-chart-5)', icon: '🛠️' },
             companies: { label: 'Företag & Labs', color: '#ec4899', icon: '🏢' }
         };
 
@@ -1074,7 +1058,7 @@
                             const intensity = i / (data.length - 1);
                             return `rgba(0, 212, 255, ${0.3 + intensity * 0.7})`;
                         }),
-                        borderColor: '#00d4ff',
+                        borderColor: 'var(--color-chart-1)',
                         borderWidth: 2
                     }]
                 },

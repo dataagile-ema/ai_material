@@ -4,24 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-utvecklingens Acceleration - Interaktiv Tidslinje</title>
+    <link rel="stylesheet" href="../shared/demos-common.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0a0a12 0%, #12121c 50%, #1a1a28 100%);
-            color: #e0e0e8;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
             padding: 40px 20px;
         }
 
@@ -34,16 +24,13 @@
         h1 {
             font-size: 3rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #00d4ff, #7c3aed, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--color-accent);
             margin-bottom: 16px;
         }
 
         .subtitle {
             font-size: 1.2rem;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
             margin-bottom: 40px;
         }
 
@@ -78,7 +65,7 @@
 
         .stat-label {
             font-size: 0.9rem;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -121,7 +108,7 @@
 
         .search-box:focus {
             outline: none;
-            border-color: #00d4ff;
+            border-color: var(--color-chart-1);
             background: rgba(255, 255, 255, 0.12);
         }
 
@@ -138,7 +125,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            background: linear-gradient(135deg, var(--color-chart-1), var(--color-chart-2));
             color: white;
         }
 
@@ -159,7 +146,7 @@
         }
 
         .btn-secondary.active {
-            background: linear-gradient(135deg, #7c3aed, #f472b6);
+            background: linear-gradient(135deg, var(--color-chart-2), var(--color-chart-4));
             color: white;
             border-color: transparent;
         }
@@ -241,7 +228,7 @@
 
         .axis-label {
             font-size: 0.9rem;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
             font-weight: 600;
         }
 
@@ -281,7 +268,7 @@
         }
 
         .tooltip-date {
-            color: #9ca3af;
+            color: var(--color-text-secondary);
             font-size: 0.75rem;
         }
 
@@ -347,7 +334,7 @@
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            background: linear-gradient(135deg, var(--color-chart-1), var(--color-chart-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -356,7 +343,7 @@
             display: flex;
             gap: 16px;
             flex-wrap: wrap;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
             font-size: 0.9rem;
         }
 
@@ -366,7 +353,7 @@
 
         .modal-section h3 {
             font-size: 1.2rem;
-            color: #00d4ff;
+            color: var(--color-chart-1);
             margin-bottom: 12px;
         }
 
@@ -394,14 +381,14 @@
         }
 
         .before-after-item.after {
-            border-color: #10b981;
+            border-color: var(--color-chart-3);
         }
 
         .before-after-label {
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
             margin-bottom: 8px;
         }
 
@@ -414,7 +401,7 @@
         }
 
         .source-link {
-            color: #00d4ff;
+            color: var(--color-chart-1);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -423,7 +410,7 @@
         }
 
         .source-link:hover {
-            color: #7c3aed;
+            color: var(--color-chart-2);
             text-decoration: underline;
         }
 
@@ -440,7 +427,7 @@
             text-align: center;
             padding: 60px 20px;
             font-size: 1.2rem;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
         }
 
         .loading::after {
@@ -515,7 +502,7 @@
         .empty-state {
             text-align: center;
             padding: 60px 20px;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
         }
 
         .empty-state-icon {
@@ -534,7 +521,7 @@
             font-weight: 700;
             margin-bottom: 24px;
             text-align: center;
-            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            background: linear-gradient(135deg, var(--color-chart-1), var(--color-chart-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -566,7 +553,7 @@
 
         .milestone-date {
             font-size: 0.85rem;
-            color: #9ca3af;
+            color: var(--color-text-secondary);
             font-weight: 600;
             text-align: right;
         }
@@ -656,25 +643,25 @@
 
             <div class="stats-grid" id="statsGrid">
                 <div class="stat-card">
-                    <div class="stat-value" style="background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <div class="stat-value" style="background: linear-gradient(135deg, var(--color-chart-1), var(--color-chart-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                         <span id="totalMilestones">52</span>
                     </div>
                     <div class="stat-label">Milstolpar</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" style="background: linear-gradient(135deg, #7c3aed, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <div class="stat-value" style="background: linear-gradient(135deg, var(--color-chart-2), var(--color-chart-4)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                         <span id="accelerationFactor">64×</span>
                     </div>
                     <div class="stat-label">Snabbare idag</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" style="background: linear-gradient(135deg, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <div class="stat-value" style="background: linear-gradient(135deg, var(--color-chart-4), #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                         <span id="currentPace">~1.5/mån</span>
                     </div>
                     <div class="stat-label">Nuvarande takt</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" style="background: linear-gradient(135deg, #10b981, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    <div class="stat-value" style="background: linear-gradient(135deg, var(--color-chart-3), var(--color-chart-1)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                         <span id="timespan">75 år</span>
                     </div>
                     <div class="stat-label">Historisk spännvidd</div>
@@ -878,7 +865,7 @@
                 const y = height / 2 + (Math.random() - 0.5) * (height - 200);
 
                 const category = allData.categories.find(c => c.id === milestone.category);
-                const color = category ? category.color : '#9ca3af';
+                const color = category ? category.color : 'var(--color-text-secondary)';
 
                 // Size based on importance
                 const baseSize = 4;
@@ -1050,7 +1037,7 @@
             listContainer.innerHTML = sortedMilestones.map(milestone => {
                 const category = allData.categories.find(c => c.id === milestone.category);
                 const company = milestone.company ? allData.companies.find(c => c.id === milestone.company) : null;
-                const color = category ? category.color : '#9ca3af';
+                const color = category ? category.color : 'var(--color-text-secondary)';
 
                 // Create importance dots
                 const importanceDots = Array.from({length: 10}, (_, i) => {
@@ -1116,7 +1103,7 @@
             // Show empty state if no results
             if (filteredMilestones.length === 0) {
                 const svg = document.getElementById('timelineSvg');
-                svg.innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="#9ca3af" font-size="1.2rem">Inga milstolpar matchar filtren</text>';
+                svg.innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="var(--color-text-secondary)" font-size="1.2rem">Inga milstolpar matchar filtren</text>';
             }
         }
 

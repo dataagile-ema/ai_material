@@ -6,7 +6,32 @@
     <title>AI Kodning & Agent Benchmarks - Utveckling över tid</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --color-bg: #1e1f1c;
+            --color-surface: #272822;
+            --color-section-bg: #2e2f2b;
+            --color-text-primary: #f8f8f2;
+            --color-text-secondary: #cfcfc2;
+            --color-text-muted: #a8a897;
+            --color-border: #3e3d32;
+            --color-accent: #7ba3b0;
+            --color-accent-light: #3d5a5e;
+            --color-success: #9bc269;
+            --color-warning: #d4c68d;
+            --color-chart-1: #7ba3b0;
+            --color-chart-2: #a89cc8;
+            --color-chart-3: #9bc269;
+            --color-chart-4: #d98594;
+            --color-chart-5: #d9a066;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,138 +39,164 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
-            min-height: 100vh;
-            color: #e0e0e0;
-            padding: 2rem;
+            font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.75;
+            padding: 4rem 2rem;
+            font-size: 17px;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1280px;
             margin: 0 auto;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--color-text-primary);
         }
 
         h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, #00d4ff, #7c3aed, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
 
-        .subtitle {
-            color: #8b8b9a;
-            font-size: 1.1rem;
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 3px solid var(--color-border);
         }
 
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1.35rem;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        /* Stats Grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 1.5rem;
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            padding: 2.25rem 1.75rem;
             text-align: center;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.2s ease;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.2);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-accent);
         }
 
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--color-accent);
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.2;
         }
-
-        .stat-card:nth-child(1) .stat-value { color: #00d4ff; }
-        .stat-card:nth-child(2) .stat-value { color: #7c3aed; }
-        .stat-card:nth-child(3) .stat-value { color: #10b981; }
-        .stat-card:nth-child(4) .stat-value { color: #f472b6; }
-        .stat-card:nth-child(5) .stat-value { color: #f59e0b; }
 
         .stat-label {
-            color: #8b8b9a;
-            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-weight: 500;
         }
 
+        /* Chart Sections */
         .chart-section {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            background: var(--color-section-bg);
+            border: 2px solid var(--color-border);
+            padding: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--color-border);
         }
 
         .chart-title {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-            color: #fff;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-primary);
+            line-height: 1.3;
         }
 
         .chart-description {
-            color: #8b8b9a;
-            margin-bottom: 1.5rem;
-            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.7;
+            max-width: 850px;
         }
 
         .chart-container {
             position: relative;
-            height: 400px;
+            height: 420px;
         }
 
-        /* Info Button Styles */
+        /* Info Button */
         .info-btn {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.3), rgba(0, 212, 255, 0.3));
-            border: 1px solid rgba(124, 58, 237, 0.5);
-            color: #fff;
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
+            background: var(--color-surface);
+            border: 2px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 0.75rem 1.5rem;
             cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s;
+            gap: 0.6rem;
+            transition: all 0.2s ease;
             white-space: nowrap;
+            font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .info-btn:hover {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.5), rgba(0, 212, 255, 0.5));
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.3);
+            background: var(--color-accent);
+            color: white;
+            box-shadow: var(--shadow-md);
         }
 
         .info-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
         }
 
-        /* Modal Styles */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -153,8 +204,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.6);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -166,69 +216,73 @@
         }
 
         .modal {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            max-width: 700px;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            max-width: 750px;
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
-            position: relative;
+            box-shadow: var(--shadow-lg);
         }
 
         .modal-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem 2.5rem;
+            border-bottom: 2px solid var(--color-border);
             display: flex;
             justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: var(--color-surface);
             z-index: 1;
         }
 
         .modal-title {
-            font-size: 1.5rem;
-            color: #fff;
+            font-size: 1.75rem;
+            color: var(--color-text-primary);
         }
 
         .modal-close {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: #fff;
+            background: transparent;
+            border: 1.5px solid var(--color-border);
+            color: var(--color-text-secondary);
             width: 36px;
             height: 36px;
-            border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s;
+            transition: all 0.2s;
+            font-weight: 300;
         }
 
         .modal-close:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: var(--color-border);
+            color: var(--color-text-primary);
         }
 
         .modal-body {
-            padding: 2rem;
+            padding: 3rem;
         }
 
         .modal-section {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2.5rem;
         }
 
         .modal-section h4 {
-            color: #00d4ff;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            font-family: 'IBM Plex Sans', sans-serif;
         }
 
-        .modal-section p, .modal-section li {
-            color: #c0c0d0;
-            line-height: 1.6;
+        .modal-section p {
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
         }
 
         .modal-section ul {
@@ -237,70 +291,85 @@
         }
 
         .modal-section li {
-            padding: 0.3rem 0;
-            padding-left: 1.5rem;
+            color: var(--color-text-secondary);
+            padding: 0.6rem 0;
+            padding-left: 1.75rem;
             position: relative;
+            line-height: 1.7;
+            font-size: 1.05rem;
         }
 
         .modal-section li::before {
             content: '•';
             position: absolute;
             left: 0;
-            color: #7c3aed;
+            color: var(--color-accent);
+            font-size: 1.3rem;
+        }
+
+        .modal-section strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
         }
 
         .modal-link {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(124, 58, 237, 0.2));
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            color: #00d4ff;
-            padding: 0.8rem 1.2rem;
-            border-radius: 8px;
+            background: var(--color-accent-light);
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 0.75rem 1.25rem;
             text-decoration: none;
             margin-top: 1rem;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            font-weight: 500;
         }
 
         .modal-link:hover {
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(124, 58, 237, 0.3));
-            transform: translateY(-2px);
+            background: var(--color-accent);
+            color: white;
         }
 
         .modal-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 1rem;
-            margin-top: 1rem;
+            margin: 1.5rem 0;
         }
 
         .modal-stat {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1rem;
-            border-radius: 10px;
+            background: var(--color-bg);
+            padding: 1.25rem;
             text-align: center;
+            border: 1px solid var(--color-border);
         }
 
         .modal-stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #7c3aed;
+            color: var(--color-accent);
+            margin-bottom: 0.25rem;
         }
 
         .modal-stat-label {
-            font-size: 0.85rem;
-            color: #8b8b9a;
-            margin-top: 0.3rem;
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            font-weight: 500;
         }
 
+        /* Timeline */
         .timeline-section {
-            margin-top: 3rem;
+            margin-top: 5rem;
+            background: var(--color-section-bg);
+            border: 2px solid var(--color-border);
+            padding: 3rem;
+            box-shadow: var(--shadow-sm);
         }
 
         .timeline {
             position: relative;
-            padding: 2rem 0;
+            padding: 2.5rem 0;
         }
 
         .timeline::before {
@@ -308,44 +377,43 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 4px;
+            width: 3px;
             height: 100%;
-            background: linear-gradient(180deg, #00d4ff, #7c3aed, #f472b6);
-            border-radius: 2px;
+            background: var(--color-border);
         }
 
         .timeline-item {
             display: flex;
             justify-content: flex-end;
-            padding-right: calc(50% + 30px);
+            padding-right: calc(50% + 35px);
             position: relative;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
 
         .timeline-item:nth-child(even) {
             justify-content: flex-start;
             padding-right: 0;
-            padding-left: calc(50% + 30px);
+            padding-left: calc(50% + 35px);
         }
 
         .timeline-content {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.2rem;
-            max-width: 400px;
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            padding: 1.75rem 2rem;
+            max-width: 480px;
             position: relative;
         }
 
         .timeline-content::before {
             content: '';
             position: absolute;
-            width: 16px;
-            height: 16px;
-            background: #7c3aed;
-            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            background: var(--color-accent);
+            border: 3px solid var(--color-surface);
             top: 50%;
             transform: translateY(-50%);
+            border-radius: 50%;
         }
 
         .timeline-item:nth-child(odd) .timeline-content::before {
@@ -357,35 +425,41 @@
         }
 
         .timeline-date {
-            color: #00d4ff;
-            font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 0.3rem;
+            color: var(--color-accent);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
         }
 
         .timeline-title {
-            color: #fff;
-            font-weight: 600;
-            margin-bottom: 0.3rem;
+            color: var(--color-text-primary);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            font-size: 1.15rem;
+            line-height: 1.4;
         }
 
         .timeline-desc {
-            color: #8b8b9a;
-            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.7;
         }
 
+        /* Insight Box */
         .insight-box {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(0, 212, 255, 0.2));
-            border: 1px solid rgba(124, 58, 237, 0.3);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 2rem;
+            background: var(--color-accent-light);
+            border-left: 5px solid var(--color-accent);
+            padding: 2.5rem 3rem;
+            margin-top: 4rem;
         }
 
         .insight-title {
-            color: #fff;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+            color: var(--color-text-primary);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
         }
 
         .insight-list {
@@ -393,176 +467,252 @@
         }
 
         .insight-list li {
-            padding: 0.5rem 0;
-            padding-left: 1.5rem;
+            padding: 0.8rem 0;
+            padding-left: 2.25rem;
             position: relative;
-            color: #c0c0d0;
+            color: var(--color-text-secondary);
+            line-height: 1.75;
+            font-size: 1.05rem;
         }
 
         .insight-list li::before {
-            content: '\2192';
+            content: '→';
             position: absolute;
             left: 0;
-            color: #00d4ff;
+            color: var(--color-accent);
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
+        .insight-list li strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #6b6b7a;
-            font-size: 0.85rem;
+            margin-top: 5rem;
+            padding-top: 2.5rem;
+            border-top: 3px solid var(--color-border);
+            color: var(--color-text-muted);
+            font-size: 1rem;
+            font-weight: 500;
         }
 
         footer a {
-            color: #00d4ff;
+            color: var(--color-accent);
             text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+            font-weight: 600;
         }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 1.8rem; }
-            .timeline::before { left: 20px; }
-            .timeline-item,
-            .timeline-item:nth-child(even) {
-                padding-left: 50px;
-                padding-right: 0;
-                justify-content: flex-start;
-            }
-            .timeline-content::before,
-            .timeline-item:nth-child(odd) .timeline-content::before,
-            .timeline-item:nth-child(even) .timeline-content::before {
-                left: -38px;
-                right: auto;
-            }
-            .chart-header {
-                flex-direction: column;
-            }
+        footer a:hover {
+            border-bottom-color: var(--color-accent);
         }
 
-        /* Model selector styles */
+        /* Model Selector */
         .model-selector select {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            color: var(--color-text-primary);
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
             cursor: pointer;
-            min-width: 250px;
+            min-width: 300px;
+            font-family: 'IBM Plex Sans', sans-serif;
         }
 
         .model-selector select:hover {
-            border-color: rgba(0, 212, 255, 0.5);
+            border-color: var(--color-accent);
         }
 
         .model-selector select:focus {
             outline: none;
-            border-color: #00d4ff;
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px var(--color-accent-light);
         }
 
         .model-selector select option,
         .model-selector select optgroup {
-            background: #1a1a2e;
-            color: #fff;
+            background: var(--color-surface);
+            color: var(--color-text-primary);
+        }
+
+        .model-selector label {
+            color: var(--color-text-secondary);
+            margin-right: 1rem;
+            font-weight: 500;
+            font-size: 1rem;
         }
 
         .model-info-box {
-            margin-top: 1.5rem;
-            padding: 1.2rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 2rem;
         }
 
         .model-info-item {
             text-align: center;
+            padding: 1rem;
         }
 
         .model-info-value {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 700;
-            color: #00d4ff;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
         }
 
         .model-info-value.best {
-            color: #10b981;
+            color: var(--color-success);
         }
 
         .model-info-value.na {
-            color: #6b6b7a;
-            font-size: 1rem;
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
         }
 
         .model-info-label {
-            font-size: 0.85rem;
-            color: #8b8b9a;
-            margin-top: 0.3rem;
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.6rem;
+            font-weight: 600;
+            line-height: 1.4;
         }
 
         .model-info-comparison {
-            font-size: 0.75rem;
-            color: #6b6b7a;
-            margin-top: 0.2rem;
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            margin-top: 0.4rem;
+            line-height: 1.4;
+            font-weight: 500;
         }
 
+        /* Sources Container */
         .sources-container {
-            margin-top: 1.5rem;
+            margin-top: 2.5rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
         }
 
         .sources-section {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            padding: 1.75rem;
         }
 
         .sources-title {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: #a0a0b0;
-            font-size: 0.85rem;
+            gap: 0.6rem;
+            color: var(--color-text-primary);
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 0.8rem;
-            padding-bottom: 0.6rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .sources-title svg {
-            opacity: 0.7;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-border);
         }
 
         .sources-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
         .sources-links a {
             display: inline-block;
-            padding: 0.4rem 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
-            color: #8b8b9a;
+            padding: 0.7rem 1.25rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
             text-decoration: none;
-            font-size: 0.8rem;
+            font-size: 1rem;
+            font-weight: 500;
             transition: all 0.2s;
         }
 
         .sources-links a:hover {
-            background: rgba(0, 212, 255, 0.1);
-            border-color: rgba(0, 212, 255, 0.3);
-            color: #00d4ff;
-            transform: translateY(-1px);
+            background: var(--color-accent-light);
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 2rem 1rem;
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            h2 {
+                font-size: 1.65rem;
+            }
+
+            .chart-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .chart-header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .stat-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .timeline::before {
+                left: 25px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+
+            .timeline-content::before,
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -43px;
+                right: auto;
+            }
+
+            .modal-body {
+                padding: 2rem;
+            }
+
+            .insight-box {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .chart-section,
+            .timeline-section {
+                break-inside: avoid;
+            }
+
+            .info-btn {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -570,24 +720,24 @@
     <div class="container">
         <header>
             <h1>AI Kodning & Agent Benchmarks</h1>
-            <p class="subtitle">Utvecklingen 2019-2025: Exponentiell tillväxt i AI-förmågor</p>
+            <p class="subtitle">Utvecklingen 2019-2025: Tillväxt i AI-förmågor</p>
         </header>
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-value">0% &rarr; 96%</div>
-                <div class="stat-label">HumanEval (GPT-3 &rarr; o1)</div>
+                <div class="stat-value">0% → 96%</div>
+                <div class="stat-label">HumanEval (GPT-3 → o1)</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">~2% &rarr; 81%</div>
+                <div class="stat-value">~2% → 81%</div>
                 <div class="stat-label">SWE-bench Verified</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">50% &rarr; 97%</div>
+                <div class="stat-value">50% → 97%</div>
                 <div class="stat-label">TAU-bench pass@1</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value">2 min &rarr; 5 tim</div>
+                <div class="stat-value">2 min → 5 tim</div>
                 <div class="stat-label">METR Time Horizon</div>
             </div>
             <div class="stat-card">
@@ -600,7 +750,7 @@
         <div class="chart-section">
             <div class="chart-header">
                 <div>
-                    <h2 class="chart-title">Kodgenerering: HumanEval Benchmark</h2>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">1.</span>Kodgenerering: HumanEval Benchmark</h2>
                     <p class="chart-description">Pass@1 resultat över tid. Visar hur AI gått från att inte kunna lösa ett enda problem till att överträffa de flesta programmerare.</p>
                 </div>
                 <button class="info-btn" onclick="openModal('humaneval-modal')">
@@ -620,7 +770,7 @@
         <div class="chart-section">
             <div class="chart-header">
                 <div>
-                    <h2 class="chart-title">Software Engineering: SWE-bench</h2>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">2.</span>Software Engineering: SWE-bench</h2>
                     <p class="chart-description">Förmågan att lösa riktiga GitHub-issues. Ett mycket svårare test än isolerad kodgenerering.</p>
                 </div>
                 <button class="info-btn" onclick="openModal('swebench-modal')">
@@ -640,7 +790,7 @@
         <div class="chart-section">
             <div class="chart-header">
                 <div>
-                    <h2 class="chart-title">Konsistens: TAU-bench (pass^k)</h2>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">3.</span>Konsistens: TAU-bench (pass^k)</h2>
                     <p class="chart-description">Hur pålitliga är AI-agenter? pass^k mäter om modellen lyckas k gånger i rad - ett hårt test på konsistens.</p>
                 </div>
                 <button class="info-btn" onclick="openModal('taubench-modal')">
@@ -660,7 +810,7 @@
         <div class="chart-section">
             <div class="chart-header">
                 <div>
-                    <h2 class="chart-title">Uppgiftslängd: METR Time Horizon</h2>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">4.</span>Uppgiftslängd: METR Time Horizon</h2>
                     <p class="chart-description">Hur långa uppgifter (mätt i mänsklig tid) kan AI klara med 50% framgång? Exponentiell tillväxt med ~7 månaders fördubblingstid.</p>
                 </div>
                 <button class="info-btn" onclick="openModal('metr-modal')">
@@ -678,7 +828,7 @@
 
         <!-- Combined Chart -->
         <div class="chart-section">
-            <h2 class="chart-title">Jämförelse: Procent-baserade Benchmarks</h2>
+            <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">5.</span>Jämförelse: Procent-baserade Benchmarks</h2>
             <p class="chart-description">Jämför framsteg över tid för benchmarks som mäter andel lösta uppgifter (%). METR exkluderat då det mäter tid.</p>
             <div class="chart-container">
                 <canvas id="combinedChart"></canvas>
@@ -689,11 +839,11 @@
         <div class="chart-section">
             <div class="chart-header">
                 <div>
-                    <h2 class="chart-title">Modellöversikt</h2>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">6.</span>Modellöversikt</h2>
                     <p class="chart-description">Välj en modell för att se dess prestanda på alla benchmarks. METR visas som procent av SOTA (289 min = 100%).</p>
                 </div>
                 <div class="model-selector">
-                    <label for="modelSelect" style="color: #8b8b9a; margin-right: 0.5rem;">Välj modell:</label>
+                    <label for="modelSelect">Välj modell:</label>
                     <select id="modelSelect" onchange="updateModelChart()">
                         <!-- Options will be dynamically populated from JSON data -->
                     </select>
@@ -871,7 +1021,7 @@
                         <div class="modal-stat-label">Problem</div>
                     </div>
                     <div class="modal-stat">
-                        <div class="modal-stat-value">0% &rarr; 96%</div>
+                        <div class="modal-stat-value">0% → 96%</div>
                         <div class="modal-stat-label">Framsteg 2021-2024</div>
                     </div>
                     <div class="modal-stat">
@@ -1152,14 +1302,14 @@
             }
         });
 
-        // Color palette
+        // Color palette for charts - professional educational colors
         const colors = {
-            cyan: '#00d4ff',
-            purple: '#7c3aed',
-            green: '#10b981',
-            pink: '#f472b6',
-            orange: '#f59e0b',
-            red: '#ef4444'
+            cyan: '#7ba3b0',
+            purple: '#a89cc8',
+            green: '#9bc269',
+            pink: '#d98594',
+            orange: '#d9a066',
+            red: '#d98594'
         };
 
         // Data loader module - loads benchmark data from JSON file
@@ -1308,25 +1458,68 @@
         const xAxisMin = '2021-01-01';
         const xAxisMax = '2026-01-01';
 
-        // Common chart options
+        // Plugin to highlight 100% line
+        const highlight100Plugin = {
+            id: 'highlight100',
+            afterDatasetsDraw(chart) {
+                const { ctx, chartArea: { left, right }, scales: { y } } = chart;
+                if (!y || y.max !== 100) return; // Only for percentage charts
+
+                const yPos = y.getPixelForValue(100);
+
+                ctx.save();
+                ctx.strokeStyle = '#64748b';
+                ctx.lineWidth = 2.5;
+                ctx.setLineDash([8, 4]);
+                ctx.beginPath();
+                ctx.moveTo(left, yPos);
+                ctx.lineTo(right, yPos);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Add label
+                ctx.fillStyle = '#64748b';
+                ctx.font = '600 13px IBM Plex Sans, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText('100% (mättnad)', left + 10, yPos - 5);
+                ctx.restore();
+            }
+        };
+
+        // Common chart options with educational styling
         const commonOptions = {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 legend: {
                     labels: {
-                        color: '#e0e0e0',
-                        font: { size: 12 }
+                        color: '#f8f8f2',
+                        font: {
+                            size: 16,
+                            family: "'IBM Plex Sans', sans-serif",
+                            weight: '600'
+                        },
+                        padding: 18
                     }
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(20, 20, 40, 0.95)',
-                    titleColor: '#fff',
-                    bodyColor: '#e0e0e0',
-                    borderColor: 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: 'rgba(46, 47, 43, 0.98)',
+                    titleColor: '#f8f8f2',
+                    bodyColor: '#cfcfc2',
+                    borderColor: '#3e3d32',
                     borderWidth: 1,
-                    padding: 12,
-                    displayColors: true
+                    padding: 14,
+                    displayColors: true,
+                    titleFont: {
+                        size: 15,
+                        weight: '600',
+                        family: "'IBM Plex Sans', sans-serif"
+                    },
+                    bodyFont: {
+                        size: 14,
+                        family: "'IBM Plex Sans', sans-serif"
+                    }
                 }
             },
             scales: {
@@ -1335,26 +1528,39 @@
                     min: xAxisMin,
                     max: xAxisMax,
                     time: {
-                        unit: 'quarter',
+                        unit: 'year',
                         displayFormats: {
-                            quarter: 'MMM yyyy'
+                            year: 'yyyy'
                         }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.05)'
+                        color: '#3e3d32',
+                        lineWidth: 1
                     },
                     ticks: {
-                        color: '#8b8b9a'
+                        color: '#cfcfc2',
+                        font: {
+                            size: 14,
+                            family: "'IBM Plex Sans', sans-serif",
+                            weight: '600'
+                        }
                     }
                 },
                 y: {
                     min: 0,
                     max: 100,
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.05)'
+                        color: '#3e3d32',
+                        lineWidth: 1
                     },
                     ticks: {
-                        color: '#8b8b9a',
+                        color: '#cfcfc2',
+                        font: {
+                            size: 15,
+                            family: "'IBM Plex Sans', sans-serif",
+                            weight: '600'
+                        },
+                        stepSize: 25,
                         callback: value => value + '%'
                     }
                 }
@@ -1386,14 +1592,16 @@
                         { x: '2025-11-01', y: 95.5, model: 'Claude 4.5 Opus' }
                     ],
                     borderColor: colors.cyan,
-                    backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                    backgroundColor: 'rgba(123, 163, 176, 0.15)',
                     fill: true,
-                    tension: 0.3,
-                    pointRadius: 6,
-                    pointHoverRadius: 10,
-                    pointBackgroundColor: colors.cyan
+                    tension: 0.2,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: colors.cyan,
+                    borderWidth: 2.5
                 }]
             },
+            plugins: [highlight100Plugin],
             options: {
                 ...commonOptions,
                 plugins: {
@@ -1415,6 +1623,7 @@
         const sweBenchCtx = document.getElementById('sweBenchChart').getContext('2d');
         new Chart(sweBenchCtx, {
             type: 'line',
+            plugins: [highlight100Plugin],
             data: {
                 datasets: [
                     {
@@ -1427,9 +1636,10 @@
                             { x: '2024-07-01', y: 45, model: 'Claude 3.5 Sonnet' }
                         ],
                         borderColor: colors.purple,
-                        tension: 0.3,
-                        pointRadius: 6,
-                        pointBackgroundColor: colors.purple
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.purple,
+                        borderWidth: 2.5
                     },
                     {
                         label: 'SWE-bench Verified',
@@ -1445,9 +1655,10 @@
                             { x: '2025-12-11', y: 80.0, model: 'GPT-5.2 Thinking' }
                         ],
                         borderColor: colors.green,
-                        tension: 0.3,
-                        pointRadius: 6,
-                        pointBackgroundColor: colors.green
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.green,
+                        borderWidth: 2.5
                     },
                     {
                         label: 'SWE-bench Pro',
@@ -1463,9 +1674,10 @@
                             { x: '2025-12-11', y: 55.6, model: 'GPT-5.2 Thinking' }
                         ],
                         borderColor: colors.orange,
-                        tension: 0.3,
-                        pointRadius: 6,
-                        pointBackgroundColor: colors.orange
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.orange,
+                        borderWidth: 2.5
                     }
                 ]
             },
@@ -1490,6 +1702,7 @@
         const tauBenchCtx = document.getElementById('tauBenchChart').getContext('2d');
         new Chart(tauBenchCtx, {
             type: 'line',
+            plugins: [highlight100Plugin],
             data: {
                 datasets: [
                     {
@@ -1503,11 +1716,12 @@
                             { x: '2025-12-01', y: 97, model: 'GPT-5' }
                         ],
                         borderColor: colors.cyan,
-                        backgroundColor: 'rgba(0, 212, 255, 0.1)',
+                        backgroundColor: 'rgba(123, 163, 176, 0.15)',
                         fill: false,
-                        tension: 0.3,
-                        pointRadius: 6,
-                        pointBackgroundColor: colors.cyan
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.cyan,
+                        borderWidth: 2.5
                     },
                     {
                         label: 'pass^8 (Retail)',
@@ -1520,12 +1734,13 @@
                             { x: '2025-12-01', y: 78, model: 'GPT-5' }
                         ],
                         borderColor: colors.red,
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        backgroundColor: 'rgba(217, 133, 148, 0.15)',
                         fill: false,
-                        tension: 0.3,
-                        pointRadius: 6,
+                        tension: 0.2,
+                        pointRadius: 5,
                         pointBackgroundColor: colors.red,
-                        borderDash: [5, 5]
+                        borderDash: [5, 5],
+                        borderWidth: 2.5
                     }
                 ]
             },
@@ -1566,12 +1781,13 @@
                         { x: '2025-11-24', y: 289, model: 'Claude 4.5 Opus', display: '4h 49min' }
                     ],
                     borderColor: colors.orange,
-                    backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                    backgroundColor: 'rgba(217, 160, 102, 0.15)',
                     fill: true,
-                    tension: 0.3,
-                    pointRadius: 8,
-                    pointHoverRadius: 12,
-                    pointBackgroundColor: colors.orange
+                    tension: 0.2,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    pointBackgroundColor: colors.orange,
+                    borderWidth: 2.5
                 }]
             },
             options: {
@@ -1580,17 +1796,31 @@
                 plugins: {
                     legend: {
                         labels: {
-                            color: '#e0e0e0',
-                            font: { size: 12 }
+                            color: '#f8f8f2',
+                            font: {
+                                size: 16,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            },
+                            padding: 18
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(20, 20, 40, 0.95)',
-                        titleColor: '#fff',
-                        bodyColor: '#e0e0e0',
-                        borderColor: 'rgba(255, 255, 255, 0.1)',
+                        backgroundColor: 'rgba(46, 47, 43, 0.98)',
+                        titleColor: '#f8f8f2',
+                        bodyColor: '#cfcfc2',
+                        borderColor: '#3e3d32',
                         borderWidth: 1,
-                        padding: 12,
+                        padding: 14,
+                        titleFont: {
+                            size: 15,
+                            weight: '600',
+                            family: "'IBM Plex Sans', sans-serif"
+                        },
+                        bodyFont: {
+                            size: 14,
+                            family: "'IBM Plex Sans', sans-serif"
+                        },
                         callbacks: {
                             label: function(context) {
                                 const point = context.raw;
@@ -1605,26 +1835,38 @@
                         min: xAxisMin,
                         max: xAxisMax,
                         time: {
-                            unit: 'quarter',
+                            unit: 'year',
                             displayFormats: {
-                                quarter: 'MMM yyyy'
+                                year: 'yyyy'
                             }
                         },
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.05)'
+                            color: '#3e3d32',
+                            lineWidth: 1
                         },
                         ticks: {
-                            color: '#8b8b9a'
+                            color: '#cfcfc2',
+                            font: {
+                                size: 14,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            }
                         }
                     },
                     y: {
                         min: 0,
                         max: 300,
                         grid: {
-                            color: 'rgba(255, 255, 255, 0.05)'
+                            color: '#3e3d32',
+                            lineWidth: 1
                         },
                         ticks: {
-                            color: '#8b8b9a',
+                            color: '#cfcfc2',
+                            font: {
+                                size: 15,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            },
                             stepSize: 60,
                             callback: function(value) {
                                 if (value === 0) return '0';
@@ -1634,7 +1876,12 @@
                         title: {
                             display: true,
                             text: 'Time Horizon',
-                            color: '#8b8b9a'
+                            color: '#cfcfc2',
+                            font: {
+                                size: 15,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            }
                         }
                     }
                 }
@@ -1645,6 +1892,7 @@
         const combinedCtx = document.getElementById('combinedChart').getContext('2d');
         new Chart(combinedCtx, {
             type: 'line',
+            plugins: [highlight100Plugin],
             data: {
                 datasets: [
                     {
@@ -1660,8 +1908,9 @@
                             { x: '2025-11-01', y: 95.5 }
                         ],
                         borderColor: colors.cyan,
-                        tension: 0.3,
-                        pointRadius: 4
+                        tension: 0.2,
+                        pointRadius: 4,
+                        borderWidth: 2.5
                     },
                     {
                         label: 'SWE-bench Verified',
@@ -1674,8 +1923,9 @@
                             { x: '2025-11-01', y: 80.9 }
                         ],
                         borderColor: colors.green,
-                        tension: 0.3,
-                        pointRadius: 4
+                        tension: 0.2,
+                        pointRadius: 4,
+                        borderWidth: 2.5
                     },
                     {
                         label: 'TAU-bench pass@1',
@@ -1688,8 +1938,9 @@
                             { x: '2025-12-01', y: 97 }
                         ],
                         borderColor: colors.pink,
-                        tension: 0.3,
-                        pointRadius: 4
+                        tension: 0.2,
+                        pointRadius: 4,
+                        borderWidth: 2.5
                     }
                 ]
             },
@@ -1726,11 +1977,11 @@
             });
 
             const backgroundColors = benchmarks.map(b => {
-                if (model[b] === null) return 'rgba(100, 100, 100, 0.3)';
+                if (model[b] === null) return 'rgba(80, 80, 80, 0.4)';
                 if (b === 'metr') {
-                    if (model[b] >= bestScores[b].value) return 'rgba(16, 185, 129, 0.8)';
+                    if (model[b] >= bestScores[b].value) return 'rgba(155, 194, 105, 0.85)';
                 } else {
-                    if (model[b] >= bestScores[b].value) return 'rgba(16, 185, 129, 0.8)';
+                    if (model[b] >= bestScores[b].value) return 'rgba(155, 194, 105, 0.85)';
                 }
                 return benchmarkColors[b] + 'cc';
             });
@@ -1749,18 +2000,18 @@
                             data: data,
                             backgroundColor: backgroundColors,
                             borderColor: benchmarks.map(b => benchmarkColors[b]),
-                            borderWidth: 2,
-                            borderRadius: 6,
-                            barPercentage: 0.6
+                            borderWidth: 1.5,
+                            borderRadius: 4,
+                            barPercentage: 0.7
                         },
                         {
                             label: 'SOTA',
                             data: bestData,
-                            backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                            borderColor: 'rgba(255, 255, 255, 0.3)',
+                            backgroundColor: 'rgba(62, 61, 50, 0.6)',
+                            borderColor: 'rgba(168, 168, 151, 0.5)',
                             borderWidth: 1,
-                            borderRadius: 6,
-                            barPercentage: 0.6,
+                            borderRadius: 4,
+                            barPercentage: 0.7,
                             sotaModels: benchmarks.map(b => bestScores[b].model)
                         }
                     ]
@@ -1773,14 +2024,14 @@
                         const sotaModels = chart.data.datasets[1].sotaModels;
 
                         ctx.save();
-                        ctx.font = '11px Segoe UI, system-ui, sans-serif';
-                        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                        ctx.font = '600 14px IBM Plex Sans, system-ui, sans-serif';
+                        ctx.fillStyle = '#a8a897';
                         ctx.textAlign = 'right';
                         ctx.textBaseline = 'middle';
 
                         meta.data.forEach((bar, index) => {
                             const model = sotaModels[index];
-                            const x = bar.x - 8;
+                            const x = bar.x - 10;
                             const y = bar.y;
                             ctx.fillText(model, x, y);
                         });
@@ -1794,17 +2045,31 @@
                     plugins: {
                         legend: {
                             labels: {
-                                color: '#e0e0e0',
-                                font: { size: 12 }
+                                color: '#f8f8f2',
+                                font: {
+                                    size: 16,
+                                    family: "'IBM Plex Sans', sans-serif",
+                                    weight: '600'
+                                },
+                                padding: 18
                             }
                         },
                         tooltip: {
-                            backgroundColor: 'rgba(20, 20, 40, 0.95)',
-                            titleColor: '#fff',
-                            bodyColor: '#e0e0e0',
-                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            backgroundColor: 'rgba(46, 47, 43, 0.98)',
+                            titleColor: '#f8f8f2',
+                            bodyColor: '#cfcfc2',
+                            borderColor: '#3e3d32',
                             borderWidth: 1,
-                            padding: 12,
+                            padding: 14,
+                            titleFont: {
+                                size: 15,
+                                weight: '600',
+                                family: "'IBM Plex Sans', sans-serif"
+                            },
+                            bodyFont: {
+                                size: 14,
+                                family: "'IBM Plex Sans', sans-serif"
+                            },
                             callbacks: {
                                 label: function(context) {
                                     const value = context.raw;
@@ -1841,10 +2106,17 @@
                             min: 0,
                             max: 100,
                             grid: {
-                                color: 'rgba(255, 255, 255, 0.05)'
+                                color: '#3e3d32',
+                                lineWidth: 1
                             },
                             ticks: {
-                                color: '#8b8b9a',
+                                color: '#cfcfc2',
+                                font: {
+                                    size: 14,
+                                    family: "'IBM Plex Sans', sans-serif",
+                                    weight: '600'
+                                },
+                                stepSize: 25,
                                 callback: value => value + '%'
                             }
                         },
@@ -1853,8 +2125,12 @@
                                 display: false
                             },
                             ticks: {
-                                color: '#e0e0e0',
-                                font: { size: 12 }
+                                color: '#f8f8f2',
+                                font: {
+                                    size: 14,
+                                    family: "'IBM Plex Sans', sans-serif",
+                                    weight: '600'
+                                }
                             }
                         }
                     }
@@ -1893,7 +2169,7 @@
                     const bestMins = item.best.value % 60;
                     const bestText = bestHours > 0 ? `${bestHours}h ${bestMins}m` : `${bestMins} min`;
                     comparison = item.value >= item.best.value ?
-                        '🏆 SOTA' :
+                        'State of the Art' :
                         `SOTA: ${bestText} (${item.best.model})`;
                 } else {
                     if (item.value >= item.best.value) {
@@ -1901,7 +2177,7 @@
                     }
                     valueText = item.value + '%';
                     comparison = item.value >= item.best.value ?
-                        '🏆 SOTA' :
+                        'State of the Art' :
                         `SOTA: ${item.best.value}% (${item.best.model})`;
                 }
 

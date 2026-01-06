@@ -9,35 +9,35 @@
       {
         "id": "humaneval",
         "label": "HumanEval",
-        "color": "#00d4ff",
+        "color": "#7ba3b0",
         "unit": "percentage",
         "sourceUrl": "https://github.com/openai/human-eval"
       },
       {
         "id": "swebench_verified",
         "label": "SWE-bench Verified",
-        "color": "#10b981",
+        "color": "#9bc269",
         "unit": "percentage",
         "sourceUrl": "https://www.swebench.com/"
       },
       {
         "id": "swebench_pro",
         "label": "SWE-bench Pro",
-        "color": "#f59e0b",
+        "color": "#d9a066",
         "unit": "percentage",
         "sourceUrl": "https://scale.com/leaderboard/swe_bench_pro_public"
       },
       {
         "id": "taubench",
         "label": "TAU-bench pass@1",
-        "color": "#f472b6",
+        "color": "#d98594",
         "unit": "percentage",
         "sourceUrl": "https://github.com/sierra-research/tau-bench"
       },
       {
         "id": "metr",
         "label": "METR (minuter)",
-        "color": "#7c3aed",
+        "color": "#a89cc8",
         "unit": "minutes",
         "sourceUrl": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
       }
