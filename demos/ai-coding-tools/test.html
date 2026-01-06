@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <title>Test - JSON Loading</title>
+</head>
+<body>
+    <h1>Test JSON Loading</h1>
+    <div id="status">Laddar...</div>
+    <pre id="output"></pre>
+
+    <script>
+        async function testLoad() {
+            const statusEl = document.getElementById('status');
+            const outputEl = document.getElementById('output');
+
+            try {
+                statusEl.textContent = 'Fetching data...';
+                console.log('Starting fetch...');
+
+                const response = await fetch('./data/coding-tools-data.json');
+                console.log('Response:', response);
+                console.log('Response OK:', response.ok);
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                statusEl.textContent = 'Parsing JSON...';
+                const data = await response.json();
+                console.log('Data loaded:', data);
+
+                statusEl.textContent = 'SUCCESS!';
+                statusEl.style.color = 'green';
+
+                outputEl.textContent = JSON.stringify({
+                    tools: data.tools.length,
+                    features: data.features.length,
+                    timeline: data.convergenceTimeline.length
+                }, null, 2);
+
+            } catch (error) {
+                statusEl.textContent = 'ERROR: ' + error.message;
+                statusEl.style.color = 'red';
+                console.error('Error:', error);
+                outputEl.textContent = error.stack;
+            }
+        }
+
+        testLoad();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1122 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-05",
+    "description": "AI-utveckling tidslinje 2017-2025: Från Transformers till Reasoning Models",
+    "language": "sv",
+    "timeRange": {
+      "start": "2017-06-01",
+      "end": "2026-01-05"
+    }
+  },
+
+  "categories": [
+    {
+      "id": "research",
+      "label": "Forskningsgenombrott",
+      "color": "#00d4ff",
+      "icon": "🔬",
+      "description": "Banbrytande papers och arkitekturer"
+    },
+    {
+      "id": "models",
+      "label": "Modellreleaser",
+      "color": "#7c3aed",
+      "icon": "🤖",
+      "description": "Stora språkmodeller och multimodala modeller"
+    },
+    {
+      "id": "products",
+      "label": "Produkter & Appar",
+      "color": "#f472b6",
+      "icon": "✨",
+      "description": "Publika AI-tjänster och applikationer"
+    },
+    {
+      "id": "benchmarks",
+      "label": "Benchmark-genombrott",
+      "color": "#10b981",
+      "icon": "📊",
+      "description": "Betydande förbättringar på standardtester"
+    },
+    {
+      "id": "tools",
+      "label": "Verktyg & Standarder",
+      "color": "#f59e0b",
+      "icon": "🛠️",
+      "description": "Utvecklarverktyg, agenter, protokoll"
+    },
+    {
+      "id": "companies",
+      "label": "Företag & Labs",
+      "color": "#ec4899",
+      "icon": "🏢",
+      "description": "Frontier labs och viktiga företagshändelser"
+    }
+  ],
+
+  "companies": [
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "color": "#10a37f"
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "color": "#d97757"
+    },
+    {
+      "id": "google",
+      "name": "Google DeepMind",
+      "color": "#4285f4"
+    },
+    {
+      "id": "meta",
+      "name": "Meta AI",
+      "color": "#0668e1"
+    },
+    {
+      "id": "microsoft",
+      "name": "Microsoft",
+      "color": "#00a4ef"
+    },
+    {
+      "id": "stability",
+      "name": "Stability AI",
+      "color": "#7c3aed"
+    }
+  ],
+
+  "milestones": [
+    {
+      "id": "attention-is-all-you-need",
+      "title": "Attention Is All You Need",
+      "date": "2017-06-12",
+      "dateDisplay": "12 juni 2017",
+      "category": "research",
+      "company": "google",
+      "importance": 10,
+      "shortDesc": "Transformer-arkitekturen introduceras och revolutionerar NLP",
+      "detailedDesc": "Vaswani et al. från Google Brain publicerar 'Attention is All You Need' på arXiv, som introducerar transformer-arkitekturen. Detta blev grunden för alla moderna språkmodeller.",
+      "significance": "Revolutionerade NLP och möjliggjorde skalning till miljardtals parametrar genom self-attention-mekanismen. Blev fundamentet för GPT, BERT, och nästan alla moderna AI-modeller.",
+      "icon": "🔬",
+      "keyPeople": ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit", "Llion Jones", "Aidan Gomez", "Łukasz Kaiser", "Illia Polosukhin"],
+      "tags": ["transformer", "architecture", "foundational", "NLP", "attention"],
+      "metrics": [
+        {
+          "label": "Citeringar",
+          "value": "173,000+",
+          "context": "En av de mest citerade AI-papers någonsin"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Attention is All You Need (arXiv)",
+          "url": "https://arxiv.org/abs/1706.03762",
+          "type": "paper"
+        },
+        {
+          "title": "Attention Is All You Need - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
+          "type": "reference"
+        }
+      ],
+      "relatedMilestones": ["bert", "gpt-1"],
+      "impactAreas": ["NLP", "Computer Vision", "Speech Recognition", "Multimodal AI"]
+    },
+
+    {
+      "id": "alphago-zero",
+      "title": "AlphaGo Zero",
+      "date": "2017-10-18",
+      "dateDisplay": "18 oktober 2017",
+      "category": "research",
+      "company": "google",
+      "importance": 9,
+      "shortDesc": "Lär sig Go från noll genom självspel, slår AlphaGo 100-0",
+      "detailedDesc": "DeepMind presenterar AlphaGo Zero som lär sig att spela Go enbart genom självspel, utan mänsklig data. Blir starkare än den tidigare versionen som slog världsmästaren.",
+      "significance": "Demonstrerade att AI kan nå övermänsklig nivå helt genom self-play och reinforcement learning utan träningsdata från människor.",
+      "icon": "🎮",
+      "keyPeople": ["David Silver", "Julian Schrittwieser", "Demis Hassabis"],
+      "tags": ["reinforcement-learning", "self-play", "games", "AlphaGo"],
+      "metrics": [
+        {
+          "label": "Matcher mot AlphaGo",
+          "value": "100-0",
+          "context": "Vann alla 100 matcher"
+        }
+      ],
+      "sources": [
+        {
+          "title": "AlphaGo Zero: Starting from scratch",
+          "url": "https://www.deepmind.com/blog/alphago-zero-starting-from-scratch",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["alphazero"],
+      "impactAreas": ["Reinforcement Learning", "Game AI", "Self-learning systems"]
+    },
+
+    {
+      "id": "alphazero",
+      "title": "AlphaZero",
+      "date": "2017-12-05",
+      "dateDisplay": "5 december 2017",
+      "category": "research",
+      "company": "google",
+      "importance": 9,
+      "shortDesc": "Generaliserbar AI som behärskar schack, shogi och Go",
+      "detailedDesc": "DeepMind presenterar AlphaZero som använder samma algoritm för att nå världsklass-nivå i tre olika strategispel: schack, shogi och Go.",
+      "significance": "Första AI-systemet som visar generalisering över olika domäner med samma algoritm, ett steg mot allmän artificiell intelligens.",
+      "icon": "♟️",
+      "keyPeople": ["David Silver", "Thomas Hubert", "Demis Hassabis"],
+      "tags": ["reinforcement-learning", "games", "generalization"],
+      "sources": [
+        {
+          "title": "AlphaZero: Shedding new light on chess, shogi, and Go",
+          "url": "https://www.deepmind.com/blog/alphazero-shedding-new-light-on-chess-shogi-and-go",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["alphago-zero"],
+      "impactAreas": ["Reinforcement Learning", "Game AI"]
+    },
+
+    {
+      "id": "gpt-1",
+      "title": "GPT-1 (Generative Pre-trained Transformer)",
+      "date": "2018-06-11",
+      "dateDisplay": "11 juni 2018",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "OpenAI:s första GPT-modell demonstrerar transfer learning",
+      "detailedDesc": "OpenAI släpper GPT-1 med 117 miljoner parametrar, som visar att pre-training på stora textmängder följt av fine-tuning kan ge state-of-the-art resultat på många NLP-uppgifter.",
+      "significance": "Startade GPT-serien och visade vägen för unsupervised pre-training följt av supervised fine-tuning.",
+      "icon": "🤖",
+      "keyPeople": ["Alec Radford", "Karthik Narasimhan", "Tim Salimans", "Ilya Sutskever"],
+      "tags": ["GPT", "language-model", "pre-training", "transfer-learning"],
+      "metrics": [
+        {
+          "label": "Parametrar",
+          "value": "117M",
+          "context": "117 miljoner parametrar"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Improving Language Understanding by Generative Pre-Training",
+          "url": "https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf",
+          "type": "paper"
+        }
+      ],
+      "relatedMilestones": ["attention-is-all-you-need", "gpt-2", "bert"],
+      "impactAreas": ["NLP", "Transfer Learning"]
+    },
+
+    {
+      "id": "bert",
+      "title": "BERT (Bidirectional Encoder Representations)",
+      "date": "2018-10-11",
+      "dateDisplay": "11 oktober 2018",
+      "category": "models",
+      "company": "google",
+      "importance": 9,
+      "shortDesc": "Bidirektionell transformer som sätter nya state-of-the-art",
+      "detailedDesc": "Google presenterar BERT som använder bidirektionell träning av transformers. Slår alla tidigare rekord på 11 NLP-uppgifter inklusive SQuAD question-answering.",
+      "significance": "Visade kraften i bidirektionell context och masked language modeling. Blev grunden för många produktionssystem.",
+      "icon": "🔬",
+      "keyPeople": ["Jacob Devlin", "Ming-Wei Chang", "Kenton Lee", "Kristina Toutanova"],
+      "tags": ["BERT", "bidirectional", "NLP", "pre-training"],
+      "metrics": [
+        {
+          "label": "SQuAD 1.1 F1",
+          "value": "93.2",
+          "context": "State-of-the-art när det släpptes"
+        }
+      ],
+      "sources": [
+        {
+          "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+          "url": "https://arxiv.org/abs/1810.04805",
+          "type": "paper"
+        }
+      ],
+      "relatedMilestones": ["attention-is-all-you-need", "gpt-1"],
+      "impactAreas": ["NLP", "Search", "Question Answering"]
+    },
+
+    {
+      "id": "gpt-2",
+      "title": "GPT-2",
+      "date": "2019-02-14",
+      "dateDisplay": "14 februari 2019",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "1.5 miljarder parametrar, kontroversiell fördröjd release",
+      "detailedDesc": "OpenAI släpper GPT-2 med 1.5 miljarder parametrar. Visade imponerande zero-shot förmågor men OpenAI väntade med full release av säkerhetsskäl.",
+      "significance": "Första gången säkerhetskoncerns påverkade release av en AI-modell. Visade skalningens kraft.",
+      "icon": "🤖",
+      "keyPeople": ["Alec Radford", "Jeffrey Wu", "Rewon Child", "David Luan", "Dario Amodei", "Ilya Sutskever"],
+      "tags": ["GPT", "language-model", "safety", "scaling"],
+      "metrics": [
+        {
+          "label": "Parametrar",
+          "value": "1.5B",
+          "context": "1.5 miljarder parametrar"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Better Language Models and Their Implications",
+          "url": "https://openai.com/research/better-language-models",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["gpt-1", "gpt-3"],
+      "impactAreas": ["NLP", "Text Generation", "AI Safety"]
+    },
+
+    {
+      "id": "gpt-3",
+      "title": "GPT-3",
+      "date": "2020-06-11",
+      "dateDisplay": "11 juni 2020",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "175 miljarder parametrar, few-shot learning genombrott",
+      "detailedDesc": "OpenAI släpper GPT-3 med 175 miljarder parametrar. Visar remarkabel förmåga till few-shot learning och kan utföra många uppgifter med bara exempel i prompten.",
+      "significance": "Transformerade synen på vad språkmodeller kan göra. Startade era av in-context learning och prompting.",
+      "icon": "🤖",
+      "keyPeople": ["Tom B. Brown", "Benjamin Mann", "Nick Ryder", "Melanie Subbiah", "Dario Amodei", "Ilya Sutskever"],
+      "tags": ["GPT", "few-shot-learning", "scaling", "language-model"],
+      "metrics": [
+        {
+          "label": "Parametrar",
+          "value": "175B",
+          "context": "175 miljarder parametrar"
+        },
+        {
+          "label": "Träningsdata",
+          "value": "300B tokens",
+          "context": "Tränad på 300 miljarder tokens"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Language Models are Few-Shot Learners",
+          "url": "https://arxiv.org/abs/2005.14165",
+          "type": "paper"
+        }
+      ],
+      "relatedMilestones": ["gpt-2", "chatgpt"],
+      "impactAreas": ["NLP", "Few-shot Learning", "Code Generation"]
+    },
+
+    {
+      "id": "github-copilot",
+      "title": "GitHub Copilot",
+      "date": "2021-06-29",
+      "dateDisplay": "29 juni 2021",
+      "category": "products",
+      "company": "openai",
+      "importance": 9,
+      "shortDesc": "AI-kodassistent baserad på Codex lanseras som technical preview",
+      "detailedDesc": "GitHub och OpenAI lanserar Copilot, en AI-kodassistent som föreslår kod och hela funktioner i realtid. Baserad på OpenAI Codex.",
+      "significance": "Första mainstream AI-kodningsverktyget. Visade att AI kan vara en praktisk utvecklingspartner.",
+      "icon": "💻",
+      "keyPeople": ["Nat Friedman", "Sam Altman"],
+      "tags": ["coding", "developer-tools", "Codex", "AI-assistant"],
+      "metrics": [
+        {
+          "label": "Användare 2023",
+          "value": "1M+",
+          "context": "Över 1 miljon betalande användare"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing GitHub Copilot",
+          "url": "https://github.blog/2021-06-29-introducing-github-copilot-ai-pair-programmer/",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["gpt-3", "codex"],
+      "impactAreas": ["Coding", "Developer Tools", "Productivity"]
+    },
+
+    {
+      "id": "codex",
+      "title": "Codex (GPT-3 för kod)",
+      "date": "2021-08-10",
+      "dateDisplay": "10 augusti 2021",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "GPT-3 fine-tunad för kod, driver GitHub Copilot",
+      "detailedDesc": "OpenAI presenterar Codex, en GPT-modell fine-tunad på kod från GitHub. Kan översätta naturligt språk till kod i dussintals programmeringsspråk.",
+      "significance": "Gjorde AI-assisterad programmering praktisk och utbredd.",
+      "icon": "🔧",
+      "keyPeople": ["Mark Chen", "Jerry Tworek", "Heewoo Jun", "Sam Altman"],
+      "tags": ["coding", "GPT", "code-generation"],
+      "metrics": [
+        {
+          "label": "HumanEval",
+          "value": "37%",
+          "context": "Löste 37% av Python-problemen"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Evaluating Large Language Models Trained on Code",
+          "url": "https://arxiv.org/abs/2107.03374",
+          "type": "paper"
+        }
+      ],
+      "relatedMilestones": ["github-copilot", "gpt-3"],
+      "impactAreas": ["Coding", "Code Generation"]
+    },
+
+    {
+      "id": "dall-e",
+      "title": "DALL-E",
+      "date": "2021-01-05",
+      "dateDisplay": "5 januari 2021",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "Text-till-bild modell baserad på GPT-3",
+      "detailedDesc": "OpenAI presenterar DALL-E, en 12 miljarder parameter version av GPT-3 tränad för att generera bilder från textbeskrivningar.",
+      "significance": "Öppnade dörren för text-till-bild generering och visade transformers kraft även för visuella uppgifter.",
+      "icon": "🎨",
+      "keyPeople": ["Aditya Ramesh", "Mikhail Pavlov", "Gabriel Goh", "Scott Gray"],
+      "tags": ["text-to-image", "multimodal", "generative"],
+      "sources": [
+        {
+          "title": "DALL·E: Creating Images from Text",
+          "url": "https://openai.com/research/dall-e",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["dall-e-2", "stable-diffusion"],
+      "impactAreas": ["Image Generation", "Multimodal AI", "Creative AI"]
+    },
+
+    {
+      "id": "dall-e-2",
+      "title": "DALL-E 2",
+      "date": "2022-04-06",
+      "dateDisplay": "6 april 2022",
+      "category": "models",
+      "company": "openai",
+      "importance": 9,
+      "shortDesc": "Kraftigt förbättrad text-till-bild med högre upplösning",
+      "detailedDesc": "OpenAI släpper DALL-E 2 med 4x högre upplösning och bättre förståelse av koncept, attribut och stilar.",
+      "significance": "Satte ny standard för AI-genererad konst och demokratiserade bildskapande.",
+      "icon": "🎨",
+      "keyPeople": ["Aditya Ramesh", "Prafulla Dhariwal", "Alex Nichol", "Casey Chu"],
+      "tags": ["text-to-image", "diffusion", "generative"],
+      "metrics": [
+        {
+          "label": "Upplösning",
+          "value": "1024x1024",
+          "context": "4x högre än DALL-E"
+        }
+      ],
+      "sources": [
+        {
+          "title": "DALL·E 2",
+          "url": "https://openai.com/dall-e-2",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["dall-e", "stable-diffusion"],
+      "impactAreas": ["Image Generation", "Creative AI"]
+    },
+
+    {
+      "id": "stable-diffusion",
+      "title": "Stable Diffusion",
+      "date": "2022-08-22",
+      "dateDisplay": "22 augusti 2022",
+      "category": "models",
+      "company": "stability",
+      "importance": 9,
+      "shortDesc": "Open-source text-till-bild modell, kan köras lokalt",
+      "detailedDesc": "Stability AI släpper Stable Diffusion som open source. Första högkvalitativa text-till-bild modellen som kan köras på konsumenthårdvara.",
+      "significance": "Demokratiserade AI-bildgenerering genom att vara open source och körbar lokalt.",
+      "icon": "🎨",
+      "keyPeople": ["Emad Mostaque", "Robin Rombach", "Patrick Esser"],
+      "tags": ["text-to-image", "diffusion", "open-source", "generative"],
+      "metrics": [
+        {
+          "label": "Nedladdningar",
+          "value": "10M+",
+          "context": "Över 10 miljoner nedladdningar första månaden"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Stable Diffusion Public Release",
+          "url": "https://stability.ai/blog/stable-diffusion-public-release",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["dall-e-2", "midjourney"],
+      "impactAreas": ["Image Generation", "Open Source AI", "Creative AI"]
+    },
+
+    {
+      "id": "whisper",
+      "title": "Whisper",
+      "date": "2022-09-21",
+      "dateDisplay": "21 september 2022",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "Robust tal-till-text modell tränad på 680,000 timmar",
+      "detailedDesc": "OpenAI släpper Whisper, ett automatic speech recognition system som närmar sig mänsklig noggrannhet och robusthet.",
+      "significance": "Satte ny standard för speech recognition och släpptes som open source.",
+      "icon": "🎤",
+      "keyPeople": ["Alec Radford", "Jong Wook Kim", "Tao Xu"],
+      "tags": ["speech-recognition", "audio", "open-source"],
+      "metrics": [
+        {
+          "label": "Träningsdata",
+          "value": "680,000 h",
+          "context": "680,000 timmar flerspråkig audio"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing Whisper",
+          "url": "https://openai.com/research/whisper",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["gpt-3"],
+      "impactAreas": ["Speech Recognition", "Audio AI", "Accessibility"]
+    },
+
+    {
+      "id": "chatgpt",
+      "title": "ChatGPT lanseras",
+      "date": "2022-11-30",
+      "dateDisplay": "30 november 2022",
+      "category": "products",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "Första publika AI-chattbot når mainstream - 100M användare på 2 månader",
+      "detailedDesc": "OpenAI släpper ChatGPT som gratis 'research preview'. Baserad på GPT-3.5. Når 1 miljon användare på 5 dagar och 100 miljoner användare inom 2 månader - snabbast växande konsumentapp någonsin.",
+      "significance": "Demokratiserade tillgången till avancerade språkmodeller och startade den publika AI-revolutionen. Förändrade hur världen ser på AI.",
+      "icon": "✨",
+      "keyPeople": ["Sam Altman", "Greg Brockman", "Mira Murati"],
+      "tags": ["chatbot", "mainstream", "llm", "breakthrough", "GPT-3.5"],
+      "metrics": [
+        {
+          "label": "Tid till 1M användare",
+          "value": "5 dagar",
+          "context": "Snabbaste någonsin"
+        },
+        {
+          "label": "Tid till 100M användare",
+          "value": "2 månader",
+          "context": "Snabbare än Instagram (2.5 år)"
+        }
+      ],
+      "sources": [
+        {
+          "title": "ChatGPT - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT",
+          "type": "reference"
+        },
+        {
+          "title": "ChatGPT is released to the public",
+          "url": "https://www.history.com/this-day-in-history/november-30/chatgpt-released-openai",
+          "type": "reference"
+        }
+      ],
+      "relatedMilestones": ["gpt-3", "gpt-4"],
+      "impactAreas": ["Education", "Coding", "Content Creation", "Research", "Customer Service"]
+    },
+
+    {
+      "id": "gpt-4",
+      "title": "GPT-4",
+      "date": "2023-03-14",
+      "dateDisplay": "14 mars 2023",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "Multimodal GPT med drastiskt förbättrade resonemang och förståelse",
+      "detailedDesc": "OpenAI släpper GPT-4, en multimodal modell som accepterar både bild- och textinput. Visar betydande förbättringar på komplexa resonemang, kreativitet och instruktionsföljning.",
+      "significance": "Första riktigt kapabla multimodala språkmodellen. Passerade många professionella och akademiska tester på mänsklig nivå.",
+      "icon": "🤖",
+      "keyPeople": ["Sam Altman", "Ilya Sutskever", "Greg Brockman"],
+      "tags": ["GPT", "multimodal", "reasoning", "vision"],
+      "metrics": [
+        {
+          "label": "Bar Exam",
+          "value": "90:e percentilen",
+          "context": "Topp 10% av testtagare"
+        },
+        {
+          "label": "MMLU",
+          "value": "86.4%",
+          "context": "State-of-the-art på common knowledge"
+        }
+      ],
+      "sources": [
+        {
+          "title": "GPT-4",
+          "url": "https://openai.com/gpt-4",
+          "type": "announcement"
+        },
+        {
+          "title": "GPT-4 Technical Report",
+          "url": "https://arxiv.org/abs/2303.08774",
+          "type": "paper"
+        }
+      ],
+      "relatedMilestones": ["chatgpt", "gpt-4o"],
+      "impactAreas": ["Multimodal AI", "Reasoning", "Vision", "Education"]
+    },
+
+    {
+      "id": "anthropic-claude",
+      "title": "Anthropic grundas och Claude lanseras",
+      "date": "2023-03-14",
+      "dateDisplay": "14 mars 2023",
+      "category": "companies",
+      "company": "anthropic",
+      "importance": 8,
+      "shortDesc": "Anthropic lanserar Claude, fokus på AI-säkerhet och användbarhet",
+      "detailedDesc": "Anthropic, grundat av tidigare OpenAI-medarbetare, lanserar Claude. Fokuserar på Constitutional AI för säkrare och mer hjälpsamma assistenter.",
+      "significance": "Startade konkurrens om säkra, användbara AI-assistenter och introducerade Constitutional AI-ramverket.",
+      "icon": "🏢",
+      "keyPeople": ["Dario Amodei", "Daniela Amodei"],
+      "tags": ["safety", "constitutional-AI", "assistant"],
+      "sources": [
+        {
+          "title": "Introducing Claude",
+          "url": "https://www.anthropic.com/index/introducing-claude",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["claude-2", "claude-3-opus"],
+      "impactAreas": ["AI Safety", "Assistants", "Ethics"]
+    },
+
+    {
+      "id": "llama-2",
+      "title": "Llama 2",
+      "date": "2023-07-18",
+      "dateDisplay": "18 juli 2023",
+      "category": "models",
+      "company": "meta",
+      "importance": 9,
+      "shortDesc": "Meta släpper open-source LLM för kommersiellt bruk",
+      "detailedDesc": "Meta släpper Llama 2 som open source med kommersiell licens. Modeller från 7B till 70B parametrar, inkluderar chat-varianter.",
+      "significance": "Demokratiserade tillgång till state-of-the-art språkmodeller genom open source release.",
+      "icon": "🦙",
+      "keyPeople": ["Mark Zuckerberg", "Yann LeCun"],
+      "tags": ["open-source", "llama", "language-model"],
+      "metrics": [
+        {
+          "label": "Nedladdningar",
+          "value": "30M+",
+          "context": "Över 30 miljoner nedladdningar första månaderna"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Llama 2: Open Foundation and Fine-Tuned Chat Models",
+          "url": "https://ai.meta.com/research/publications/llama-2-open-foundation-and-fine-tuned-chat-models/",
+          "type": "paper"
+        }
+      ],
+      "relatedMilestones": ["gpt-4", "claude-2"],
+      "impactAreas": ["Open Source AI", "NLP", "Research"]
+    },
+
+    {
+      "id": "claude-2",
+      "title": "Claude 2",
+      "date": "2023-07-11",
+      "dateDisplay": "11 juli 2023",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 8,
+      "shortDesc": "Förbättrad Claude med längre kontext (100K tokens)",
+      "detailedDesc": "Anthropic släpper Claude 2 med 100K token context window, förbättrad kodning och resonemang.",
+      "significance": "Introducerade riktigt lång kontext som möjliggjorde analys av hela böcker och kodbaser.",
+      "icon": "🤖",
+      "keyPeople": ["Dario Amodei", "Daniela Amodei"],
+      "tags": ["claude", "long-context", "assistant"],
+      "metrics": [
+        {
+          "label": "Context window",
+          "value": "100K tokens",
+          "context": "~75,000 ord"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing Claude 2",
+          "url": "https://www.anthropic.com/index/claude-2",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["anthropic-claude", "claude-3-opus"],
+      "impactAreas": ["Long Context", "Coding", "Document Analysis"]
+    },
+
+    {
+      "id": "gemini-announcement",
+      "title": "Google Gemini tillkännages",
+      "date": "2023-12-06",
+      "dateDisplay": "6 december 2023",
+      "category": "models",
+      "company": "google",
+      "importance": 9,
+      "shortDesc": "Google's multimodala modell, natively multimodal från grunden",
+      "detailedDesc": "Google DeepMind lanserar Gemini, tränad att vara natively multimodal över text, kod, ljud, bild och video.",
+      "significance": "Första modellen designad som multimodal från grunden snarare än separata system sammanfogade.",
+      "icon": "🌟",
+      "keyPeople": ["Demis Hassabis", "Jeff Dean", "Sundar Pichai"],
+      "tags": ["multimodal", "gemini", "video", "audio"],
+      "metrics": [
+        {
+          "label": "MMLU",
+          "value": "90.0%",
+          "context": "Gemini Ultra score"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing Gemini: our largest and most capable AI model",
+          "url": "https://blog.google/technology/ai/google-gemini-ai/",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["gpt-4", "gemini-2"],
+      "impactAreas": ["Multimodal AI", "Video Understanding", "Code Generation"]
+    },
+
+    {
+      "id": "claude-3-opus",
+      "title": "Claude 3 Opus",
+      "date": "2024-03-04",
+      "dateDisplay": "4 mars 2024",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 10,
+      "shortDesc": "Mest kapabla Claude, slår GPT-4 på många benchmarks",
+      "detailedDesc": "Anthropic släpper Claude 3-familjen med Opus som flaggskeppsmodell. Visar överlägsna resultat på resonemang, matematik, kodning och multimodal förståelse.",
+      "significance": "Första modellen som konsekvent slog GPT-4 på flera viktiga benchmarks. Visade att konkurrensen intensifierades.",
+      "icon": "🤖",
+      "keyPeople": ["Dario Amodei", "Daniela Amodei"],
+      "tags": ["claude", "multimodal", "reasoning", "vision"],
+      "metrics": [
+        {
+          "label": "MMLU",
+          "value": "86.8%",
+          "context": "Toppresultat på common knowledge"
+        },
+        {
+          "label": "HumanEval",
+          "value": "84.9%",
+          "context": "Ledande på kodningsbenchmark"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing the next generation of Claude",
+          "url": "https://www.anthropic.com/news/claude-3-family",
+          "type": "announcement"
+        },
+        {
+          "title": "Claude (language model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Claude_(language_model)",
+          "type": "reference"
+        }
+      ],
+      "relatedMilestones": ["claude-2", "claude-3-5-sonnet"],
+      "impactAreas": ["Reasoning", "Coding", "Multimodal AI", "Vision"]
+    },
+
+    {
+      "id": "gpt-4o",
+      "title": "GPT-4o (Omni)",
+      "date": "2024-05-13",
+      "dateDisplay": "13 maj 2024",
+      "category": "models",
+      "company": "openai",
+      "importance": 9,
+      "shortDesc": "Snabbare, billigare GPT-4 med nativ audio/vision",
+      "detailedDesc": "OpenAI lanserar GPT-4o med nativ audio, vision och text. Samma nivå som GPT-4 Turbo men snabbare och billigare. Real-time voice conversations.",
+      "significance": "Gjorde multimodal AI mer tillgänglig och praktisk för real-time applikationer.",
+      "icon": "🎙️",
+      "keyPeople": ["Sam Altman", "Mira Murati"],
+      "tags": ["multimodal", "audio", "real-time", "GPT"],
+      "metrics": [
+        {
+          "label": "Pris",
+          "value": "50% billigare",
+          "context": "Jämfört med GPT-4 Turbo"
+        },
+        {
+          "label": "Hastighet",
+          "value": "2x snabbare",
+          "context": "Jämfört med GPT-4 Turbo"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Hello GPT-4o",
+          "url": "https://openai.com/index/hello-gpt-4o/",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["gpt-4"],
+      "impactAreas": ["Multimodal AI", "Real-time AI", "Voice AI"]
+    },
+
+    {
+      "id": "claude-3-5-sonnet",
+      "title": "Claude 3.5 Sonnet",
+      "date": "2024-06-20",
+      "dateDisplay": "20 juni 2024",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 10,
+      "shortDesc": "Mest kraftfulla Claude, introducerar Artifacts",
+      "detailedDesc": "Anthropic släpper Claude 3.5 Sonnet som överträffar Claude 3 Opus på de flesta benchmarks samtidigt som den är snabbare och billigare. Introducerar Artifacts för interaktiv kodgenerering.",
+      "significance": "Satte nytt rekord för kodning (93% på SWE-bench Verified) och introducerade ny UX med Artifacts.",
+      "icon": "⚡",
+      "keyPeople": ["Dario Amodei", "Daniela Amodei"],
+      "tags": ["claude", "coding", "artifacts", "reasoning"],
+      "metrics": [
+        {
+          "label": "SWE-bench Verified",
+          "value": "93.7%",
+          "context": "Nytt rekord för kodning"
+        },
+        {
+          "label": "MMLU",
+          "value": "88.7%",
+          "context": "Överträffar Opus"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing Claude 3.5 Sonnet",
+          "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["claude-3-opus"],
+      "impactAreas": ["Coding", "Artifacts", "Interactive AI", "Reasoning"]
+    },
+
+    {
+      "id": "o1-preview",
+      "title": "OpenAI o1 (Reasoning Model)",
+      "date": "2024-09-12",
+      "dateDisplay": "12 september 2024",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "Första reasoning model med chain-of-thought, PhD-nivå på vissa uppgifter",
+      "detailedDesc": "OpenAI lanserar o1, en ny klass av modeller som 'tänker' innan de svarar genom reinforcement learning. Visar PhD-nivå på fysik, matematik och kodning.",
+      "significance": "Introducerade reasoning models som ny kategori. Visar vägen mot System 2 thinking i AI.",
+      "icon": "🧠",
+      "keyPeople": ["Sam Altman", "Jakub Pachocki"],
+      "tags": ["reasoning", "chain-of-thought", "mathematics", "o1"],
+      "metrics": [
+        {
+          "label": "AIME 2024",
+          "value": "83%",
+          "context": "Math olympiad level (GPT-4o: 13%)"
+        },
+        {
+          "label": "Codeforces",
+          "value": "89:e percentilen",
+          "context": "Competitive programming"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing OpenAI o1",
+          "url": "https://openai.com/index/introducing-openai-o1/",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["gpt-4o", "o3"],
+      "impactAreas": ["Reasoning", "Mathematics", "Science", "Coding"]
+    },
+
+    {
+      "id": "mcp-launch",
+      "title": "Model Context Protocol (MCP)",
+      "date": "2024-11-25",
+      "dateDisplay": "25 november 2024",
+      "category": "tools",
+      "company": "anthropic",
+      "importance": 9,
+      "shortDesc": "Open standard för AI-integration med externa system",
+      "detailedDesc": "Anthropic lanserar Model Context Protocol, ett öppet protokoll för att standardisera hur AI-system integrerar med externa verktyg och datakällor.",
+      "significance": "Löser M×N-problemet för AI-integrationer. Kan bli det standardprotokoll som förenar AI-ekosystemet.",
+      "icon": "🔌",
+      "keyPeople": ["David Soria Parra", "Justin Spahr-Summers"],
+      "tags": ["protocol", "integration", "standard", "open-source"],
+      "sources": [
+        {
+          "title": "Introducing the Model Context Protocol",
+          "url": "https://www.anthropic.com/news/model-context-protocol",
+          "type": "announcement"
+        },
+        {
+          "title": "Model Context Protocol - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+          "type": "reference"
+        }
+      ],
+      "relatedMilestones": ["claude-code"],
+      "impactAreas": ["Standards", "Integration", "Developer Tools", "Ecosystem"]
+    },
+
+    {
+      "id": "o3",
+      "title": "OpenAI o3",
+      "date": "2024-12-20",
+      "dateDisplay": "20 december 2024",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "Genombrott på ARC-AGI, närmar sig allmän intelligens",
+      "detailedDesc": "OpenAI tillkännager o3 som visar unprecedented prestanda på ARC-AGI benchmark (75.7% på high-compute), ett test designat för att mäta allmän intelligens.",
+      "significance": "Första modellen som närmar sig human-level på ARC-AGI, potentiellt genombrott mot AGI.",
+      "icon": "🧠",
+      "keyPeople": ["Sam Altman", "Jakub Pachocki"],
+      "tags": ["reasoning", "AGI", "ARC-AGI", "o3"],
+      "metrics": [
+        {
+          "label": "ARC-AGI",
+          "value": "75.7%",
+          "context": "High-compute (mänsklig genomsnitt: 85%)"
+        },
+        {
+          "label": "Codeforces",
+          "value": "96:e percentilen",
+          "context": "Elite competitive programming"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing OpenAI o3 and o3-mini",
+          "url": "https://openai.com/index/introducing-o3-and-o3-mini/",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["o1-preview"],
+      "impactAreas": ["AGI", "Reasoning", "Mathematics", "General Intelligence"]
+    },
+
+    {
+      "id": "gemini-2",
+      "title": "Gemini 2.0",
+      "date": "2024-12-11",
+      "dateDisplay": "11 december 2024",
+      "category": "models",
+      "company": "google",
+      "importance": 9,
+      "shortDesc": "Google's nästa generation multimodal AI med agentförmågor",
+      "detailedDesc": "Google DeepMind lanserar Gemini 2.0 Flash med förbättrade multimodala förmågor, nativ tool use och agentiskt tänkande.",
+      "significance": "Visar Google's satsning på agentic AI och multimodal reasoning.",
+      "icon": "🌟",
+      "keyPeople": ["Demis Hassabis", "Sundar Pichai"],
+      "tags": ["multimodal", "agents", "gemini", "reasoning"],
+      "metrics": [
+        {
+          "label": "MMLU-Pro",
+          "value": "65.8%",
+          "context": "Advanced reasoning"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Gemini 2.0: our new AI model for the agentic era",
+          "url": "https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["gemini-announcement"],
+      "impactAreas": ["Multimodal AI", "Agents", "Reasoning"]
+    },
+
+    {
+      "id": "claude-code",
+      "title": "Claude Code",
+      "date": "2024-12-17",
+      "dateDisplay": "17 december 2024",
+      "category": "tools",
+      "company": "anthropic",
+      "importance": 8,
+      "shortDesc": "AI-kodningsagent i terminalen med MCP-stöd",
+      "detailedDesc": "Anthropic lanserar Claude Code, en terminal-baserad AI-agent som kan skriva kod, navigera kodbaser och använda verktyg via Model Context Protocol.",
+      "significance": "Visar framtiden för AI-assisterad utveckling med agentic workflows.",
+      "icon": "💻",
+      "keyPeople": ["Dario Amodei"],
+      "tags": ["coding-agent", "CLI", "MCP", "developer-tools"],
+      "sources": [
+        {
+          "title": "Introducing Claude Code",
+          "url": "https://www.anthropic.com/news/claude-code",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["mcp-launch", "claude-3-5-sonnet"],
+      "impactAreas": ["Coding", "Developer Tools", "Agents", "CLI"]
+    },
+
+    {
+      "id": "cursor-composer",
+      "title": "Cursor Composer",
+      "date": "2024-08-15",
+      "dateDisplay": "15 augusti 2024",
+      "category": "tools",
+      "company": "cursor",
+      "importance": 8,
+      "shortDesc": "Multi-file AI-kodredigering i Cursor IDE",
+      "detailedDesc": "Cursor lanserar Composer som låter AI göra ändringar över flera filer samtidigt, vilket dramatiskt ökar produktiviteten.",
+      "significance": "Visar evolution från autocomplete till AI-driven refactoring och implementation.",
+      "icon": "⚡",
+      "keyPeople": ["Aman Sanger", "Arvid Lunnemark"],
+      "tags": ["IDE", "coding", "multi-file", "refactoring"],
+      "sources": [
+        {
+          "title": "Cursor - The AI Code Editor",
+          "url": "https://cursor.sh",
+          "type": "website"
+        }
+      ],
+      "relatedMilestones": ["github-copilot", "claude-code"],
+      "impactAreas": ["Coding", "IDE", "Productivity"]
+    },
+
+    {
+      "id": "devin-announcement",
+      "title": "Devin - Första AI Software Engineer",
+      "date": "2024-03-12",
+      "dateDisplay": "12 mars 2024",
+      "category": "tools",
+      "company": "cognition",
+      "importance": 7,
+      "shortDesc": "Autonom AI-agent som kan slutföra hela engineering tasks",
+      "detailedDesc": "Cognition AI lanserar Devin, som beskrivs som världens första fully autonomous AI software engineer. Kan planera, koda, debugga och deploya.",
+      "significance": "Visar framtiden för autonoma utvecklingsagenter som kan arbeta självständigt.",
+      "icon": "🤖",
+      "keyPeople": ["Scott Wu"],
+      "tags": ["autonomous-agent", "coding", "SWE", "agents"],
+      "metrics": [
+        {
+          "label": "SWE-bench",
+          "value": "13.86%",
+          "context": "Tidigt resultat"
+        }
+      ],
+      "sources": [
+        {
+          "title": "Introducing Devin, the first AI software engineer",
+          "url": "https://www.cognition-labs.com/introducing-devin",
+          "type": "announcement"
+        }
+      ],
+      "relatedMilestones": ["claude-code"],
+      "impactAreas": ["Autonomous Agents", "Software Engineering", "Automation"]
+    },
+
+    {
+      "id": "autogpt",
+      "title": "AutoGPT",
+      "date": "2023-03-30",
+      "dateDisplay": "30 mars 2023",
+      "category": "tools",
+      "company": "open-source",
+      "importance": 7,
+      "shortDesc": "Viral experiment med autonom GPT-4 agent",
+      "detailedDesc": "Toran Bruce Richards släpper AutoGPT, ett open-source projekt som låter GPT-4 agera autonomt genom att sätta och fullfölja egna sub-goals.",
+      "significance": "Populariserade konceptet med autonoma AI-agenter och inspirerade hundratals liknande projekt.",
+      "icon": "🔄",
+      "keyPeople": ["Toran Bruce Richards"],
+      "tags": ["autonomous-agent", "GPT-4", "open-source", "viral"],
+      "metrics": [
+        {
+          "label": "GitHub Stars",
+          "value": "160K+",
+          "context": "Ett av de snabbast växande GitHub-projekten"
+        }
+      ],
+      "sources": [
+        {
+          "title": "AutoGPT GitHub Repository",
+          "url": "https://github.com/Significant-Gravitas/AutoGPT",
+          "type": "code"
+        }
+      ],
+      "relatedMilestones": ["gpt-4"],
+      "impactAreas": ["Autonomous Agents", "Open Source"]
+    },
+
+    {
+      "id": "midjourney-v5",
+      "title": "Midjourney V5",
+      "date": "2023-03-15",
+      "dateDisplay": "15 mars 2023",
+      "category": "products",
+      "company": "midjourney",
+      "importance": 7,
+      "shortDesc": "Fotorealistisk AI-bildgenerering når mainstream",
+      "detailedDesc": "Midjourney släpper Version 5 med dramatiskt förbättrad fotorealism, högre upplösning och bättre prompt-förståelse.",
+      "significance": "Satte ny standard för AI-genererad konst och fotorealism.",
+      "icon": "🎨",
+      "keyPeople": ["David Holz"],
+      "tags": ["text-to-image", "photorealistic", "art"],
+      "sources": [
+        {
+          "title": "Midjourney V5 Announcement",
+          "url": "https://www.midjourney.com",
+          "type": "website"
+        }
+      ],
+      "relatedMilestones": ["dall-e-2", "stable-diffusion"],
+      "impactAreas": ["Image Generation", "Creative AI", "Art"]
+    }
+  ],
+
+  "accelerationMetrics": {
+    "eventsPerYear": [
+      { "year": 2017, "count": 3 },
+      { "year": 2018, "count": 2 },
+      { "year": 2019, "count": 1 },
+      { "year": 2020, "count": 1 },
+      { "year": 2021, "count": 3 },
+      { "year": 2022, "count": 4 },
+      { "year": 2023, "count": 9 },
+      { "year": 2024, "count": 15 },
+      { "year": 2025, "count": 0 }
+    ],
+
+    "averageDaysBetweenMajorReleases": [
+      { "period": "2017-2019", "days": 120 },
+      { "period": "2020-2021", "days": 90 },
+      { "period": "2022", "days": 60 },
+      { "period": "2023", "days": 35 },
+      { "period": "2024", "days": 18 }
+    ]
+  }
+}

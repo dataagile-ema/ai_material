@@ -1,0 +1,1274 @@
+{
+  "metadata": {
+    "version": "2.2.0",
+    "lastUpdated": "2026-01-06",
+    "description": "AI-utveckling med accelerationsvisualisering - från AI:s födelse till dagens genombrott",
+    "language": "sv",
+    "author": "Compiled from verified sources",
+    "totalMilestones": 55
+  },
+
+  "categories": [
+    {"id": "research", "label": "Forskningsgenombrott", "color": "#00d4ff", "icon": "🔬"},
+    {"id": "models", "label": "Modellreleaser", "color": "#7c3aed", "icon": "🤖"},
+    {"id": "products", "label": "Produkter & Appar", "color": "#f472b6", "icon": "✨"},
+    {"id": "benchmarks", "label": "Benchmark-genombrott", "color": "#10b981", "icon": "📊"},
+    {"id": "tools", "label": "Verktyg & Standarder", "color": "#f59e0b", "icon": "🛠️"},
+    {"id": "companies", "label": "Företag & Labs", "color": "#ec4899", "icon": "🏢"}
+  ],
+
+  "companies": [
+    {"id": "openai", "name": "OpenAI", "color": "#10a37f"},
+    {"id": "anthropic", "name": "Anthropic", "color": "#d4a574"},
+    {"id": "google", "name": "Google/DeepMind", "color": "#4285f4"},
+    {"id": "meta", "name": "Meta", "color": "#0668e1"},
+    {"id": "ibm", "name": "IBM", "color": "#006699"},
+    {"id": "mistral", "name": "Mistral AI", "color": "#f2a154"},
+    {"id": "midjourney", "name": "Midjourney", "color": "#8b5cf6"},
+    {"id": "stability", "name": "Stability AI", "color": "#ec4899"},
+    {"id": "cursor", "name": "Cursor", "color": "#000000"},
+    {"id": "codeium", "name": "Codeium", "color": "#09b6a3"}
+  ],
+
+  "milestones": [
+    {
+      "id": "dartmouth-1956",
+      "title": "Dartmouth-konferensen",
+      "date": "1956-06-01",
+      "dateDisplay": "Sommar 1956",
+      "category": "research",
+      "importance": 10,
+      "shortDesc": "AI föds som akademiskt forskningsfält",
+      "detailedDesc": "Dartmouth-workshopen 1956 var den händelse som markerade AI:s formella tillkomst som en akademisk disciplin. John McCarthy, Marvin Minsky, Nathaniel Rochester och Claude Shannon myntade termen 'artificiell intelligens' och definierade fältets mål.",
+      "significance": "Detta var ögonblicket då AI fick sitt namn, sitt uppdrag och sina nyckelpersoner. Workshopen lade grunden för AI som vetenskaplig disciplin och satte ambitiösa mål för framtiden.",
+      "capabilityArea": "foundation",
+      "beforeAfter": {
+        "before": "Datorer sågs endast som beräkningsverk tyg",
+        "after": "AI etablerades som mål - att skapa maskiner som kan tänka"
+      },
+      "keyPeople": ["John McCarthy", "Marvin Minsky", "Nathaniel Rochester", "Claude Shannon"],
+      "tags": ["grundläggande", "historia", "konferens"],
+      "sources": [
+        {
+          "title": "The Birth of AI: The Dartmouth Conference (1956)",
+          "url": "https://ai-researchs.com/the-birth-of-ai-the-dartmouth-conference-1956/",
+          "type": "reference"
+        },
+        {
+          "title": "History of Artificial Intelligence - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "perceptron-1958",
+      "title": "Perceptron - det första neurala nätverket",
+      "date": "1958-07-01",
+      "dateDisplay": "1958",
+      "category": "research",
+      "importance": 8,
+      "shortDesc": "Frank Rosenblatt byggde den första neurala nätverksmodellen",
+      "detailedDesc": "Perceptron var ett enskikts neuralt nätverk som introducerades av Frank Rosenblatt. Det kunde lära sig från erfarenhet och känna igen enkla mönster - ett stort steg i att lära datorer att anpassa sig och förbättra sig själva.",
+      "significance": "Perceptron visade att maskiner kunde lära sig från data och förbättra sin prestanda över tid. Detta la grunden för moderna neurala nätverk och deep learning.",
+      "capabilityArea": "foundation",
+      "beforeAfter": {
+        "before": "Datorer kunde bara köra förutbestämda program",
+        "after": "Datorer kunde lära sig från exempel och förbättra sig"
+      },
+      "keyPeople": ["Frank Rosenblatt"],
+      "tags": ["neurala nätverk", "maskininlärning", "grundläggande"],
+      "sources": [
+        {
+          "title": "The Top 20 Milestones in AI (1943 to Present)",
+          "url": "https://mediaandthemachine.substack.com/p/the-top-20-milestones-in-ai-1943",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "ai-winter-1974",
+      "title": "AI-vintern börjar",
+      "date": "1974-01-01",
+      "dateDisplay": "1974-1980",
+      "category": "research",
+      "importance": 6,
+      "shortDesc": "Finansieringskollaps visar tidiga AI-begränsningar",
+      "detailedDesc": "Först AI-vintern inleddes när förväntningarna på AI-system inte uppfylldes. Finansiering drogs in när lovande projekt inte levererade praktiska resultat, vilket ledde till minskad forskning i nästan ett decennium.",
+      "significance": "AI-vintern lärde forskare om vikten av realistiska förväntningar och behovet av solid vetenskaplig grund. Det var en nödvändig korrigering av överoptimism.",
+      "capabilityArea": "foundation",
+      "keyPeople": ["James Lighthill"],
+      "tags": ["historia", "utmaningar", "finansiering"],
+      "sources": [
+        {
+          "title": "History of Artificial Intelligence - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "backpropagation-1986",
+      "title": "Backpropagation återupptäcks",
+      "date": "1986-10-09",
+      "dateDisplay": "1986",
+      "category": "research",
+      "importance": 8,
+      "shortDesc": "Genombrott i hur neurala nätverk kan tränas effektivt",
+      "detailedDesc": "Backpropagation-algoritmen, som möjliggör träning av fler-lagers neurala nätverk, återupptäcktes och populariserades. Detta gjorde det möjligt att träna djupare nätverk effektivt.",
+      "significance": "Backpropagation är den fundamentala algoritm som gör modern deep learning möjlig. Utan den skulle dagens AI-revolution inte vara möjlig.",
+      "capabilityArea": "foundation",
+      "keyPeople": ["David Rumelhart", "Geoffrey Hinton", "Ronald Williams"],
+      "tags": ["träning", "algoritm", "neurala nätverk"],
+      "sources": [
+        {
+          "title": "History of Artificial Intelligence - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "deep-blue-1997",
+      "title": "Deep Blue besegrar Kasparov",
+      "date": "1997-05-11",
+      "dateDisplay": "11 Maj 1997",
+      "category": "benchmarks",
+      "company": "ibm",
+      "importance": 9,
+      "shortDesc": "Första gången en dator besegrade världsmästare i schack",
+      "detailedDesc": "IBM:s Deep Blue-superdator besegrade Garry Kasparov, världsmästaren i schack, den 11 maj 1997. Deep Blue kunde beräkna miljontals drag per sekund och visade att datorer kunde överträffa människor i komplexa strategiska spel.",
+      "significance": "Detta var ett symboliskt ögonblick som visade att datorer kunde matcha och överträffa mänsklig intelligens i specifika domäner. Det inspirerade en generation av AI-forskare.",
+      "capabilityArea": "games",
+      "beforeAfter": {
+        "before": "Schack ansågs vara för komplext för datorer",
+        "after": "AI visade överlägsen förmåga i strategiska spel"
+      },
+      "metrics": [
+        {"name": "Beräkningar per sekund", "value": "Miljoner", "comparison": "vs mänsklig intuition"}
+      ],
+      "keyPeople": ["Garry Kasparov", "Murray Campbell", "Feng-hsiung Hsu"],
+      "tags": ["schack", "spel", "benchmark"],
+      "sources": [
+        {
+          "title": "The Top 20 Milestones in AI",
+          "url": "https://mediaandthemachine.substack.com/p/the-top-20-milestones-in-ai-1943",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "imagenet-2009",
+      "title": "ImageNet-dataset skapas",
+      "date": "2009-06-01",
+      "dateDisplay": "2009",
+      "category": "research",
+      "importance": 7,
+      "shortDesc": "Massiv bilddatabas lägger grunden för datorseende",
+      "detailedDesc": "ImageNet-datasetet, med miljontals märkta bilder, skapades för att träna och testa datorseendesystem. Det blev den viktigaste benchmarken för bildklassificering.",
+      "significance": "ImageNet-datasetet möjliggjorde träning av stora neurala nätverk för bildanalys och blev katalysatorn för deep learning-revolutionen.",
+      "capabilityArea": "vision",
+      "keyPeople": ["Fei-Fei Li"],
+      "tags": ["dataset", "datorseende", "benchmark"],
+      "sources": [
+        {
+          "title": "History of Artificial Intelligence - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "alexnet-2012",
+      "title": "AlexNet vinner ImageNet",
+      "date": "2012-10-01",
+      "dateDisplay": "Oktober 2012",
+      "category": "benchmarks",
+      "importance": 10,
+      "shortDesc": "Deep learning-eran börjar med kraftig förbättring i bildklassificering",
+      "detailedDesc": "AlexNet, ett djupt faltningsneuralt nätverk utvecklat av Alex Krizhevsky, vann ImageNet-tävlingen med betydligt färre fel än tvåa. Detta markerade en vändpunkt där deep learning visade sin överlägsna förmåga.",
+      "significance": "AlexNet-vinsten var startskottet för deep learning-revolutionen. Det visade att djupa neurala nätverk med GPU-träning kunde överträffa alla tidigare metoder.",
+      "capabilityArea": "vision",
+      "beforeAfter": {
+        "before": "Bildklassificering var långsam och oprecis",
+        "after": "Deep learning visade dramatisk förbättring i noggrannhet"
+      },
+      "metrics": [
+        {"name": "Felfrekvens", "value": "16.4%", "comparison": "vs 26% för näst bästa 2012"}
+      ],
+      "keyPeople": ["Alex Krizhevsky", "Ilya Sutskever", "Geoffrey Hinton"],
+      "tags": ["deep learning", "datorseende", "genombrott"],
+      "sources": [
+        {
+          "title": "The Top 20 Milestones in AI",
+          "url": "https://mediaandthemachine.substack.com/p/the-top-20-milestones-in-ai-1943",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "word2vec-2013",
+      "title": "Word2Vec - ordrepresentationer",
+      "date": "2013-01-01",
+      "dateDisplay": "2013",
+      "category": "research",
+      "company": "google",
+      "importance": 7,
+      "shortDesc": "Genombrott i hur ord kan representeras matematiskt",
+      "detailedDesc": "Word2Vec-tekniken från Google möjliggjorde att representera ord som vektorer i ett matematiskt rum där semantiska relationer bevaras. Detta la grunden för modern språkförståelse.",
+      "significance": "Word2Vec visade att betydelse kan fångas matematiskt och att datorer kan förstå semantiska relationer mellan ord.",
+      "capabilityArea": "language",
+      "keyPeople": ["Tomas Mikolov"],
+      "tags": ["NLP", "språk", "embeddings"],
+      "sources": [
+        {
+          "title": "History of Artificial Intelligence",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "attention-2017",
+      "title": "Attention Is All You Need - Transformers uppfinns",
+      "date": "2017-06-12",
+      "dateDisplay": "Juni 2017",
+      "category": "research",
+      "company": "google",
+      "importance": 10,
+      "shortDesc": "Transformer-arkitekturen revolutionerar AI",
+      "detailedDesc": "Forskare från Google introducerade Transformer-arkitekturen som baseras helt på attention-mekanismer, utan behov av rekurrens. Detta blev grunden för alla moderna språkmodeller.",
+      "significance": "Transformers är den viktigaste arkitektoniska innovationen i modern AI. All dagens stora modeller (GPT, BERT, Claude, etc.) bygger på denna upptäckt.",
+      "capabilityArea": "language",
+      "beforeAfter": {
+        "before": "Språkmodeller var begränsade och långsamma",
+        "after": "Transformers möjliggjorde massiv skalning och parallellträning"
+      },
+      "keyPeople": ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit"],
+      "tags": ["transformers", "arkitektur", "genombrott"],
+      "sources": [
+        {
+          "title": "Attention Is All You Need - ArXiv",
+          "url": "https://arxiv.org/abs/1706.03762",
+          "type": "paper"
+        },
+        {
+          "title": "Attention Is All You Need - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "alphago-zero-2017",
+      "title": "AlphaGo Zero - självlärande AI",
+      "date": "2017-10-18",
+      "dateDisplay": "Oktober 2017",
+      "category": "benchmarks",
+      "company": "google",
+      "importance": 9,
+      "shortDesc": "AI lär sig spela Go från noll utan mänsklig data",
+      "detailedDesc": "AlphaGo Zero från DeepMind lärde sig spela Go enbart genom självspel, utan någon mänsklig data. Det blev bättre än originalet AlphaGo och visade kraften i reinforcement learning.",
+      "significance": "Visade att AI kan lära sig komplex strategi helt självständigt, utan mänsklig vägledning. Detta öppnade dörren för självlärande system.",
+      "capabilityArea": "games",
+      "beforeAfter": {
+        "before": "AI behövde mänskliga exempel för att lära sig",
+        "after": "AI kunde lära sig från noll genom självspel"
+      },
+      "keyPeople": ["David Silver", "Julian Schrittwieser", "Demis Hassabis"],
+      "tags": ["reinforcement learning", "spel", "självlärande"],
+      "sources": [
+        {
+          "title": "70 Years of AI: 57 Key Milestones",
+          "url": "https://www.visive.ai/news/70-years-of-ai-57-key-milestones-in-its-astonishing-evolution",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "gpt-1-2018",
+      "title": "GPT-1 - generativ förträning",
+      "date": "2018-06-11",
+      "dateDisplay": "Juni 2018",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "OpenAI introducerar generativ förträning för språkmodeller",
+      "detailedDesc": "GPT-1 med 117 miljoner parametrar demonstrerade kraften i generativ förträning. Modellen tränade på ostrukturerad text och kunde sedan finjusteras för specifika uppgifter.",
+      "significance": "GPT-1 etablerade pre-training/fine-tuning-paradigmet som blev standarden för stora språkmodeller.",
+      "capabilityArea": "language",
+      "metrics": [
+        {"name": "Parametrar", "value": "117M", "comparison": "Första GPT-modellen"}
+      ],
+      "keyPeople": ["Alec Radford"],
+      "tags": ["GPT", "språkmodell", "förträning"],
+      "sources": [
+        {
+          "title": "Transformer architecture timeline",
+          "url": "https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "bert-2018",
+      "title": "BERT - dubbelriktad förståelse",
+      "date": "2018-10-11",
+      "dateDisplay": "Oktober 2018",
+      "category": "models",
+      "company": "google",
+      "importance": 8,
+      "shortDesc": "Google introducerar dubbelriktad språkförståelse",
+      "detailedDesc": "BERT (Bidirectional Encoder Representations from Transformers) använder Transformerens encoder för att skapa dubbelriktade representationer. Detta gav state-of-the-art resultat på många NLP-uppgifter.",
+      "significance": "BERT visade att dubbelriktad kontextförståelse är kraftfull och blev fundamentet för många praktiska NLP-applikationer.",
+      "capabilityArea": "language",
+      "keyPeople": ["Jacob Devlin", "Ming-Wei Chang"],
+      "tags": ["BERT", "NLP", "språkförståelse"],
+      "sources": [
+        {
+          "title": "10 Things You Need to Know About BERT",
+          "url": "https://neptune.ai/blog/bert-and-the-transformer-architecture",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "gpt-2-2019",
+      "title": "GPT-2 - 'För farlig att släppa'",
+      "date": "2019-02-14",
+      "dateDisplay": "Februari 2019",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "1.5B-parameter modell väcker debatt om AI-säkerhet",
+      "detailedDesc": "GPT-2 med 1.5 miljarder parametrar genererade så övertygande text att OpenAI initialt vägrade släppa den helt, av oro för missbruk. Detta startade diskussionen om ansvarsfull AI-utveckling.",
+      "significance": "GPT-2 visade att språkmodeller närmar sig mänsklig skrivförmåga och väckte viktiga frågor om AI-säkerhet och ansvar.",
+      "capabilityArea": "language",
+      "beforeAfter": {
+        "before": "AI-genererad text var lätt att identifiera",
+        "after": "AI kunde skriva övertygande, sammanhängande text"
+      },
+      "metrics": [
+        {"name": "Parametrar", "value": "1.5B", "comparison": "vs 117M i GPT-1"}
+      ],
+      "keyPeople": ["Alec Radford", "Jeff Wu"],
+      "tags": ["GPT", "textgenerering", "AI-säkerhet"],
+      "sources": [
+        {
+          "title": "Transformer architecture - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "alphastar-2019",
+      "title": "AlphaStar behärskar StarCraft II",
+      "date": "2019-10-30",
+      "dateDisplay": "Oktober 2019",
+      "category": "benchmarks",
+      "company": "google",
+      "importance": 7,
+      "shortDesc": "AI når grandmaster-nivå i realtidsstrategi",
+      "detailedDesc": "DeepMind's AlphaStar nådde grandmaster-nivå i StarCraft II, ett komplext realtidsstrategispel med ofullständig information. Detta visade AI:s förmåga att hantera komplex, dynamisk strategi.",
+      "significance": "Visade att AI kan hantera realtidsbeslut, långsiktig planering och osäkerhet i komplexa miljöer.",
+      "capabilityArea": "games",
+      "keyPeople": ["Oriol Vinyals"],
+      "tags": ["spel", "strategi", "reinforcement learning"],
+      "sources": [
+        {
+          "title": "70 Years of AI Milestones",
+          "url": "https://www.visive.ai/news/70-years-of-ai-57-key-milestones-in-its-astonishing-evolution",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "gpt-3-2020",
+      "title": "GPT-3 - 175B parametrar",
+      "date": "2020-05-28",
+      "dateDisplay": "Maj 2020",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "Massiv modell demonstrerar few-shot learning",
+      "detailedDesc": "GPT-3 med 175 miljarder parametrar visade att skalning av modeller ger kraftfulla emergenta förmågor. Modellen kunde utföra uppgifter den aldrig tränats på, enbart från några exempel (few-shot learning).",
+      "significance": "GPT-3 var den första modellen som fick allmänheten att förstå AI:s potential. Det visade att skalning ger kvalitativa genombrott, inte bara kvantitativa förbättringar.",
+      "capabilityArea": "language",
+      "beforeAfter": {
+        "before": "Modeller behövde tränas för varje specifik uppgift",
+        "after": "En modell kunde hantera tusentals uppgifter genom few-shot learning"
+      },
+      "metrics": [
+        {"name": "Parametrar", "value": "175B", "comparison": "vs 1.5B i GPT-2"}
+      ],
+      "keyPeople": ["Tom Brown", "Sam Altman", "Ilya Sutskever"],
+      "tags": ["GPT", "skalning", "few-shot learning"],
+      "sources": [
+        {
+          "title": "AlphaFold 2 article comparison",
+          "url": "https://daleonai.com/how-alphafold-works",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "alphafold2-2020",
+      "title": "AlphaFold 2 löser proteinveckning",
+      "date": "2020-11-30",
+      "dateDisplay": "November 2020",
+      "category": "benchmarks",
+      "company": "google",
+      "importance": 10,
+      "shortDesc": "AI löser 50-årigt vetenskapligt problem",
+      "detailedDesc": "DeepMind's AlphaFold 2 vann CASP14-tävlingen med en noggrannhet jämförbar med experimentella metoder. Detta ansågs vara en lösning på det 50-åriga 'proteinveckningsproblemet'.",
+      "significance": "Ett av de mest betydelsefulla vetenskapliga genombrotten med AI. Accelererar läkemedelsutveckling och biologisk forskning dramatiskt.",
+      "capabilityArea": "science",
+      "beforeAfter": {
+        "before": "Proteinstrukturbestämning tog månader eller år",
+        "after": "AlphaFold kan förutsäga strukturer på minuter med hög noggrannhet"
+      },
+      "metrics": [
+        {"name": "Noggrannhet (median GDT)", "value": "92.4", "comparison": "vs ~40 för tidigare metoder"}
+      ],
+      "keyPeople": ["John Jumper", "Demis Hassabis"],
+      "tags": ["vetenskap", "proteinveckning", "genombrott"],
+      "sources": [
+        {
+          "title": "AlphaFold - DeepMind",
+          "url": "https://deepmind.google/science/alphafold/",
+          "type": "docs"
+        },
+        {
+          "title": "DeepMind's protein-folding AI solved a 50-year puzzle",
+          "url": "https://fortune.com/2020/11/30/deepmind-solved-protein-folding-alphafold/",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "dalle-1-2021",
+      "title": "DALL-E - text-till-bild-generering",
+      "date": "2021-01-05",
+      "dateDisplay": "Januari 2021",
+      "category": "models",
+      "company": "openai",
+      "importance": 9,
+      "shortDesc": "AI skapar bilder från textbeskrivningar",
+      "detailedDesc": "DALL-E (en kombination av Salvador Dalí och WALL-E) demonstrerade förmågan att generera kreativa bilder från textbeskrivningar. Detta öppnade dörren för AI-konst.",
+      "significance": "Visade att AI kan vara kreativ och förstå abstrakta koncept tillräckligt för att visualisera dem.",
+      "capabilityArea": "multimodal",
+      "beforeAfter": {
+        "before": "AI kunde inte skapa meningsfulla bilder från text",
+        "after": "AI kan generera kreativa, komplexa bilder från beskrivningar"
+      },
+      "keyPeople": ["Aditya Ramesh"],
+      "tags": ["multimodal", "bildgenerering", "kreativitet"],
+      "sources": [
+        {
+          "title": "AI history timeline",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "clip-2021",
+      "title": "CLIP - vision-språkbrygga",
+      "date": "2021-01-05",
+      "dateDisplay": "Januari 2021",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "AI förstår relationen mellan bilder och text",
+      "detailedDesc": "CLIP (Contrastive Language-Image Pre-training) lärde sig kopplingen mellan bilder och text genom att tränas på miljontals bild-text-par från internet.",
+      "significance": "CLIP möjliggjorde zero-shot bildklassificering och blev fundamentet för många multimodala modeller.",
+      "capabilityArea": "multimodal",
+      "keyPeople": ["Alec Radford", "Ilya Sutskever"],
+      "tags": ["multimodal", "vision-språk", "zero-shot"],
+      "sources": [
+        {
+          "title": "AI history timeline",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "codex-2021",
+      "title": "Codex och GitHub Copilot",
+      "date": "2021-06-29",
+      "dateDisplay": "Juni 2021",
+      "category": "products",
+      "company": "openai",
+      "importance": 9,
+      "shortDesc": "AI-assisterad kodning blir verklighet",
+      "detailedDesc": "OpenAI:s Codex, tränad på kod från GitHub, kunde skriva funktionell kod från naturlig språkbeskrivning. GitHub Copilot gjorde detta tillgängligt för miljontals utvecklare.",
+      "significance": "Första stora praktiska tillämpningen av stora språkmodeller. Förändrade hur utvecklare arbetar och startade AI-kodningsrevolutionen.",
+      "capabilityArea": "coding",
+      "beforeAfter": {
+        "before": "Utvecklare skrev all kod manuellt",
+        "after": "AI kan generera, komplettera och förklara kod"
+      },
+      "metrics": [
+        {"name": "HumanEval pass@1", "value": "29%", "comparison": "2021 baseline"}
+      ],
+      "keyPeople": ["Chen Mark", "Greg Brockman"],
+      "tags": ["kodning", "Copilot", "utvecklarverktyg"],
+      "sources": [
+        {
+          "title": "AI timeline history",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "stable-diffusion-2022",
+      "title": "Stable Diffusion blir öppen källkod",
+      "date": "2022-08-22",
+      "dateDisplay": "Augusti 2022",
+      "category": "models",
+      "company": "stability",
+      "importance": 8,
+      "shortDesc": "Demokratiserad AI-konstgenerering",
+      "detailedDesc": "Stability AI släppte Stable Diffusion som öppen källkod, vilket gjorde högkvalitativ bildgenerering tillgänglig för alla. Detta startade en explosion av kreativa AI-applikationer.",
+      "significance": "Demokratiserade AI-konst och visade kraften i öppen källkod för AI. Miljontals människor kunde nu experimentera med AI-bildgenerering.",
+      "capabilityArea": "multimodal",
+      "keyPeople": ["Emad Mostaque"],
+      "tags": ["bildgenerering", "öppen källkod", "diffusion"],
+      "sources": [
+        {
+          "title": "AI history timeline",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "chatgpt-2022",
+      "title": "ChatGPT lanseras",
+      "date": "2022-11-30",
+      "dateDisplay": "30 November 2022",
+      "category": "products",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "100 miljoner användare på 2 månader - allmänhetens AI-uppvaknande",
+      "detailedDesc": "ChatGPT lanserades och blev den snabbast växande konsumentapplikationen i historien. 100 miljoner användare på två månader - jämfört med 9 månader för TikTok och 2.5 år för Instagram.",
+      "significance": "Ögonblicket då AI blev mainstream. ChatGPT gjorde kraftfull AI tillgänglig för alla och startade den globala AI-revolutionen.",
+      "capabilityArea": "language",
+      "beforeAfter": {
+        "before": "AI var något för forskare och tech-företag",
+        "after": "Hundratals miljoner människor använder AI dagligen"
+      },
+      "metrics": [
+        {"name": "Användare", "value": "100M på 2 månader", "comparison": "Snabbaste tillväxten någonsin"}
+      ],
+      "keyPeople": ["Sam Altman", "Greg Brockman"],
+      "tags": ["ChatGPT", "genombrott", "mainstream"],
+      "sources": [
+        {
+          "title": "ChatGPT - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT",
+          "type": "reference"
+        },
+        {
+          "title": "ChatGPT Statistics",
+          "url": "https://www.notta.ai/en/blog/chatgpt-statistics",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "gpt-4-2023",
+      "title": "GPT-4 - multimodal och klarar advokatexamen",
+      "date": "2023-03-14",
+      "dateDisplay": "14 Mars 2023",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "Multimodal AI med professionell kompetensnivå",
+      "detailedDesc": "GPT-4 introducerade multimodala förmågor (text och bild) och visade professionell kompetensnivå genom att klara advokatexamen i 90:e percentilen. Kvalitetshoppet från GPT-3.5 var dramatiskt.",
+      "significance": "Visade att AI kan prestera på professionell nivå i komplexa uppgifter. Multimodala förmågor öppnade nya användningsområden.",
+      "capabilityArea": "multimodal",
+      "beforeAfter": {
+        "before": "AI var begränsad till grundläggande uppgifter",
+        "after": "AI kan prestera på nivå med mänskliga experter"
+      },
+      "metrics": [
+        {"name": "Advokatexamen", "value": "90:e percentilen", "comparison": "vs 10:e för GPT-3.5"}
+      ],
+      "keyPeople": ["Sam Altman", "Ilya Sutskever"],
+      "tags": ["GPT-4", "multimodal", "benchmark"],
+      "sources": [
+        {
+          "title": "ChatGPT - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "claude-1-2023",
+      "title": "Claude från Anthropic",
+      "date": "2023-03-14",
+      "dateDisplay": "Mars 2023",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 8,
+      "shortDesc": "Constitutional AI och 100K kontext",
+      "detailedDesc": "Anthropic lanserade Claude med Constitutional AI för att göra modellen mer hjälpsam, harmlös och ärlig. 100K token-kontext var banbrytande.",
+      "significance": "Introducerade viktiga säkerhetskoncept och visade att längre kontext möjliggör nya användningsfall.",
+      "capabilityArea": "language",
+      "beforeAfter": {
+        "before": "Modeller var begränsade till ~4K tokens kontext",
+        "after": "Claude kunde hantera hela böcker i en konversation"
+      },
+      "metrics": [
+        {"name": "Kontext", "value": "100K tokens", "comparison": "vs 4K för GPT-3.5"}
+      ],
+      "keyPeople": ["Dario Amodei", "Daniela Amodei"],
+      "tags": ["Claude", "säkerhet", "constitutional AI"],
+      "sources": [
+        {
+          "title": "Claude (language model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Claude_(language_model)",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "midjourney-v5-2023",
+      "title": "Midjourney V5 - fotorealistisk AI-konst",
+      "date": "2023-03-15",
+      "dateDisplay": "Mars 2023",
+      "category": "products",
+      "company": "midjourney",
+      "importance": 7,
+      "shortDesc": "AI-genererade bilder blir oåtskiljliga från foton",
+      "detailedDesc": "Midjourney V5 nådde en nivå av fotorealism där AI-genererade bilder blev nästan oåtskiljliga från riktiga fotografier.",
+      "significance": "Visade att AI-konst når professionell kvalitet och väckte frågor om autenticitet och upphovsrätt.",
+      "capabilityArea": "multimodal",
+      "keyPeople": ["David Holz"],
+      "tags": ["bildgenerering", "konst", "fotorealism"],
+      "sources": [
+        {
+          "title": "Tracing the History of Anthropic's Claude",
+          "url": "https://medium.com/@sebastian.lambright/tracing-the-history-of-anthropics-claude-05f2a363dc94",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "autogpt-2023",
+      "title": "Auto-GPT - tidiga autonoma agenter",
+      "date": "2023-03-30",
+      "dateDisplay": "Mars 2023",
+      "category": "tools",
+      "importance": 7,
+      "shortDesc": "Första försöken med självständiga AI-agenter",
+      "detailedDesc": "Auto-GPT visade konceptet med autonoma AI-agenter som kan planera och utföra fler-stegs uppgifter självständigt.",
+      "significance": "Startade diskussionen och utvecklingen av agentic AI - system som kan arbeta självständigt mot mål.",
+      "capabilityArea": "agentic",
+      "beforeAfter": {
+        "before": "AI behövde guidning för varje steg",
+        "after": "AI började experimentera med självständig uppgiftslösning"
+      },
+      "tags": ["agenter", "autonomi", "planering"],
+      "sources": [
+        {
+          "title": "AI timeline",
+          "url": "https://en.wikipedia.org/wiki/History_of_artificial_intelligence",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "gpt-4-vision-2023",
+      "title": "GPT-4 Vision",
+      "date": "2023-09-25",
+      "dateDisplay": "September 2023",
+      "category": "models",
+      "company": "openai",
+      "importance": 8,
+      "shortDesc": "GPT-4 kan se och förstå bilder",
+      "detailedDesc": "GPT-4 med vision (GPT-4V) blev tillgänglig, vilket gör att modellen kan analysera och resonera kring bilder, diagram, skärmdumpar och mer.",
+      "significance": "Multimodal förståelse blev praktiskt användbar, vilket öppnade för nya tillämpningar inom utbildning, tillgänglighet och analys.",
+      "capabilityArea": "multimodal",
+      "tags": ["vision", "multimodal", "GPT-4"],
+      "sources": [
+        {
+          "title": "ChatGPT - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "claude-2.1-2023",
+      "title": "Claude 2.1 med 200K kontext",
+      "date": "2023-11-21",
+      "dateDisplay": "November 2023",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 7,
+      "shortDesc": "Lång dokumentanalys blir möjlig",
+      "detailedDesc": "Claude 2.1 utökade kontextfönstret till 200K tokens, vilket motsvarar cirka 150 000 ord eller 500 sidor. Detta möjliggjorde analys av mycket långa dokument.",
+      "significance": "Visade vägen mot ännu längre kontext och möjliggjorde helt nya användningsfall för dokumentanalys.",
+      "capabilityArea": "language",
+      "metrics": [
+        {"name": "Kontext", "value": "200K tokens", "comparison": "~500 sidor text"}
+      ],
+      "tags": ["Claude", "långt kontext", "dokumentanalys"],
+      "sources": [
+        {
+          "title": "Claude - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Claude_(language_model)",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "gemini-pro-2023",
+      "title": "Gemini Pro från Google",
+      "date": "2023-12-06",
+      "dateDisplay": "December 2023",
+      "category": "models",
+      "company": "google",
+      "importance": 8,
+      "shortDesc": "Googles multimodala svar på GPT-4",
+      "detailedDesc": "Google lanserade Gemini-familjen med Pro som mittennivå, designad från grunden för multimodal förståelse.",
+      "significance": "Google blev en seriös konkurrent i frontier AI-tävlingen, vilket accelererade utvecklingen.",
+      "capabilityArea": "multimodal",
+      "keyPeople": ["Demis Hassabis", "Sundar Pichai"],
+      "tags": ["Gemini", "multimodal", "Google"],
+      "sources": [
+        {
+          "title": "Claude timeline history",
+          "url": "https://medium.com/@sebastian.lambright/tracing-the-history-of-anthropics-claude-05f2a363dc94",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "mixtral-2023",
+      "title": "Mixtral 8x7B - öppen MoE",
+      "date": "2023-12-11",
+      "dateDisplay": "December 2023",
+      "category": "models",
+      "company": "mistral",
+      "importance": 7,
+      "shortDesc": "Öppen källkod konkurrerar med stängda modeller",
+      "detailedDesc": "Mistral AI:s Mixtral 8x7B använder Mixture of Experts-arkitektur och visade att öppna modeller kan konkurrera med stängda frontier-modeller.",
+      "significance": "Bevisade att öppen källkod håller jämna steg med stängda modeller, vilket demokratiserar tillgången till kraftfull AI.",
+      "capabilityArea": "language",
+      "tags": ["öppen källkod", "MoE", "Mistral"],
+      "sources": [
+        {
+          "title": "Claude history",
+          "url": "https://medium.com/@sebastian.lambright/tracing-the-history-of-anthropics-claude-05f2a363dc94",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "gemini-1.5-2024",
+      "title": "Gemini 1.5 Pro med 1M tokens",
+      "date": "2024-02-15",
+      "dateDisplay": "Februari 2024",
+      "category": "models",
+      "company": "google",
+      "importance": 9,
+      "shortDesc": "Massivt kontextgenombrott - 1 miljon tokens",
+      "detailedDesc": "Gemini 1.5 Pro introducerade ett 1 miljoner token kontextfönster, vilket möjliggör analys av timslång video, hundratals tusen rader kod, eller hundratals dokument samtidigt.",
+      "significance": "Ett kvantsprång i kontextlängd som möjliggjorde helt nya användningsfall och visade skalbarhet i arkitekturen.",
+      "capabilityArea": "multimodal",
+      "beforeAfter": {
+        "before": "Kontext var begränsad till ~200K tokens",
+        "after": "1M tokens möjliggör analys av massiva datamängder"
+      },
+      "metrics": [
+        {"name": "Kontext", "value": "1M tokens", "comparison": "vs 200K för Claude 2.1"}
+      ],
+      "tags": ["Gemini", "kontext", "genombrott"],
+      "sources": [
+        {
+          "title": "Claude timeline",
+          "url": "https://medium.com/@sebastian.lambright/tracing-the-history-of-anthropics-claude-05f2a363dc94",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "claude-3-2024",
+      "title": "Claude 3-familjen",
+      "date": "2024-03-04",
+      "dateDisplay": "4 Mars 2024",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 9,
+      "shortDesc": "Haiku, Sonnet och Opus - första gången Anthropic slår GPT-4",
+      "detailedDesc": "Claude 3-familjen (Haiku, Sonnet, Opus) lanserades med Opus som överträffade GPT-4 på de flesta benchmarks. Tre modellstorlekar för olika användningsfall.",
+      "significance": "Visade att konkurrensen driver innovation. Opus blev den första modellen att konsekvent slå GPT-4.",
+      "capabilityArea": "multimodal",
+      "beforeAfter": {
+        "before": "GPT-4 var ohotad i toppen",
+        "after": "Opus visade att GPT-4 kunde överträffas"
+      },
+      "metrics": [
+        {"name": "MMLU", "value": "86.8%", "comparison": "vs 86.4% för GPT-4"}
+      ],
+      "keyPeople": ["Dario Amodei"],
+      "tags": ["Claude", "benchmark", "konkurrens"],
+      "sources": [
+        {
+          "title": "Anthropic: Claude 3 Family",
+          "url": "https://www.anthropic.com/news/claude-3-family",
+          "type": "announcement"
+        },
+        {
+          "title": "Claude - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Claude_(language_model)",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "claude-3.5-sonnet-2024",
+      "title": "Claude 3.5 Sonnet med Artifacts",
+      "date": "2024-06-20",
+      "dateDisplay": "20 Juni 2024",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 9,
+      "shortDesc": "Kodningsexcellens och interaktiva artifacts",
+      "detailedDesc": "Claude 3.5 Sonnet överträffade Opus trots att vara mindre och introducerade Artifacts - förmågan att skapa interaktiv kod i separata fönster.",
+      "significance": "Visade att intelligens per parameter förbättras snabbt. Artifacts förändrade hur användare interagerar med AI-genererad kod.",
+      "capabilityArea": "coding",
+      "beforeAfter": {
+        "before": "AI-genererad kod var statisk text",
+        "after": "AI skapar interaktiva, körbara artifacts i realtid"
+      },
+      "metrics": [
+        {"name": "Kodningsbenchmarks", "value": "Topp 3", "comparison": "Överträffar större Opus"}
+      ],
+      "tags": ["Claude", "kodning", "artifacts"],
+      "sources": [
+        {
+          "title": "Introducing Claude 3.5 Sonnet",
+          "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+          "type": "announcement"
+        }
+      ]
+    },
+    {
+      "id": "openai-o1-2024",
+      "title": "OpenAI o1 - reasoning-modell",
+      "date": "2024-09-12",
+      "dateDisplay": "12 September 2024",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "Chain-of-thought reasoning - AI som tänker steg för steg",
+      "detailedDesc": "OpenAI o1 introducerade explicit resonemang genom 'chain of thought'. Modellen 'tänker' före den svarar, vilket gör den mycket bättre på matematik, programmering och komplexa problem.",
+      "significance": "Ett paradigmskifte från snabba svar till genomtänkt resonemang. Visar att längre 'tanketid' ger kvalitativt bättre resultat.",
+      "capabilityArea": "reasoning",
+      "beforeAfter": {
+        "before": "Modeller svarade omedelbart utan synligt resonemang",
+        "after": "o1 visar tankekedjor och når expert-nivå i matematik"
+      },
+      "metrics": [
+        {"name": "AIME matematik", "value": "74% (13.9/15)", "comparison": "Topp 500 nationellt i USA"},
+        {"name": "Codeforces", "value": "89:e percentilen", "comparison": "vs 11:e för GPT-4o"}
+      ],
+      "keyPeople": ["Jakub Pachocki", "Sam Altman"],
+      "tags": ["reasoning", "o1", "chain-of-thought"],
+      "sources": [
+        {
+          "title": "Learning to reason with LLMs - OpenAI",
+          "url": "https://openai.com/index/learning-to-reason-with-llms/",
+          "type": "announcement"
+        },
+        {
+          "title": "OpenAI o1 - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/OpenAI_o1",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "claude-computer-use-2024",
+      "title": "Claude 3.5 Sonnet med Computer Use",
+      "date": "2024-10-22",
+      "dateDisplay": "22 Oktober 2024",
+      "category": "products",
+      "company": "anthropic",
+      "importance": 9,
+      "shortDesc": "AI kan kontrollera datorer - flytta musen, klicka, skriva",
+      "detailedDesc": "Claude 3.5 Sonnet fick förmågan att kontrollera datorer genom att se skärmen och använda mus och tangentbord. Detta öppnade för automation av nästan vilken datoruppgift som helst.",
+      "significance": "Ett stort steg mot generell AI-assistans. Visade att AI kan interagera med mjukvara designad för människor.",
+      "capabilityArea": "agentic",
+      "beforeAfter": {
+        "before": "AI var begränsad till textgränssnitt och API:er",
+        "after": "AI kan använda vilken mjukvara som helst genom GUI"
+      },
+      "tags": ["computer use", "automation", "agentic"],
+      "sources": [
+        {
+          "title": "Claude - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Claude_(language_model)",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "mcp-2024",
+      "title": "Model Context Protocol (MCP)",
+      "date": "2024-11-25",
+      "dateDisplay": "25 November 2024",
+      "category": "tools",
+      "company": "anthropic",
+      "importance": 8,
+      "shortDesc": "Öppen standard för AI-verktygsintegration",
+      "detailedDesc": "Anthropic introducerade Model Context Protocol (MCP) - en öppen standard för att koppla AI-assistenter till datasystem. Löser 'M×N-problemet' där varje modell annars behöver separata kopplingar till varje verktyg.",
+      "significance": "Standardisering accelererar ekosystemet. MCP fick snabbt stöd från OpenAI, Microsoft, Cloudflare och Cursor.",
+      "capabilityArea": "integration",
+      "beforeAfter": {
+        "before": "Varje AI-verktyg behövde egna integrations för varje datakälla",
+        "after": "En standard gör integrationer återanvändbara och skalbar"
+      },
+      "keyPeople": ["David Soria Parra", "Justin Spahr-Summers"],
+      "tags": ["standard", "integration", "protokoll"],
+      "sources": [
+        {
+          "title": "Introducing the Model Context Protocol - Anthropic",
+          "url": "https://www.anthropic.com/news/model-context-protocol",
+          "type": "announcement"
+        },
+        {
+          "title": "Model Context Protocol - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+          "type": "reference"
+        }
+      ]
+    },
+    {
+      "id": "openai-o1-full-2024",
+      "title": "OpenAI o1 - full release",
+      "date": "2024-12-05",
+      "dateDisplay": "5 December 2024",
+      "category": "models",
+      "company": "openai",
+      "importance": 9,
+      "shortDesc": "Production reasoning-modell tillgänglig för alla",
+      "detailedDesc": "Den fullständiga versionen av o1 släpptes för produktion efter preview-fasen. Förbättringar inkluderar bättre multimodal förståelse och snabbare inferens.",
+      "significance": "Reasoning-modeller blir mainstream och tillgängliga för praktiska tillämpningar.",
+      "capabilityArea": "reasoning",
+      "tags": ["o1", "production", "reasoning"],
+      "sources": [
+        {
+          "title": "OpenAI o1 System Card",
+          "url": "https://cdn.openai.com/o1-system-card-20241205.pdf",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "id": "gemini-2.0-2024",
+      "title": "Gemini 2.0 Flash",
+      "date": "2024-12-11",
+      "dateDisplay": "11 December 2024",
+      "category": "models",
+      "company": "google",
+      "importance": 8,
+      "shortDesc": "Agentic AI med native verktygsanvändning",
+      "detailedDesc": "Gemini 2.0 Flash introducerades som Googles första modell byggd från grunden för agentic användning, med native stöd för verktygsanvändning och multimodala output.",
+      "significance": "Visar tydligt skiftet mot agentic AI där modeller inte bara svarar utan agerar och använder verktyg.",
+      "capabilityArea": "agentic",
+      "metrics": [
+        {"name": "MATH-500", "value": "78.3%", "comparison": "vs 64.1% för standard Flash"}
+      ],
+      "tags": ["Gemini", "agentic", "verktyg"],
+      "sources": [
+        {
+          "title": "OpenAI o1 article (Gemini comparison)",
+          "url": "https://simonwillison.net/2024/Sep/12/openai-o1/",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "claude-sonnet-4.5-2024",
+      "title": "Claude Sonnet 4.5",
+      "date": "2024-12-20",
+      "dateDisplay": "December 2024",
+      "category": "models",
+      "company": "anthropic",
+      "importance": 9,
+      "shortDesc": "Ny SOTA across benchmarks",
+      "detailedDesc": "Claude Sonnet 4.5 satte nya rekord över flera benchmarks och etablerade Anthropic som ledande inom frontier AI.",
+      "significance": "Fortsatt snabb förbättring visar att vi är långt från platån. Konkurrensen driver constant innovation.",
+      "capabilityArea": "multimodal",
+      "tags": ["Claude", "SOTA", "benchmark"],
+      "sources": [
+        {
+          "title": "Anthropic news updates",
+          "url": "https://www.anthropic.com/news",
+          "type": "announcement"
+        }
+      ]
+    },
+    {
+      "id": "claude-code-2024",
+      "title": "Claude Code",
+      "date": "2024-12-15",
+      "dateDisplay": "December 2024",
+      "category": "tools",
+      "company": "anthropic",
+      "importance": 8,
+      "shortDesc": "Officiell Anthropic kodningsagent för terminal & IDE",
+      "detailedDesc": "Claude Code lanserades som Anthropics kommandoradsverktyg för agentic kodning, med integrationer för VS Code, Cursor, Windsurf och JetBrains.",
+      "significance": "Kodningsagenter från frontier labs visar hur AI blir en naturlig del av utvecklingsflödet.",
+      "capabilityArea": "coding",
+      "tags": ["kodning", "agent", "CLI"],
+      "sources": [
+        {
+          "title": "Claude Code - Anthropic",
+          "url": "https://www.anthropic.com/claude-code",
+          "type": "docs"
+        }
+      ]
+    },
+    {
+      "id": "arc-agi-breakthrough-2024",
+      "title": "ARC-AGI genombrott: 5% → 76%",
+      "date": "2024-12-20",
+      "dateDisplay": "December 2024",
+      "category": "benchmarks",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "OpenAI o3 gör dramatiskt hopp på AGI-benchmark",
+      "detailedDesc": "ARC-AGI benchmark tog 4 år att gå från 0% (GPT-3, 2020) till 5% (GPT-4o, tidig 2024). OpenAI:s o3 nådde 75.7% (low-compute) till 87.5% (high-compute) i slutet av 2024 - ett enormt hopp.",
+      "significance": "Det största steghoppet i AI-förmåga på ett enda år. Visar att novel task adaptation - en kärnkomponent i AGI - förbättras dramatiskt.",
+      "capabilityArea": "reasoning",
+      "beforeAfter": {
+        "before": "AI kunde inte generalisera till nya typer av uppgifter",
+        "after": "o3 visar signifikant förmåga till abstrakt resonemang"
+      },
+      "metrics": [
+        {"name": "ARC-AGI score", "value": "75.7%", "comparison": "vs 5% för GPT-4o tidig 2024"},
+        {"name": "Årlig förbättring", "value": "1420% ökning", "comparison": "Från 5% till 76% på <1 år"}
+      ],
+      "keyPeople": ["François Chollet"],
+      "tags": ["AGI", "benchmark", "resonemang"],
+      "sources": [
+        {
+          "title": "OpenAI o3 Breakthrough on ARC-AGI",
+          "url": "https://arcprize.org/blog/oai-o3-pub-breakthrough",
+          "type": "announcement"
+        },
+        {
+          "title": "ARC Prize 2024 Technical Report",
+          "url": "https://arxiv.org/html/2412.04604v2",
+          "type": "paper"
+        }
+      ]
+    },
+    {
+      "id": "cursor-ide-2024",
+      "title": "Cursor IDE - AI pair programming",
+      "date": "2024-06-01",
+      "dateDisplay": "2024",
+      "category": "tools",
+      "company": "cursor",
+      "importance": 7,
+      "shortDesc": "AI-native kodredigerare förändrar utveckling",
+      "detailedDesc": "Cursor IDE blev populärt som en AI-native fork av VS Code med djup integration av språkmodeller för kodgenerering, refactoring och förklaring.",
+      "significance": "Visar hur specialiserade verktyg kan göra AI mer användbar än generella chattgränssnitt.",
+      "capabilityArea": "coding",
+      "tags": ["IDE", "kodning", "verktyg"],
+      "sources": [
+        {
+          "title": "Best AI Coding IDE 2025 Comparison",
+          "url": "https://www.humai.blog/best-ai-coding-ide-2025-cursor-vs-antigravity-vs-claude-code-vs-windsurf-the-complete-comparison/",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "windsurf-2024",
+      "title": "Windsurf Editor (Codeium)",
+      "date": "2024-11-01",
+      "dateDisplay": "November 2024",
+      "category": "tools",
+      "company": "codeium",
+      "importance": 7,
+      "shortDesc": "Multi-fil autonom redigering med Cascade",
+      "detailedDesc": "Codeiums Windsurf IDE integrerar Claude och egna modeller i Cascade-systemet för flödesbaserad AI-kodning. Hundratusentals användare inom veckor.",
+      "significance": "Snabb adoption visar hungren efter bättre AI-kodningsverktyg. Claude-integration visar värdet av specialiserade modeller.",
+      "capabilityArea": "coding",
+      "tags": ["IDE", "kodning", "Cascade"],
+      "sources": [
+        {
+          "title": "Codeium's Windsurf with Claude Integration",
+          "url": "https://analyticsindiamag.com/ai-news-updates/codeiums-windsurf-takes-coding-to-the-next-level-with-anthropic-claude-integration/",
+          "type": "blog"
+        }
+      ]
+    },
+    {
+      "id": "eu-ai-act-2025",
+      "title": "EU AI Act - Första stora regulatory milestone",
+      "date": "2025-02-02",
+      "dateDisplay": "2 Februari 2025",
+      "category": "companies",
+      "importance": 9,
+      "shortDesc": "EU:s AI-lag börjar tillämpas - förbud mot högriskanvändningar",
+      "detailedDesc": "Den 2 februari 2025 började EU:s AI Act formellt tillämpas över alla 27 medlemsländer. Förbud mot 'oacceptabel risk' AI-praxis blev juridiskt bindande, inklusive massövervakning och social scoring.",
+      "significance": "Första stora globala AI-regleringsmilstolpen. Sätter precedent för ansvarsfull AI-utveckling världen över och introducerar böter upp till €35M eller 7% av global omsättning.",
+      "capabilityArea": "regulation",
+      "beforeAfter": {
+        "before": "AI-utveckling var oreglerad i Europa",
+        "after": "Juridiskt ramverk med kraftfulla sanktioner på plats"
+      },
+      "metrics": [
+        {"name": "Maximal böt", "value": "€35M eller 7% omsättning", "comparison": "Högsta sanktioner någonsin för AI"}
+      ],
+      "keyPeople": ["Ursula von der Leyen"],
+      "tags": ["regulering", "EU", "policy"],
+      "sources": [
+        {
+          "title": "EU Artificial Intelligence Act Implementation Timeline",
+          "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+          "type": "docs"
+        },
+        {
+          "title": "Initial Prohibitions Under EU AI Act Take Effect",
+          "url": "https://www.quinnemanuel.com/the-firm/publications/initial-prohibitions-under-eu-ai-act-take-effect/",
+          "type": "announcement"
+        }
+      ]
+    },
+    {
+      "id": "openai-o3-2025",
+      "title": "OpenAI o3 - Full release med ARC-AGI genombrott",
+      "date": "2025-04-15",
+      "dateDisplay": "April 2025",
+      "category": "models",
+      "company": "openai",
+      "importance": 10,
+      "shortDesc": "87.5% på ARC-AGI - dramatiskt hopp i abstrakta resonemangförmåga",
+      "detailedDesc": "OpenAI släppte o3 fullt i april 2025 efter att ha annonserat det i december 2024. Modellen uppnådde 87.5% på ARC-AGI med high-compute konfiguration, jämfört med 5% för GPT-4o - ett av de största sprången i AI-förmåga någonsin.",
+      "significance": "Visar dramatisk förbättring i novel task adaptation - en kärnkomponent i AGI. Från 5% till 87.5% representerar ett paradigmskifte i abstrakt resonemang.",
+      "capabilityArea": "reasoning",
+      "beforeAfter": {
+        "before": "AI stagnerade på ~5% ARC-AGI i flera år",
+        "after": "o3 når 87.5%, närmar sig mänsklig prestanda (77%)"
+      },
+      "metrics": [
+        {"name": "ARC-AGI score", "value": "87.5%", "comparison": "vs 5% för GPT-4o"},
+        {"name": "Förbättring", "value": "1650%", "comparison": "17.5× bättre än GPT-4o"}
+      ],
+      "keyPeople": ["Sam Altman"],
+      "tags": ["reasoning", "benchmark", "AGI"],
+      "sources": [
+        {
+          "title": "OpenAI o3 Breakthrough on ARC-AGI",
+          "url": "https://arcprize.org/blog/oai-o3-pub-breakthrough",
+          "type": "announcement"
+        },
+        {
+          "title": "OpenAI's o3 shows remarkable progress on ARC-AGI",
+          "url": "https://venturebeat.com/ai/openais-o3-shows-remarkable-progress-on-arc-agi-sparking-debate-on-ai-reasoning",
+          "type": "blog"
+        }
+      ],
+      "relatedMilestones": ["arc-agi-breakthrough-2024"]
+    },
+    {
+      "id": "gemini-3-2025",
+      "title": "Gemini 3 - SOTA på flera benchmarks",
+      "date": "2025-11-18",
+      "dateDisplay": "18 November 2025",
+      "category": "models",
+      "company": "google",
+      "importance": 10,
+      "shortDesc": "Google lanserar Gemini 3 Pro - 100% AIME, högsta Humanity's Last Exam",
+      "detailedDesc": "Google släppte Gemini 3 i november 2025 med dramatiska förbättringar på matematisk och vetenskaplig reasoning. Uppnådde perfekt 100% på AIME 2025, 91.9% på GPQA Diamond, och högsta poäng någonsin på Humanity's Last Exam (37.4). På MathArena Apex förbättrades prestandan 46× jämfört med Gemini 2.5.",
+      "significance": "Markerade Googles återkomst till frontlinjen av AI-utveckling. Dramatiska hopp på flera benchmarks visar kvalitativa genombrott i reasoning-förmåga, särskilt för komplexa multi-step problem.",
+      "capabilityArea": "multimodal",
+      "beforeAfter": {
+        "before": "Gemini 2.5 Pro: 0.5% MathArena Apex, 4.9% ARC-AGI-2",
+        "after": "Gemini 3 Pro: 23.4% MathArena (46×), 31.1% ARC-AGI-2 (6×)"
+      },
+      "metrics": [
+        {"name": "AIME 2025", "value": "100%", "comparison": "Perfekt poäng på matematik"},
+        {"name": "GPQA Diamond", "value": "91.9%", "comparison": "vs 86.4% för Gemini 2.5"},
+        {"name": "MathArena Apex", "value": "23.4%", "comparison": "46× förbättring (0.5% → 23.4%)"},
+        {"name": "Humanity's Last Exam", "value": "37.4", "comparison": "Högsta poäng någonsin"}
+      ],
+      "keyPeople": ["Demis Hassabis", "Sundar Pichai"],
+      "tags": ["Gemini", "multimodal", "SOTA", "matematik"],
+      "sources": [
+        {
+          "title": "Gemini 3 Pro Model Card (November 2025)",
+          "url": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-Pro-Model-Card.pdf",
+          "type": "docs"
+        },
+        {
+          "title": "Google unveils Gemini 3 claiming lead in benchmarks",
+          "url": "https://venturebeat.com/ai/google-unveils-gemini-3-claiming-the-lead-in-math-science-multimodal-and",
+          "type": "announcement"
+        },
+        {
+          "title": "Gemini 3 Benchmarks Explained",
+          "url": "https://www.vellum.ai/blog/google-gemini-3-benchmarks",
+          "type": "blog"
+        }
+      ]
+    }
+  ],
+
+  "accelerationMetrics": {
+    "eventsPerPeriod": [
+      {
+        "period": "1950-2010",
+        "years": 60,
+        "count": 8,
+        "avgMonthsApart": 90,
+        "description": "Grundläggande forskning och tidiga genombrott"
+      },
+      {
+        "period": "2011-2016",
+        "years": 6,
+        "count": 4,
+        "avgMonthsApart": 18,
+        "description": "Deep learning börjar visa potential"
+      },
+      {
+        "period": "2017-2020",
+        "years": 4,
+        "count": 10,
+        "avgMonthsApart": 4.8,
+        "description": "Transformer-revolution och skalning"
+      },
+      {
+        "period": "2021-2023",
+        "years": 3,
+        "count": 13,
+        "avgMonthsApart": 2.8,
+        "description": "Publika AI-appar och mainstream-adoption"
+      },
+      {
+        "period": "2024-2025",
+        "years": 2,
+        "count": 20,
+        "avgMonthsApart": 1.2,
+        "description": "Reasoning, agenter och multimodala genombrott"
+      }
+    ],
+    "accelerationFactor": 75,
+    "currentPace": "~1 milstolpe per månad (2024-2025)",
+    "totalMilestones": 55
+  }
+}

@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-utvecklingens Acceleration - Interaktiv Tidslinje</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a12 0%, #12121c 50%, #1a1a28 100%);
+            color: #e0e0e8;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            margin-bottom: 40px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Controls */
+        .controls-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #e0e0e8;
+            font-size: 1rem;
+            width: 300px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #00d4ff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e0e8;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary.active {
+            background: linear-gradient(135deg, #7c3aed, #f472b6);
+            color: white;
+            border-color: transparent;
+        }
+
+        .category-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 16px;
+            border: 2px solid;
+            border-radius: 20px;
+            background: transparent;
+            color: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-btn.active {
+            background: var(--category-color);
+            color: white;
+        }
+
+        /* Timeline Container */
+        .timeline-wrapper {
+            position: relative;
+            margin: 40px 0;
+            padding: 40px 0;
+        }
+
+        .timeline-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #densityCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #timelineSvg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .timeline-axis {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .axis-label {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            font-weight: 600;
+        }
+
+        /* Event particles */
+        .event-particle {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .event-particle:hover {
+            filter: brightness(1.5) drop-shadow(0 0 8px currentColor);
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 100;
+            max-width: 300px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tooltip.visible {
+            opacity: 1;
+        }
+
+        .tooltip-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .tooltip-date {
+            color: #9ca3af;
+            font-size: 0.75rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        .modal-section {
+            margin-bottom: 24px;
+        }
+
+        .modal-section h3 {
+            font-size: 1.2rem;
+            color: #00d4ff;
+            margin-bottom: 12px;
+        }
+
+        .modal-section p {
+            line-height: 1.7;
+            color: #d0d0d8;
+        }
+
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .before-after-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 12px;
+            border-left: 3px solid;
+        }
+
+        .before-after-item.before {
+            border-color: #ef4444;
+        }
+
+        .before-after-item.after {
+            border-color: #10b981;
+        }
+
+        .before-after-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #9ca3af;
+            margin-bottom: 8px;
+        }
+
+        .sources-list {
+            list-style: none;
+        }
+
+        .source-item {
+            margin-bottom: 8px;
+        }
+
+        .source-link {
+            color: #00d4ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s;
+        }
+
+        .source-link:hover {
+            color: #7c3aed;
+            text-decoration: underline;
+        }
+
+        .source-type {
+            font-size: 0.7rem;
+            background: rgba(124, 58, 237, 0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.2rem;
+            color: #9ca3af;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 32px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        .legend-label {
+            font-size: 0.85rem;
+            color: #c0c0d0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .controls-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .before-after {
+                grid-template-columns: 1fr;
+            }
+
+            .modal {
+                padding: 24px;
+            }
+
+            .timeline-canvas-container {
+                height: 400px;
+            }
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #9ca3af;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        /* Milestone List */
+        .milestones-section {
+            margin-top: 60px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            text-align: center;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .milestones-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .milestone-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .milestone-card:hover {
+            transform: translateX(8px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .milestone-date {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .milestone-content {
+            flex: 1;
+        }
+
+        .milestone-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .milestone-icon {
+            font-size: 1.5rem;
+        }
+
+        .milestone-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #e0e0e8;
+        }
+
+        .milestone-desc {
+            font-size: 0.9rem;
+            color: #b0b0c0;
+            line-height: 1.5;
+        }
+
+        .milestone-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .milestone-importance {
+            display: flex;
+            gap: 2px;
+        }
+
+        .importance-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: 0.3;
+        }
+
+        .importance-dot.filled {
+            opacity: 1;
+        }
+
+        .milestone-company {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #c0c0d0;
+        }
+
+        @media (max-width: 768px) {
+            .milestone-card {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .milestone-date {
+                text-align: left;
+            }
+
+            .milestone-meta {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI-utvecklingens Acceleration</h1>
+            <p class="subtitle">Från Dartmouth till dagens genombrott - se hur snabbt saker rör sig</p>
+
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-value" style="background: linear-gradient(135deg, #00d4ff, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        <span id="totalMilestones">52</span>
+                    </div>
+                    <div class="stat-label">Milstolpar</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="background: linear-gradient(135deg, #7c3aed, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        <span id="accelerationFactor">64×</span>
+                    </div>
+                    <div class="stat-label">Snabbare idag</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="background: linear-gradient(135deg, #f472b6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        <span id="currentPace">~1.5/mån</span>
+                    </div>
+                    <div class="stat-label">Nuvarande takt</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" style="background: linear-gradient(135deg, #10b981, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        <span id="timespan">75 år</span>
+                    </div>
+                    <div class="stat-label">Historisk spännvidd</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls-section">
+            <div class="controls-row">
+                <div class="control-group">
+                    <input type="text" class="search-box" id="searchBox" placeholder="Sök milstolpar...">
+                    <button class="btn btn-secondary" id="toggleMode">Växla till Linjär Tid</button>
+                    <button class="btn btn-primary" id="playBtn">▶ Spela Acceleration</button>
+                </div>
+                <div class="category-filters" id="categoryFilters">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-wrapper">
+            <div class="timeline-canvas-container" id="timelineContainer">
+                <canvas id="densityCanvas"></canvas>
+                <svg id="timelineSvg"></svg>
+                <div class="timeline-axis" id="timelineAxis"></div>
+            </div>
+            <div id="tooltip" class="tooltip">
+                <div class="tooltip-title"></div>
+                <div class="tooltip-date"></div>
+            </div>
+        </div>
+
+        <div class="legend" id="legend">
+            <!-- Populated by JS -->
+        </div>
+
+        <!-- Milestone List -->
+        <div class="milestones-section">
+            <h2 class="section-title">Alla Milstolpar</h2>
+            <div class="milestones-list" id="milestonesList">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" id="modalClose">×</button>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-meta" id="modalMeta"></div>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Data loader
+        const DataLoader = {
+            cache: null,
+            async load() {
+                if (this.cache) return this.cache;
+                try {
+                    const response = await fetch('data/timeline-data.json');
+                    if (!response.ok) throw new Error('Failed to load data');
+                    this.cache = await response.json();
+                    return this.cache;
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    throw error;
+                }
+            }
+        };
+
+        // State
+        let currentMode = 'accelerated'; // 'accelerated' or 'linear'
+        let currentFilters = {
+            search: '',
+            categories: new Set()
+        };
+        let allData = null;
+        let filteredMilestones = [];
+
+        // Time scale configuration
+        const timeEpochs = [
+            { start: new Date('1950-01-01'), end: new Date('2010-12-31'), widthPct: 15 },
+            { start: new Date('2011-01-01'), end: new Date('2016-12-31'), widthPct: 10 },
+            { start: new Date('2017-01-01'), end: new Date('2020-12-31'), widthPct: 20 },
+            { start: new Date('2021-01-01'), end: new Date('2023-12-31'), widthPct: 25 },
+            { start: new Date('2024-01-01'), end: new Date('2025-12-31'), widthPct: 30 }
+        ];
+
+        // Calculate position on timeline
+        function calculatePosition(date, mode = 'accelerated') {
+            const dateObj = new Date(date);
+            const minDate = new Date('1950-01-01');
+            const maxDate = new Date('2025-12-31');
+
+            if (mode === 'linear') {
+                const totalMs = maxDate - minDate;
+                const offsetMs = dateObj - minDate;
+                return (offsetMs / totalMs) * 100;
+            }
+
+            // Accelerated mode
+            let currentWidthOffset = 0;
+            for (const epoch of timeEpochs) {
+                if (dateObj >= epoch.start && dateObj <= epoch.end) {
+                    const epochDuration = epoch.end - epoch.start;
+                    const offsetInEpoch = dateObj - epoch.start;
+                    const pctInEpoch = offsetInEpoch / epochDuration;
+                    return currentWidthOffset + (pctInEpoch * epoch.widthPct);
+                }
+                currentWidthOffset += epoch.widthPct;
+            }
+            return currentWidthOffset;
+        }
+
+        // Render density heat map
+        function renderDensityMap(milestones) {
+            const canvas = document.getElementById('densityCanvas');
+            const ctx = canvas.getContext('2d');
+            const container = canvas.parentElement;
+
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+
+            const segments = 100;
+            const segmentWidth = canvas.width / segments;
+            const densityCounts = new Array(segments).fill(0);
+
+            // Count events in each segment
+            milestones.forEach(milestone => {
+                const position = calculatePosition(milestone.date, currentMode);
+                const segmentIndex = Math.floor((position / 100) * segments);
+                if (segmentIndex >= 0 && segmentIndex < segments) {
+                    densityCounts[segmentIndex] += milestone.importance || 5;
+                }
+            });
+
+            // Normalize
+            const maxDensity = Math.max(...densityCounts);
+            if (maxDensity === 0) return;
+
+            // Render gradient
+            densityCounts.forEach((count, i) => {
+                const density = (count / maxDensity) * 100;
+                const color = getDensityColor(density);
+                const x = i * segmentWidth;
+
+                const gradient = ctx.createLinearGradient(x, 0, x, canvas.height);
+                gradient.addColorStop(0, `${color}00`);
+                gradient.addColorStop(0.5, `${color}40`);
+                gradient.addColorStop(1, `${color}80`);
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(x, 0, segmentWidth, canvas.height);
+            });
+
+            // Apply blur
+            ctx.filter = 'blur(40px)';
+            ctx.drawImage(canvas, 0, 0);
+            ctx.filter = 'none';
+        }
+
+        function getDensityColor(density) {
+            const stops = [
+                { pct: 0, color: '#1e3a8a' },
+                { pct: 20, color: '#3b82f6' },
+                { pct: 40, color: '#06b6d4' },
+                { pct: 60, color: '#fbbf24' },
+                { pct: 80, color: '#f97316' },
+                { pct: 90, color: '#dc2626' },
+                { pct: 100, color: '#ffffff' }
+            ];
+
+            for (let i = 0; i < stops.length - 1; i++) {
+                if (density >= stops[i].pct && density <= stops[i + 1].pct) {
+                    return stops[i + 1].color;
+                }
+            }
+            return stops[stops.length - 1].color;
+        }
+
+        // Render timeline events
+        function renderTimeline(milestones) {
+            const svg = document.getElementById('timelineSvg');
+            const container = svg.parentElement;
+
+            svg.setAttribute('width', container.offsetWidth);
+            svg.setAttribute('height', container.offsetHeight);
+            svg.innerHTML = '';
+
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const padding = 40;
+
+            milestones.forEach((milestone, index) => {
+                const x = (calculatePosition(milestone.date, currentMode) / 100) * (width - 2 * padding) + padding;
+                const y = height / 2 + (Math.random() - 0.5) * (height - 200);
+
+                const category = allData.categories.find(c => c.id === milestone.category);
+                const color = category ? category.color : '#9ca3af';
+
+                // Size based on importance
+                const baseSize = 4;
+                const importance = milestone.importance || 5;
+                const radius = baseSize + (importance / 10) * 12;
+
+                // Create circle
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', x);
+                circle.setAttribute('cy', y);
+                circle.setAttribute('r', radius);
+                circle.setAttribute('fill', color);
+                circle.setAttribute('opacity', 0.8);
+                circle.setAttribute('class', 'event-particle');
+                circle.setAttribute('data-index', index);
+
+                // Glow effect for important events
+                if (importance >= 8) {
+                    circle.setAttribute('filter', 'url(#glow)');
+                }
+
+                // Add event listeners
+                circle.addEventListener('mouseenter', (e) => showTooltip(e, milestone));
+                circle.addEventListener('mouseleave', hideTooltip);
+                circle.addEventListener('click', () => openModal(milestone));
+
+                svg.appendChild(circle);
+            });
+
+            // Add glow filter definition
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+            filter.setAttribute('id', 'glow');
+
+            const blur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+            blur.setAttribute('stdDeviation', '3');
+            blur.setAttribute('result', 'coloredBlur');
+
+            const merge = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge');
+            const mergeNode1 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+            mergeNode1.setAttribute('in', 'coloredBlur');
+            const mergeNode2 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+            mergeNode2.setAttribute('in', 'SourceGraphic');
+
+            merge.appendChild(mergeNode1);
+            merge.appendChild(mergeNode2);
+            filter.appendChild(blur);
+            filter.appendChild(merge);
+            defs.appendChild(filter);
+            svg.insertBefore(defs, svg.firstChild);
+        }
+
+        // Tooltip
+        function showTooltip(e, milestone) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.querySelector('.tooltip-title').textContent = milestone.title;
+            tooltip.querySelector('.tooltip-date').textContent = milestone.dateDisplay;
+            tooltip.classList.add('visible');
+
+            // Position tooltip
+            const x = e.pageX + 10;
+            const y = e.pageY + 10;
+            tooltip.style.left = x + 'px';
+            tooltip.style.top = y + 'px';
+        }
+
+        function hideTooltip() {
+            document.getElementById('tooltip').classList.remove('visible');
+        }
+
+        // Modal
+        function openModal(milestone) {
+            const modal = document.getElementById('modalOverlay');
+            const category = allData.categories.find(c => c.id === milestone.category);
+
+            document.getElementById('modalTitle').textContent = `${category?.icon || ''} ${milestone.title}`;
+
+            let metaHtml = `<span>📅 ${milestone.dateDisplay}</span>`;
+            if (milestone.company) {
+                const company = allData.companies.find(c => c.id === milestone.company);
+                if (company) metaHtml += `<span>🏢 ${company.name}</span>`;
+            }
+            metaHtml += `<span>⭐ Betydelse: ${milestone.importance}/10</span>`;
+            document.getElementById('modalMeta').innerHTML = metaHtml;
+
+            let contentHtml = `
+                <div class="modal-section">
+                    <h3>Beskrivning</h3>
+                    <p>${milestone.detailedDesc}</p>
+                </div>
+            `;
+
+            if (milestone.significance) {
+                contentHtml += `
+                    <div class="modal-section">
+                        <h3>Betydelse</h3>
+                        <p>${milestone.significance}</p>
+                    </div>
+                `;
+            }
+
+            if (milestone.beforeAfter) {
+                contentHtml += `
+                    <div class="modal-section">
+                        <h3>Före & Efter</h3>
+                        <div class="before-after">
+                            <div class="before-after-item before">
+                                <div class="before-after-label">Före</div>
+                                <p>${milestone.beforeAfter.before}</p>
+                            </div>
+                            <div class="before-after-item after">
+                                <div class="before-after-label">Efter</div>
+                                <p>${milestone.beforeAfter.after}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (milestone.metrics && milestone.metrics.length > 0) {
+                contentHtml += `
+                    <div class="modal-section">
+                        <h3>Metrics</h3>
+                        ${milestone.metrics.map(m => `<p><strong>${m.name}:</strong> ${m.value} ${m.comparison ? `(${m.comparison})` : ''}</p>`).join('')}
+                    </div>
+                `;
+            }
+
+            if (milestone.sources && milestone.sources.length > 0) {
+                contentHtml += `
+                    <div class="modal-section">
+                        <h3>Källor</h3>
+                        <ul class="sources-list">
+                            ${milestone.sources.map(s => `
+                                <li class="source-item">
+                                    <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="source-link">
+                                        📄 ${s.title}
+                                        <span class="source-type">${s.type}</span>
+                                    </a>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+
+            document.getElementById('modalContent').innerHTML = contentHtml;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Render milestone list
+        function renderMilestoneList(milestones) {
+            const listContainer = document.getElementById('milestonesList');
+
+            if (milestones.length === 0) {
+                listContainer.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>Inga milstolpar matchar dina filter</p></div>';
+                return;
+            }
+
+            // Sort by date (newest first)
+            const sortedMilestones = [...milestones].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            listContainer.innerHTML = sortedMilestones.map(milestone => {
+                const category = allData.categories.find(c => c.id === milestone.category);
+                const company = milestone.company ? allData.companies.find(c => c.id === milestone.company) : null;
+                const color = category ? category.color : '#9ca3af';
+
+                // Create importance dots
+                const importanceDots = Array.from({length: 10}, (_, i) => {
+                    const filled = i < milestone.importance ? 'filled' : '';
+                    return `<div class="importance-dot ${filled}" style="color: ${color}"></div>`;
+                }).join('');
+
+                return `
+                    <div class="milestone-card" style="border-left-color: ${color}" onclick="openMilestoneFromList('${milestone.id}')">
+                        <div class="milestone-date">${milestone.dateDisplay}</div>
+                        <div class="milestone-content">
+                            <div class="milestone-header">
+                                <span class="milestone-icon">${category?.icon || '📌'}</span>
+                                <h3 class="milestone-title">${milestone.title}</h3>
+                            </div>
+                            <p class="milestone-desc">${milestone.shortDesc}</p>
+                        </div>
+                        <div class="milestone-meta">
+                            <div class="milestone-importance" title="Betydelse: ${milestone.importance}/10">
+                                ${importanceDots}
+                            </div>
+                            ${company ? `<div class="milestone-company">${company.name}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Open milestone from list
+        function openMilestoneFromList(milestoneId) {
+            const milestone = allData.milestones.find(m => m.id === milestoneId);
+            if (milestone) {
+                openModal(milestone);
+            }
+        }
+
+        // Filters
+        function applyFilters() {
+            filteredMilestones = allData.milestones.filter(m => {
+                // Search filter
+                if (currentFilters.search) {
+                    const searchTerm = currentFilters.search.toLowerCase();
+                    const matchesSearch =
+                        m.title.toLowerCase().includes(searchTerm) ||
+                        m.shortDesc.toLowerCase().includes(searchTerm) ||
+                        m.detailedDesc.toLowerCase().includes(searchTerm) ||
+                        (m.tags && m.tags.some(t => t.toLowerCase().includes(searchTerm)));
+                    if (!matchesSearch) return false;
+                }
+
+                // Category filter
+                if (currentFilters.categories.size > 0 && !currentFilters.categories.has(m.category)) {
+                    return false;
+                }
+
+                return true;
+            });
+
+            renderDensityMap(filteredMilestones);
+            renderTimeline(filteredMilestones);
+            renderMilestoneList(filteredMilestones);
+
+            // Show empty state if no results
+            if (filteredMilestones.length === 0) {
+                const svg = document.getElementById('timelineSvg');
+                svg.innerHTML = '<text x="50%" y="50%" text-anchor="middle" fill="#9ca3af" font-size="1.2rem">Inga milstolpar matchar filtren</text>';
+            }
+        }
+
+        // Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
+        // Initialize
+        async function init() {
+            try {
+                allData = await DataLoader.load();
+                filteredMilestones = allData.milestones;
+
+                // Update stats
+                document.getElementById('totalMilestones').textContent = allData.metadata.totalMilestones;
+                document.getElementById('accelerationFactor').textContent = `${allData.accelerationMetrics.accelerationFactor.toFixed(0)}×`;
+                document.getElementById('currentPace').textContent = allData.accelerationMetrics.currentPace.split(' ')[0];
+
+                // Create category filters
+                const filtersContainer = document.getElementById('categoryFilters');
+                allData.categories.forEach(cat => {
+                    const btn = document.createElement('button');
+                    btn.className = 'category-btn active';
+                    btn.style.setProperty('--category-color', cat.color);
+                    btn.style.borderColor = cat.color;
+                    btn.style.color = cat.color;
+                    btn.innerHTML = `${cat.icon} ${cat.label}`;
+                    btn.addEventListener('click', () => {
+                        btn.classList.toggle('active');
+                        if (btn.classList.contains('active')) {
+                            currentFilters.categories.delete(cat.id);
+                        } else {
+                            currentFilters.categories.add(cat.id);
+                        }
+                        applyFilters();
+                    });
+                    filtersContainer.appendChild(btn);
+                });
+
+                // Create legend
+                const legend = document.getElementById('legend');
+                allData.categories.forEach(cat => {
+                    const item = document.createElement('div');
+                    item.className = 'legend-item';
+                    item.innerHTML = `
+                        <div class="legend-color" style="background: ${cat.color};"></div>
+                        <span class="legend-label">${cat.icon} ${cat.label}</span>
+                    `;
+                    legend.appendChild(item);
+                });
+
+                // Search
+                document.getElementById('searchBox').addEventListener('input', debounce((e) => {
+                    currentFilters.search = e.target.value;
+                    applyFilters();
+                }, 300));
+
+                // Toggle mode
+                document.getElementById('toggleMode').addEventListener('click', () => {
+                    currentMode = currentMode === 'accelerated' ? 'linear' : 'accelerated';
+                    document.getElementById('toggleMode').textContent =
+                        currentMode === 'accelerated' ? 'Växla till Linjär Tid' : 'Växla till Accelererad Tid';
+                    applyFilters();
+                });
+
+                // Modal close
+                document.getElementById('modalClose').addEventListener('click', closeModal);
+                document.getElementById('modalOverlay').addEventListener('click', (e) => {
+                    if (e.target === e.currentTarget) closeModal();
+                });
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closeModal();
+                });
+
+                // Render
+                applyFilters();
+
+                // Resize handler
+                window.addEventListener('resize', debounce(() => {
+                    applyFilters();
+                }, 150));
+
+            } catch (error) {
+                console.error('Initialization error:', error);
+                document.querySelector('.container').innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><h2>Kunde inte ladda data</h2><p>Kontrollera att data/timeline-data.json finns och är korrekt formaterad.</p></div>';
+            }
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

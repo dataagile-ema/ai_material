@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Kodningsverktyg - Komplett Jämförelse</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            color: #e0e0e0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #8b8b9a;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card:nth-child(1) .stat-value { color: #00d4ff; }
+        .stat-card:nth-child(2) .stat-value { color: #10b981; }
+        .stat-card:nth-child(3) .stat-value { color: #7c3aed; }
+        .stat-card:nth-child(4) .stat-value { color: #f472b6; }
+
+        .stat-label {
+            color: #8b8b9a;
+            font-size: 0.9rem;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .section-description {
+            color: #8b8b9a;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Table Styles */
+        .tools-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .tools-table th,
+        .tools-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tools-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #00d4ff;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .tools-table th:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .tools-table tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tool-name {
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .category-commercial {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .category-opensource {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 1.2rem;
+            margin: 0 0.2rem;
+        }
+
+        .feature-yes {
+            color: #10b981;
+        }
+
+        .feature-no {
+            color: #6b6b7a;
+        }
+
+        /* Filter Controls */
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e0e0e0;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: rgba(0, 212, 255, 0.5);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(124, 58, 237, 0.3));
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-top: 1.5rem;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            z-index: 1;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-section h4 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .modal-section p, .modal-section li {
+            color: #c0c0d0;
+            line-height: 1.6;
+        }
+
+        .modal-link {
+            display: inline-block;
+            color: #00d4ff;
+            text-decoration: none;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .modal-link:hover {
+            color: #7c3aed;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #6b6b7a;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .tools-table { font-size: 0.85rem; }
+            .tools-table th, .tools-table td { padding: 0.75rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Kodningsverktyg</h1>
+            <p class="subtitle">Komplett jämförelse: Features, Standards, Deployment & Konvergens</p>
+        </header>
+
+        <div class="stats-grid" id="stats-grid">
+            <!-- Stats will be dynamically populated -->
+        </div>
+
+        <!-- Main Comparison Table Section -->
+        <div class="section">
+            <h2 class="section-title">Verktygsöversikt</h2>
+            <p class="section-description">Jämför AI-kodningsverktyg - kommersiella och open source. Klicka på verktygsnamn för detaljer.</p>
+
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">Alla Verktyg</button>
+                <button class="filter-btn" data-filter="commercial">Kommersiella</button>
+                <button class="filter-btn" data-filter="opensource">Open Source</button>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="tools-table" id="tools-table">
+                    <thead>
+                        <tr>
+                            <th>Verktyg</th>
+                            <th>Kategori</th>
+                            <th>Code Completion</th>
+                            <th>Agentic Coding</th>
+                            <th>MCP</th>
+                            <th>Multi-File</th>
+                            <th>Pris (USD/mån)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tools-tbody">
+                        <!-- Table rows will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Convergence Timeline Section -->
+        <div class="section">
+            <h2 class="section-title">Funktionskonvergens över tid</h2>
+            <p class="section-description">Hur AI-kodningsverktyg har adopterat liknande features. Open source ledde ofta, kommersiella följde 6-12 månader senare.</p>
+            <div style="overflow-x: auto;">
+                <table class="tools-table" id="convergence-table">
+                    <thead>
+                        <tr>
+                            <th>År & Kvartal</th>
+                            <th>Händelse</th>
+                            <th>Beskrivning</th>
+                            <th>Verktyg som adopterade</th>
+                            <th>Betydelse</th>
+                        </tr>
+                    </thead>
+                    <tbody id="convergence-tbody">
+                        <!-- Table rows will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Deployment Options Section -->
+        <div class="section">
+            <h2 class="section-title">Deployment-alternativ</h2>
+            <p class="section-description">Var och hur verktyg kan köras: cloud, on-premises, lokal, Azure, AWS, GCP.</p>
+            <div style="overflow-x: auto;">
+                <table class="tools-table" id="deployment-table">
+                    <thead>
+                        <tr>
+                            <th>Verktyg</th>
+                            <th>SaaS (Cloud)</th>
+                            <th>Azure OpenAI</th>
+                            <th>Google Cloud</th>
+                            <th>AWS</th>
+                            <th>Lokal/Self-hosted</th>
+                            <th>On-Premises</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deployment-tbody">
+                        <!-- Table rows will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Feature Details Section -->
+        <div class="section">
+            <h2 class="section-title">Nyckelinsikter</h2>
+            <div class="modal-section">
+                <h4>Open Source vs Kommersiellt</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #10b981;">✓</span>
+                        <strong>Open Source fördelar:</strong> Innovation först (Aider 2023 → agentic coding), deployment-flexibilitet, anpassning, gratis
+                    </li>
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #00d4ff;">✓</span>
+                        <strong>Kommersiell fördelar:</strong> Enterprise compliance (SOC2, ISO 27001), polerad UX, native IDE-integration
+                    </li>
+                </ul>
+            </div>
+
+            <div class="modal-section">
+                <h4>Konvergensmönster</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #7c3aed;">→</span>
+                        <strong>Config-filer (.md):</strong> Cursor (.cursorrules 2024) → Claude Code (.claude.md 2024) → Blir standard
+                    </li>
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #f472b6;">→</span>
+                        <strong>Agentic coding:</strong> Open source först (Aider maj 2023) → Kommersiellt (Cursor aug 2024, Claude Code dec 2024)
+                    </li>
+                    <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: #f59e0b;">→</span>
+                        <strong>MCP Protocol:</strong> Anthropic's bet på standardisering (nov 2024), adoption pågår
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tool Detail Modals will be dynamically created -->
+
+        <footer>
+            <p>Data källor:
+            <a href="https://github.com/features/copilot" target="_blank">GitHub Copilot</a>,
+            <a href="https://cursor.sh" target="_blank">Cursor</a>,
+            <a href="https://www.anthropic.com/claude-code" target="_blank">Claude Code</a>,
+            <a href="https://aider.chat" target="_blank">Aider</a>,
+            <a href="https://continue.dev" target="_blank">Continue</a></p>
+            <p style="margin-top: 0.5rem;">Genererad januari 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        // Color palette
+        const colors = {
+            cyan: '#00d4ff',
+            purple: '#7c3aed',
+            green: '#10b981',
+            pink: '#f472b6',
+            orange: '#f59e0b'
+        };
+
+        // Data loader
+        const DataLoader = {
+            cache: null,
+
+            async loadToolsData() {
+                if (this.cache) return this.cache;
+
+                const response = await fetch('./data/coding-tools-data.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: Failed to load data`);
+                }
+
+                const data = await response.json();
+                this.cache = data;
+                return data;
+            }
+        };
+
+        // Global data
+        let toolsData = null;
+        let currentFilter = 'all';
+
+        // Initialize application
+        async function initializeApp() {
+            try {
+                toolsData = await DataLoader.loadToolsData();
+
+                renderStats();
+                renderToolsTable();
+                renderConvergenceChart();
+                renderDeploymentChart();
+                setupFilters();
+                setupModals();
+
+            } catch (error) {
+                console.error('Failed to initialize:', error);
+                console.error('Error stack:', error.stack);
+                document.getElementById('stats-grid').innerHTML = `
+                    <div style="grid-column: 1/-1; padding: 2rem; text-align: center; color: #ff6b6b;">
+                        <h3>Fel vid laddning</h3>
+                        <p>${error.message}</p>
+                        <p style="font-size: 0.9rem; color: #8b8b9a;">Öppna console (F12) för mer information</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Render stats
+        function renderStats() {
+            const statsGrid = document.getElementById('stats-grid');
+            const totalTools = toolsData.tools.length;
+            const commercialCount = toolsData.tools.filter(t => t.category === 'commercial').length;
+            const opensourceCount = toolsData.tools.filter(t => t.category === 'opensource').length;
+            const mcpCount = toolsData.tools.filter(t => t.features.mcp_support?.supported).length;
+
+            statsGrid.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${totalTools}</div>
+                    <div class="stat-label">Verktyg Jämförda</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${commercialCount} vs ${opensourceCount}</div>
+                    <div class="stat-label">Kommersiella vs Open Source</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">6+</div>
+                    <div class="stat-label">Deployment-alternativ</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${mcpCount}</div>
+                    <div class="stat-label">MCP Protocol Stöd</div>
+                </div>
+            `;
+        }
+
+        // Render tools table
+        function renderToolsTable() {
+            const tbody = document.getElementById('tools-tbody');
+            const tools = toolsData.tools.filter(tool => {
+                if (currentFilter === 'all') return true;
+                return tool.category === currentFilter;
+            });
+
+            tbody.innerHTML = tools.map(tool => {
+                const categoryClass = tool.category === 'commercial' ? 'category-commercial' : 'category-opensource';
+                const categoryLabel = tool.category === 'commercial' ? 'Kommersiell' : 'Open Source';
+
+                const codeCompletion = tool.features.code_completion?.supported ? '✓' : '—';
+                const agenticCoding = tool.features.agentic_coding?.supported ? '✓' : '—';
+                const mcpSupport = tool.features.mcp_support?.supported ? '✓' : '—';
+                const multiFile = tool.features.multifile_edit?.supported ? '✓' : '—';
+
+                const price = tool.pricing.free_tier
+                    ? (tool.pricing.individual?.price ? `$${tool.pricing.individual.price}` : 'Gratis')
+                    : (tool.pricing.individual?.price ? `$${tool.pricing.individual.price}` : 'N/A');
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="tool-name">
+                                <span>${tool.name}</span>
+                                <button onclick="openToolModal('${tool.id}')" style="background: rgba(0,212,255,0.2); border: 1px solid rgba(0,212,255,0.3); color: #00d4ff; padding: 0.25rem 0.5rem; border-radius: 6px; cursor: pointer; font-size: 0.75rem;">Info</button>
+                            </div>
+                        </td>
+                        <td><span class="category-badge ${categoryClass}">${categoryLabel}</span></td>
+                        <td class="${tool.features.code_completion?.supported ? 'feature-yes' : 'feature-no'}">${codeCompletion}</td>
+                        <td class="${tool.features.agentic_coding?.supported ? 'feature-yes' : 'feature-no'}">${agenticCoding}</td>
+                        <td class="${tool.features.mcp_support?.supported ? 'feature-yes' : 'feature-no'}">${mcpSupport}</td>
+                        <td class="${tool.features.multifile_edit?.supported ? 'feature-yes' : 'feature-no'}">${multiFile}</td>
+                        <td>${price}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Setup filters
+        function setupFilters() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    renderToolsTable();
+                });
+            });
+        }
+
+        // Render convergence timeline table
+        function renderConvergenceChart() {
+            const tbody = document.getElementById('convergence-tbody');
+            const timeline = toolsData.convergenceTimeline;
+
+            tbody.innerHTML = timeline.map(event => {
+                const toolNames = event.adopters.map(id => {
+                    const tool = toolsData.tools.find(t => t.id === id);
+                    return tool ? tool.name : id;
+                }).join(', ');
+
+                const significanceBadge = event.significance === 'high'
+                    ? '<span style="color: #f472b6; font-weight: 600;">●●●</span>'
+                    : event.significance === 'medium'
+                    ? '<span style="color: #f59e0b; font-weight: 600;">●●○</span>'
+                    : '<span style="color: #8b8b9a; font-weight: 600;">●○○</span>';
+
+                return `
+                    <tr>
+                        <td style="white-space: nowrap;"><strong>${event.quarter} ${event.year}</strong></td>
+                        <td><strong style="color: #00d4ff;">${event.event}</strong></td>
+                        <td>${event.description}</td>
+                        <td>${toolNames}</td>
+                        <td style="text-align: center;">${significanceBadge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Render deployment table
+        function renderDeploymentChart() {
+            const tbody = document.getElementById('deployment-tbody');
+
+            tbody.innerHTML = toolsData.tools.map(tool => {
+                const checkmark = '✓';
+                const cross = '—';
+
+                return `
+                    <tr>
+                        <td>
+                            <div class="tool-name">
+                                <span>${tool.name}</span>
+                                <span class="category-badge ${tool.category === 'commercial' ? 'category-commercial' : 'category-opensource'}">
+                                    ${tool.category === 'commercial' ? 'Kommersiell' : 'Open Source'}
+                                </span>
+                            </div>
+                        </td>
+                        <td class="${tool.deployment.saas ? 'feature-yes' : 'feature-no'}" style="text-align: center;">
+                            ${tool.deployment.saas ? checkmark : cross}
+                        </td>
+                        <td class="${tool.deployment.azure_openai ? 'feature-yes' : 'feature-no'}" style="text-align: center;">
+                            ${tool.deployment.azure_openai ? checkmark : cross}
+                        </td>
+                        <td class="${tool.deployment.google_cloud ? 'feature-yes' : 'feature-no'}" style="text-align: center;">
+                            ${tool.deployment.google_cloud ? checkmark : cross}
+                        </td>
+                        <td class="${tool.deployment.aws ? 'feature-yes' : 'feature-no'}" style="text-align: center;">
+                            ${tool.deployment.aws ? checkmark : cross}
+                        </td>
+                        <td class="${tool.deployment.local ? 'feature-yes' : 'feature-no'}" style="text-align: center;">
+                            ${tool.deployment.local ? checkmark : cross}
+                        </td>
+                        <td class="${tool.deployment.onprem_enterprise ? 'feature-yes' : 'feature-no'}" style="text-align: center;">
+                            ${tool.deployment.onprem_enterprise ? checkmark : cross}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Setup modals
+        function setupModals() {
+            // Create modal containers
+            toolsData.tools.forEach(tool => {
+                const modal = document.createElement('div');
+                modal.className = 'modal-overlay';
+                modal.id = `modal-${tool.id}`;
+                modal.innerHTML = `
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h3 class="modal-title">${tool.name}</h3>
+                            <button class="modal-close" onclick="closeModal('${tool.id}')">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-section">
+                                <h4>Om ${tool.name}</h4>
+                                <p>${tool.description}</p>
+                                <p><strong>Kategori:</strong> ${tool.category === 'commercial' ? 'Kommersiell' : 'Open Source'}</p>
+                                <p><strong>Leverantör:</strong> ${tool.vendor}</p>
+                                <p><strong>Lanserad:</strong> ${tool.launched}</p>
+                            </div>
+
+                            <div class="modal-section">
+                                <h4>Features</h4>
+                                <ul>
+                                    ${Object.entries(tool.features).filter(([k, v]) => v.supported).map(([key, val]) =>
+                                        `<li><strong>${toolsData.features.find(f => f.id === key)?.label || key}:</strong> ${val.notes || 'Stöds'} ${val.since ? `(sedan ${val.since})` : ''}</li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+
+                            <div class="modal-section">
+                                <h4>Källor</h4>
+                                ${tool.sources.map(s => `<div><a href="${s.url}" target="_blank" class="modal-link">${s.title}</a></div>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+
+                // Close on overlay click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(tool.id);
+                    }
+                });
+            });
+        }
+
+        // Modal functions
+        function openToolModal(toolId) {
+            document.getElementById(`modal-${toolId}`).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(toolId) {
+            document.getElementById(`modal-${toolId}`).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modals on Escape key
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Initialize on load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+    </script>
+</body>
+</html>

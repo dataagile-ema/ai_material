@@ -1,0 +1,462 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-05",
+    "description": "AI-tidslinje med källattribuering - från Dartmouth 1956 till moderna resonerande modeller 2025",
+    "language": "sv"
+  },
+  "categories": [
+    {
+      "id": "research",
+      "label": "Forskningsgenombrott",
+      "color": "#00d4ff",
+      "description": "Banbrytande akademisk forskning och publicerade papers"
+    },
+    {
+      "id": "products",
+      "label": "Produkter/Appar",
+      "color": "#7c3aed",
+      "description": "Konsumentprodukter och publika AI-tjänster"
+    },
+    {
+      "id": "benchmarks",
+      "label": "Benchmarks",
+      "color": "#10b981",
+      "description": "Utvärderingsstandarder och prestationsmätningar"
+    },
+    {
+      "id": "tools",
+      "label": "Verktyg/Standarder",
+      "color": "#f59e0b",
+      "description": "Utvecklarverktyg, protokoll och standarder"
+    }
+  ],
+  "events": [
+    {
+      "id": "dartmouth",
+      "title": "Dartmouth-konferensen",
+      "category": "research",
+      "date": "1956-06-18",
+      "dateDisplay": "Juni-Augusti 1956",
+      "shortDesc": "AI skapas som forskningsfält",
+      "detailedDesc": "Dartmouth Summer Research Project on Artificial Intelligence hölls från 18 juni till 17 augusti 1956. John McCarthy myntade termen 'Artificial Intelligence' och samlade forskare som Marvin Minsky, Claude Shannon och Nathaniel Rochester för att diskutera hur maskiner skulle kunna simulera aspekter av mänsklig intelligens.",
+      "significance": "Etablerade AI som ett legitimt forskningsfält och definierade grundläggande mål för området",
+      "keyPeople": ["John McCarthy", "Marvin Minsky", "Claude Shannon", "Nathaniel Rochester"],
+      "tags": ["foundational", "historical"],
+      "sources": [
+        {
+          "title": "Dartmouth workshop - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Dartmouth_workshop",
+          "type": "reference"
+        },
+        {
+          "title": "AI Coined at Dartmouth",
+          "url": "https://home.dartmouth.edu/about/artificial-intelligence-ai-coined-dartmouth",
+          "type": "reference"
+        }
+      ],
+      "relatedEvents": []
+    },
+    {
+      "id": "alexnet",
+      "title": "AlexNet vinner ImageNet",
+      "category": "research",
+      "date": "2012-09-01",
+      "dateDisplay": "September 2012",
+      "shortDesc": "Deep learning-genombrott i bildklassificering",
+      "detailedDesc": "Alex Krizhevsky, Ilya Sutskever och Geoffrey Hinton vann ImageNet Large Scale Visual Recognition Challenge 2012 med AlexNet, en djup konvolutionell neural nätverksarkitektur. Modellen uppnådde en top-5 felhastighet på 15,3%, över 10,8% bättre än tvåan. AlexNet innehåller 60 miljoner parametrar och tränades på 2 Nvidia GTX 580 GPU:er.",
+      "significance": "Markerade början på deep learning-eran och visade GPU-träningens potential för stora neurala nätverk",
+      "keyPeople": ["Alex Krizhevsky", "Ilya Sutskever", "Geoffrey Hinton"],
+      "tags": ["deep_learning", "computer_vision", "foundational"],
+      "sources": [
+        {
+          "title": "AlexNet - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AlexNet",
+          "type": "reference"
+        },
+        {
+          "title": "ImageNet Classification with Deep Convolutional Neural Networks (NeurIPS)",
+          "url": "https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks",
+          "type": "paper"
+        }
+      ],
+      "relatedEvents": ["alphago"]
+    },
+    {
+      "id": "alphago",
+      "title": "AlphaGo besegrar Lee Sedol",
+      "category": "products",
+      "date": "2016-03-09",
+      "dateDisplay": "9-15 Mars 2016",
+      "shortDesc": "AI vinner över världsmästare i Go",
+      "detailedDesc": "DeepMinds AlphaGo besegrade Go-världsmästaren Lee Sedol med 4-1 i en femspelsmatch i Seoul, Sydkorea (9-15 mars 2016). Matchen sågs av över 200 miljoner människor världen över. Efter vinsten tilldelades AlphaGo den högsta Go-graden 'hedersgrad 9 dan' av Korea Baduk Association.",
+      "significance": "Första gången AI besegrade en världsmästare i det komplexa spelet Go, ansett som en större utmaning än schack",
+      "keyPeople": ["Demis Hassabis", "David Silver"],
+      "tags": ["narrow_ai", "games", "deepmind"],
+      "sources": [
+        {
+          "title": "AlphaGo versus Lee Sedol - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/AlphaGo_versus_Lee_Sedol",
+          "type": "reference"
+        },
+        {
+          "title": "AlphaGo - Google DeepMind",
+          "url": "https://deepmind.google/research/alphago/",
+          "type": "official"
+        }
+      ],
+      "relatedEvents": ["alexnet"]
+    },
+    {
+      "id": "attention",
+      "title": "Attention is All You Need",
+      "category": "research",
+      "date": "2017-06-12",
+      "dateDisplay": "Juni 2017",
+      "shortDesc": "Transformer-arkitekturen introduceras",
+      "detailedDesc": "Vaswani et al. från Google Brain publicerade 'Attention is All You Need' på arXiv (12 juni 2017), som introducerade transformer-arkitekturen. Detta blev grunden för alla moderna stora språkmodeller (GPT, BERT, T5, Claude, etc.). Artikeln har citerats över 173 000 gånger och är en av de mest citerade artiklarna på 2000-talet.",
+      "significance": "Revolutionerade NLP och möjliggjorde skalning till miljardtals parametrar genom self-attention-mekanismen",
+      "keyPeople": ["Ashish Vaswani", "Noam Shazeer", "Niki Parmar", "Jakob Uszkoreit", "Llion Jones", "Aidan Gomez", "Łukasz Kaiser", "Illia Polosukhin"],
+      "tags": ["transformer", "architecture", "foundational"],
+      "sources": [
+        {
+          "title": "Attention is All You Need (arXiv)",
+          "url": "https://arxiv.org/abs/1706.03762",
+          "type": "paper"
+        },
+        {
+          "title": "Attention Is All You Need - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Attention_Is_All_You_Need",
+          "type": "reference"
+        }
+      ],
+      "relatedEvents": ["gpt1", "bert"]
+    },
+    {
+      "id": "gpt1",
+      "title": "GPT-1",
+      "category": "research",
+      "date": "2018-06-11",
+      "dateDisplay": "Juni 2018",
+      "shortDesc": "Första generative pre-trained transformer",
+      "detailedDesc": "OpenAI introducerade GPT (Generative Pre-trained Transformer) i juni 2018, den första modellen i GPT-serien. Med 117 miljoner parametrar visade GPT att unsupervised pre-training följt av supervised fine-tuning kunde uppnå state-of-the-art resultat på många NLP-uppgifter.",
+      "significance": "Etablerade pre-training + fine-tuning paradigmet som blev standard för språkmodeller",
+      "keyPeople": ["Alec Radford", "Ilya Sutskever"],
+      "tags": ["transformer", "gpt", "llm"],
+      "sources": [
+        {
+          "title": "Improving Language Understanding by Generative Pre-Training",
+          "url": "https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf",
+          "type": "paper"
+        }
+      ],
+      "relatedEvents": ["gpt2", "bert"]
+    },
+    {
+      "id": "bert",
+      "title": "BERT",
+      "category": "research",
+      "date": "2018-10-11",
+      "dateDisplay": "Oktober 2018",
+      "shortDesc": "Bidirectional transformer för språkförståelse",
+      "detailedDesc": "Google AI lanserade BERT (Bidirectional Encoder Representations from Transformers) i oktober 2018. BERT använder maskerad språkmodellering för att träna bidirectionellt, vilket möjliggör djupare kontextförståelse än tidigare unidirectional modeller. BERT slog 11 NLP-rekord vid lanseringen.",
+      "significance": "Visade kraften i bidirectional pre-training och blev grund för många språkförståelse-applikationer",
+      "keyPeople": ["Jacob Devlin", "Ming-Wei Chang", "Kenton Lee", "Kristina Toutanova"],
+      "tags": ["transformer", "bert", "google"],
+      "sources": [
+        {
+          "title": "BERT: Pre-training of Deep Bidirectional Transformers (arXiv)",
+          "url": "https://arxiv.org/abs/1810.04805",
+          "type": "paper"
+        }
+      ],
+      "relatedEvents": ["gpt1", "gpt2"]
+    },
+    {
+      "id": "gpt2",
+      "title": "GPT-2",
+      "category": "research",
+      "date": "2019-02-14",
+      "dateDisplay": "Februari 2019",
+      "shortDesc": "1.5B parameter-modell med stegvis release",
+      "detailedDesc": "OpenAI släppte GPT-2 i februari 2019, en 1.5 miljarder parameter transformer-modell. På grund av oro för missbruk släpptes modellen stegvis över flera månader. GPT-2 visade imponerande zero-shot-kapacitet och kunde generera sammanhängande texter på många ämnen.",
+      "significance": "Första stora demonstrationen av scaling laws och visar vikten av datastorl och modellstorlek",
+      "keyPeople": ["Alec Radford", "Jeffrey Wu", "Rewon Child", "Ilya Sutskever"],
+      "tags": ["transformer", "gpt", "llm"],
+      "sources": [
+        {
+          "title": "Language Models are Unsupervised Multitask Learners",
+          "url": "https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf",
+          "type": "paper"
+        }
+      ],
+      "relatedEvents": ["gpt1", "gpt3"]
+    },
+    {
+      "id": "gpt3",
+      "title": "GPT-3",
+      "category": "research",
+      "date": "2020-05-28",
+      "dateDisplay": "Maj 2020",
+      "shortDesc": "175B parametrar - första riktigt stora språkmodellen",
+      "detailedDesc": "OpenAI lanserade GPT-3 i maj 2020 med 175 miljarder parametrar, över 100 gånger större än GPT-2. GPT-3 visade remarkabla few-shot learning-kapaciteter och kunde utföra många uppgifter med endast några exempel. Modellen blev tillgänglig via API i juli 2020.",
+      "significance": "Visade emergent förmågor vid stor skala och initierade vågen av kommersiella LLM-applikationer",
+      "keyPeople": ["Tom Brown", "Benjamin Mann", "Sam Altman"],
+      "tags": ["transformer", "gpt", "llm", "scaling"],
+      "sources": [
+        {
+          "title": "Language Models are Few-Shot Learners (arXiv)",
+          "url": "https://arxiv.org/abs/2005.14165",
+          "type": "paper"
+        }
+      ],
+      "relatedEvents": ["gpt2", "chatgpt_launch"]
+    },
+    {
+      "id": "github_copilot",
+      "title": "GitHub Copilot",
+      "category": "tools",
+      "date": "2021-06-29",
+      "dateDisplay": "Juni 2021",
+      "shortDesc": "AI-kodningsassistent från GitHub och OpenAI",
+      "detailedDesc": "GitHub och OpenAI lanserade GitHub Copilot som technical preview den 29 juni 2021. Baserad på OpenAI Codex (en GPT-3-variant tränad på kod), integreras Copilot i editorer som VS Code och föreslår kodrader och hela funktioner i realtid. Copilot blev allmänt tillgängligt i juni 2022.",
+      "significance": "Första mainstream AI-kodningsassistent som nådde miljontals utvecklare",
+      "keyPeople": ["Nat Friedman", "Thomas Dohmke"],
+      "tags": ["coding", "copilot", "tools"],
+      "sources": [
+        {
+          "title": "Introducing GitHub Copilot - GitHub Blog",
+          "url": "https://github.blog/2021-06-29-introducing-github-copilot-ai-pair-programmer/",
+          "type": "official"
+        }
+      ],
+      "relatedEvents": ["cursor", "claude_code"]
+    },
+    {
+      "id": "chatgpt_launch",
+      "title": "ChatGPT lanseras",
+      "category": "products",
+      "date": "2022-11-30",
+      "dateDisplay": "30 November 2022",
+      "shortDesc": "Första publika AI-chattbotten når miljontals användare",
+      "detailedDesc": "OpenAI släppte ChatGPT som en gratis 'research preview' den 30 november 2022. Inom fem dagar hade över en miljon personer registrerat sig, och inom två månader blev det den snabbast växande konsumentapplikationen någonsin med 100 miljoner användare. Sam Altman annonserade lanseringen med en sex meningar lång tweet.",
+      "significance": "Demokratiserade tillgången till avancerade språkmodeller och startade den publika AI-revolutionen",
+      "keyPeople": ["Sam Altman", "Greg Brockman"],
+      "tags": ["llm", "chatbot", "mainstream"],
+      "sources": [
+        {
+          "title": "ChatGPT - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/ChatGPT",
+          "type": "reference"
+        },
+        {
+          "title": "ChatGPT is released to the public - History.com",
+          "url": "https://www.history.com/this-day-in-history/november-30/chatgpt-released-openai",
+          "type": "reference"
+        }
+      ],
+      "relatedEvents": ["gpt4", "claude3"]
+    },
+    {
+      "id": "gpt4",
+      "title": "GPT-4",
+      "category": "products",
+      "date": "2023-03-14",
+      "dateDisplay": "14 Mars 2023",
+      "shortDesc": "Multimodal modell med dramatiskt förbättrade kapaciteter",
+      "detailedDesc": "OpenAI släppte GPT-4 den 14 mars 2023, en multimodal modell som accepterar både text- och bildprompts. Modellen klarar ett simulerat advokat-examen med resultat i topp 10% (jämfört med GPT-3.5:s botten 10%). GPT-4 gjordes tillgänglig för ChatGPT Plus-användare och via API. Microsoft bekräftade att Bing Chat körde på GPT-4.",
+      "significance": "Första storskaliga multimodala modellen som kombinerade text och bildförståelse med kraftigt förbättrad resonerande förmåga",
+      "keyPeople": ["Sam Altman", "Greg Brockman"],
+      "tags": ["multimodal", "llm", "reasoning"],
+      "sources": [
+        {
+          "title": "GPT-4 - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/GPT-4",
+          "type": "reference"
+        },
+        {
+          "title": "OpenAI releases GPT-4 - TechCrunch",
+          "url": "https://techcrunch.com/2023/03/14/openai-releases-gpt-4-ai-that-it-claims-is-state-of-the-art/",
+          "type": "news"
+        }
+      ],
+      "relatedEvents": ["chatgpt_launch", "claude3"]
+    },
+    {
+      "id": "claude3_opus",
+      "title": "Claude 3 Opus",
+      "category": "products",
+      "date": "2024-03-04",
+      "dateDisplay": "4 Mars 2024",
+      "shortDesc": "Anthropic släpper Claude 3-familjen",
+      "detailedDesc": "Anthropic lanserade Claude 3-familjen (Haiku, Sonnet, Opus) den 4 mars 2024. Opus, den mest avancerade modellen, överträffade konkurrenterna på de flesta vanliga AI-utvärderingsstandarder inklusive MMLU (undergraduate expert knowledge), GPQA (graduate level reasoning), GSM8K (matematik) och mer. Claude 3 var också multimodal med stöd för bildanalys.",
+      "significance": "Etablerade Anthropic som en ledande frontier lab med modeller som konkurrerade med eller överträffade GPT-4",
+      "keyPeople": ["Dario Amodei", "Daniela Amodei"],
+      "tags": ["multimodal", "llm", "claude"],
+      "sources": [
+        {
+          "title": "Claude 3 Family - Anthropic",
+          "url": "https://www.anthropic.com/news/claude-3-family",
+          "type": "official"
+        },
+        {
+          "title": "Claude (language model) - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Claude_(language_model)",
+          "type": "reference"
+        }
+      ],
+      "relatedEvents": ["claude35_sonnet", "gpt4"]
+    },
+    {
+      "id": "claude35_sonnet",
+      "title": "Claude 3.5 Sonnet",
+      "category": "products",
+      "date": "2024-06-20",
+      "dateDisplay": "20 Juni 2024",
+      "shortDesc": "Första modellen i 3.5-familjen med Artifacts",
+      "detailedDesc": "Anthropic släppte Claude 3.5 Sonnet den 20 juni 2024, första modellen i 3.5-familjen. Enligt Anthropics egna benchmarks presterade modellen bättre än den större Claude 3 Opus samtidigt som den körde dubbelt så snabbt. Modellen introducerade också Artifacts-funktionen där Claude kan skapa kod i ett separat fönster och förhandsgranska renderingen i realtid. Pris: $3 per miljon input-tokens, $15 per miljon output-tokens.",
+      "significance": "Visade att mindre, mer effektiva modeller kan överträffa större genom bättre träning och arkitektur",
+      "keyPeople": ["Dario Amodei"],
+      "tags": ["llm", "claude", "efficiency"],
+      "sources": [
+        {
+          "title": "Introducing Claude 3.5 Sonnet - Anthropic",
+          "url": "https://www.anthropic.com/news/claude-3-5-sonnet",
+          "type": "official"
+        },
+        {
+          "title": "Anthropic Claude 3.5 Sonnet AI announced - CNBC",
+          "url": "https://www.cnbc.com/2024/06/20/anthropic-claude-3point5-sonnet-ai-announced.html",
+          "type": "news"
+        }
+      ],
+      "relatedEvents": ["claude3_opus", "o1"]
+    },
+    {
+      "id": "o1",
+      "title": "OpenAI o1",
+      "category": "products",
+      "date": "2024-09-12",
+      "dateDisplay": "12 September 2024",
+      "shortDesc": "Reasoning model med chain-of-thought",
+      "detailedDesc": "OpenAI släppte o1-preview och o1-mini den 12 september 2024 för ChatGPT Plus och Team-användare. Modellen spenderar tid på att 'tänka' innan den svarar och är betydligt bättre på komplexa resonemang, vetenskap och programmering än GPT-4o genom chain-of-thought-processning. Modellen var tidigare känd inom OpenAI som 'Q*' och senare 'Strawberry'. Den fulla versionen av o1 släpptes den 5 december 2024.",
+      "significance": "Introducerade explicit reasoning som ny paradigm för språkmodeller med dramatiska förbättringar på svåra problem",
+      "keyPeople": ["Sam Altman"],
+      "tags": ["reasoning", "chain_of_thought", "llm"],
+      "sources": [
+        {
+          "title": "Introducing OpenAI o1 - OpenAI",
+          "url": "https://openai.com/index/introducing-openai-o1-preview/",
+          "type": "official"
+        },
+        {
+          "title": "OpenAI o1 - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/OpenAI_o1",
+          "type": "reference"
+        }
+      ],
+      "relatedEvents": ["o3", "claude35_sonnet"]
+    },
+    {
+      "id": "mcp",
+      "title": "Model Context Protocol (MCP)",
+      "category": "tools",
+      "date": "2024-11-25",
+      "dateDisplay": "25 November 2024",
+      "shortDesc": "Standardiserat protokoll för AI-dataåtkomst",
+      "detailedDesc": "Anthropic öppnade källkoden för Model Context Protocol (MCP) den 25 november 2024, en ny standard för att koppla AI-assistenter till system där data finns (content repositories, business tools, development environments). MCP återanvänder message-flow-idéer från Language Server Protocol (LSP) och transporteras över JSON-RPC 2.0. Inkluderade SDK:er för Python, TypeScript, C# och Java samt färdiga MCP-servrar för Google Drive, Slack, GitHub, Git, Postgres och Puppeteer. Den 26 mars 2025 annonserade OpenAI:s CEO Sam Altman fullt stöd för MCP. I december 2025 donerades MCP till Agentic AI Foundation under Linux Foundation.",
+      "significance": "Skapade en gemensam standard för AI-agenter att koppla till externa datakällor, vilket möjliggjorde ekosystem av återanvändbara verktyg",
+      "keyPeople": ["Dario Amodei"],
+      "tags": ["protocol", "standard", "tools", "agents"],
+      "sources": [
+        {
+          "title": "Introducing the Model Context Protocol - Anthropic",
+          "url": "https://www.anthropic.com/news/model-context-protocol",
+          "type": "official"
+        },
+        {
+          "title": "Model Context Protocol - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Model_Context_Protocol",
+          "type": "reference"
+        }
+      ],
+      "relatedEvents": ["claude_code"]
+    }
+  ],
+  "benchmarks": [
+    {
+      "id": "imagenet",
+      "name": "ImageNet Top-5 Error",
+      "category": "benchmarks",
+      "introduced": "2010-01-01",
+      "description": "Bildklassificering med 1000 klasser - Top-5 error rate",
+      "sourceUrl": "http://www.image-net.org/",
+      "yAxisLabel": "Top-5 Error (%)",
+      "yAxisMax": 50,
+      "invertYAxis": true,
+      "timeSeriesData": [
+        { "date": "2010-01-01", "topModel": "Baseline", "value": 28.2 },
+        { "date": "2012-09-01", "topModel": "AlexNet", "value": 15.3 },
+        { "date": "2013-01-01", "topModel": "ZFNet", "value": 14.8 },
+        { "date": "2014-01-01", "topModel": "VGGNet", "value": 7.3 },
+        { "date": "2015-01-01", "topModel": "ResNet", "value": 3.6 },
+        { "date": "2016-01-01", "topModel": "Ensemble", "value": 2.9 },
+        { "date": "2017-01-01", "topModel": "SENet", "value": 2.25 }
+      ]
+    },
+    {
+      "id": "mmlu",
+      "name": "MMLU (Massive Multitask Language Understanding)",
+      "category": "benchmarks",
+      "introduced": "2020-09-01",
+      "description": "57 ämnesområden från grundskola till expertnivå",
+      "sourceUrl": "https://arxiv.org/abs/2009.03300",
+      "yAxisLabel": "Accuracy (%)",
+      "yAxisMax": 100,
+      "humanBaseline": 89.8,
+      "timeSeriesData": [
+        { "date": "2020-09-01", "topModel": "GPT-3 175B", "value": 43.9 },
+        { "date": "2022-04-01", "topModel": "Chinchilla", "value": 67.6 },
+        { "date": "2023-03-14", "topModel": "GPT-4", "value": 86.4 },
+        { "date": "2024-03-04", "topModel": "Claude 3 Opus", "value": 86.8 },
+        { "date": "2024-06-20", "topModel": "Claude 3.5 Sonnet", "value": 88.3 },
+        { "date": "2024-12-01", "topModel": "Gemini 2.0", "value": 90.5 }
+      ]
+    },
+    {
+      "id": "humaneval",
+      "name": "HumanEval (Kodning Pass@1)",
+      "category": "benchmarks",
+      "introduced": "2021-07-01",
+      "description": "Python-kodningsproblem med automatiska tester",
+      "sourceUrl": "https://github.com/openai/human-eval",
+      "yAxisLabel": "Pass@1 (%)",
+      "yAxisMax": 100,
+      "timeSeriesData": [
+        { "date": "2021-07-01", "topModel": "Codex", "value": 28.8 },
+        { "date": "2022-03-01", "topModel": "InstructGPT", "value": 37.2 },
+        { "date": "2023-03-14", "topModel": "GPT-4", "value": 67.0 },
+        { "date": "2024-03-04", "topModel": "Claude 3 Opus", "value": 84.9 },
+        { "date": "2024-06-20", "topModel": "Claude 3.5 Sonnet", "value": 92.0 },
+        { "date": "2024-09-12", "topModel": "o1-preview", "value": 90.2 },
+        { "date": "2024-12-05", "topModel": "o1", "value": 96.3 }
+      ]
+    },
+    {
+      "id": "arcagi",
+      "name": "ArcAGI (Semi-private Eval)",
+      "category": "benchmarks",
+      "introduced": "2024-01-01",
+      "description": "Abstrakt reasoning och generalisering",
+      "sourceUrl": "https://arcprize.org/",
+      "yAxisLabel": "Accuracy (%)",
+      "yAxisMax": 100,
+      "timeSeriesData": [
+        { "date": "2024-03-01", "topModel": "GPT-4", "value": 5.0 },
+        { "date": "2024-06-01", "topModel": "Claude 3.5 Sonnet", "value": 14.0 },
+        { "date": "2024-09-01", "topModel": "o1-preview", "value": 21.0 },
+        { "date": "2024-12-20", "topModel": "o3-low", "value": 75.7 }
+      ]
+    }
+  ]
+}

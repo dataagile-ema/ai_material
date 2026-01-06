@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Material - Demos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0a0a12 0%, #1a1a28 100%);
+            color: #e5e7eb;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4ff, #7c3aed, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .demo-description {
+            color: #9ca3af;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .demo-status {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-updated {
+            background: rgba(124, 58, 237, 0.2);
+            color: #a78bfa;
+            border: 1px solid rgba(124, 58, 237, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .demos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Material</h1>
+        <p class="subtitle">Interaktiva visualiseringar och demos för AI-utveckling</p>
+
+        <div class="demos-grid">
+            <a href="ai-development/" class="demo-card">
+                <div class="demo-icon">🚀</div>
+                <div class="demo-title">AI Development Timeline</div>
+                <div class="demo-description">
+                    Visualiserar AI-utvecklingens acceleration med Gravity Well Timeline.
+                    55 verifierade milstolpar från 1956-2025.
+                </div>
+                <span class="demo-status status-updated">✓ Uppdaterad 2026-01-06</span>
+            </a>
+
+            <a href="ai-timelines/" class="demo-card">
+                <div class="demo-icon">📅</div>
+                <div class="demo-title">AI Timelines</div>
+                <div class="demo-description">
+                    Historiska AI-tidslinjer och utvecklingsmilstolpar genom åren.
+                </div>
+                <span class="demo-status status-active">Aktiv</span>
+            </a>
+
+            <a href="ai-trends/" class="demo-card">
+                <div class="demo-icon">📈</div>
+                <div class="demo-title">AI Trends</div>
+                <div class="demo-description">
+                    Trender och utvecklingsmönster inom artificiell intelligens.
+                </div>
+                <span class="demo-status status-active">Aktiv</span>
+            </a>
+
+            <a href="ml-llm-learning/" class="demo-card">
+                <div class="demo-icon">🎓</div>
+                <div class="demo-title">ML/LLM Learning</div>
+                <div class="demo-description">
+                    Utbildningsmaterial och resurser för Machine Learning och stora språkmodeller.
+                </div>
+                <span class="demo-status status-active">Aktiv</span>
+            </a>
+
+            <a href="ai-coding-tools/ai-coding-tools.html" class="demo-card">
+                <div class="demo-icon">🛠️</div>
+                <div class="demo-title">AI Coding Tools</div>
+                <div class="demo-description">
+                    Översikt och jämförelse av AI-baserade kodningsverktyg.
+                </div>
+                <span class="demo-status status-active">Aktiv</span>
+            </a>
+
+            <a href="ai-coding-trends/ai-coding-benchmarks.html" class="demo-card">
+                <div class="demo-icon">💻</div>
+                <div class="demo-title">AI Coding Benchmarks</div>
+                <div class="demo-description">
+                    Benchmarks och prestandajämförelser för AI-kodningsmodeller.
+                </div>
+                <span class="demo-status status-active">Aktiv</span>
+            </a>
+        </div>
+
+        <footer>
+            <p>AI Material © 2026 | Alla demos är interaktiva och fungerar direkt i webbläsaren</p>
+        </footer>
+    </div>
+</body>
+</html>

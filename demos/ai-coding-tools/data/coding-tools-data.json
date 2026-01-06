@@ -1,0 +1,965 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-05",
+    "description": "Komplett jämförelse av AI-kodningsverktyg: Kommersiella produkter, open-source agenter, funktioner, standards och deployment-alternativ",
+    "language": "sv"
+  },
+
+  "categories": {
+    "commercial": {
+      "label": "Kommersiella Produkter",
+      "color": "#00d4ff",
+      "icon": "💼",
+      "description": "Betalda tjänster från företag med enterprise-support"
+    },
+    "opensource": {
+      "label": "Open Source Agenter",
+      "color": "#10b981",
+      "icon": "🌟",
+      "description": "Fritt tillgängliga kodningsagenter under open source-licenser"
+    },
+    "ide": {
+      "label": "IDE-integrerade",
+      "color": "#7c3aed",
+      "icon": "🔧",
+      "description": "Verktyg inbyggda i utvecklingsmiljöer"
+    }
+  },
+
+  "features": [
+    {
+      "id": "code_completion",
+      "label": "Code Completion",
+      "category": "basic",
+      "description": "Autocomplete för kod i realtid (inline suggestions)",
+      "adoptionYear": 2021,
+      "icon": "⚡"
+    },
+    {
+      "id": "chat_interface",
+      "label": "Chat Interface",
+      "category": "interaction",
+      "description": "Konversationsbaserad kodhjälp och Q&A",
+      "adoptionYear": 2022,
+      "icon": "💬"
+    },
+    {
+      "id": "agentic_coding",
+      "label": "Agentic Coding",
+      "category": "advanced",
+      "description": "Autonom multi-fil redigering och implementation av features",
+      "adoptionYear": 2023,
+      "icon": "🤖"
+    },
+    {
+      "id": "mcp_support",
+      "label": "MCP Support",
+      "category": "protocol",
+      "description": "Model Context Protocol integration för standardiserade verktygsintegrationer",
+      "adoptionYear": 2024,
+      "icon": "🔌"
+    },
+    {
+      "id": "multifile_edit",
+      "label": "Multi-File Editing",
+      "category": "advanced",
+      "description": "Simultana ändringar i flera filer",
+      "adoptionYear": 2023,
+      "icon": "📁"
+    },
+    {
+      "id": "terminal_integration",
+      "label": "Terminal Integration",
+      "category": "integration",
+      "description": "Direkt tillgång till kommandorad och CLI-verktyg",
+      "adoptionYear": 2023,
+      "icon": "⌨️"
+    },
+    {
+      "id": "codebase_indexing",
+      "label": "Codebase Indexing",
+      "category": "advanced",
+      "description": "Intelligent indexering av hela kodbasen för kontext",
+      "adoptionYear": 2023,
+      "icon": "🗂️"
+    },
+    {
+      "id": "config_files",
+      "label": "Config Files (.md)",
+      "category": "convergence",
+      "description": "Markdown-baserade konfigurationsfiler för anpassning (ex. .cursorrules, .claude.md)",
+      "adoptionYear": 2024,
+      "icon": "📝"
+    },
+    {
+      "id": "voice_input",
+      "label": "Voice Input",
+      "category": "interaction",
+      "description": "Röstbaserad input och interaktion",
+      "adoptionYear": 2024,
+      "icon": "🎤"
+    },
+    {
+      "id": "test_generation",
+      "label": "Test Generation",
+      "category": "advanced",
+      "description": "Automatisk generering av enhetstester",
+      "adoptionYear": 2023,
+      "icon": "🧪"
+    }
+  ],
+
+  "standards": [
+    {
+      "id": "iso_27001",
+      "name": "ISO 27001",
+      "category": "security",
+      "description": "Information security management system standard",
+      "icon": "🔒"
+    },
+    {
+      "id": "soc2",
+      "name": "SOC 2 Type II",
+      "category": "security",
+      "description": "Service Organization Control 2 - Security, Availability, Confidentiality",
+      "icon": "🛡️"
+    },
+    {
+      "id": "gdpr",
+      "name": "GDPR",
+      "category": "privacy",
+      "description": "General Data Protection Regulation compliance (EU)",
+      "icon": "🇪🇺"
+    },
+    {
+      "id": "hipaa",
+      "name": "HIPAA",
+      "category": "healthcare",
+      "description": "Healthcare data protection (US)",
+      "icon": "🏥"
+    },
+    {
+      "id": "ccpa",
+      "name": "CCPA",
+      "category": "privacy",
+      "description": "California Consumer Privacy Act",
+      "icon": "🇺🇸"
+    }
+  ],
+
+  "deploymentOptions": [
+    {
+      "id": "saas",
+      "label": "SaaS (Cloud)",
+      "description": "Molnbaserad direkt från leverantör",
+      "icon": "☁️"
+    },
+    {
+      "id": "azure_openai",
+      "label": "Azure OpenAI",
+      "description": "Via Azure OpenAI Service",
+      "icon": "🔷"
+    },
+    {
+      "id": "google_cloud",
+      "label": "Google Cloud",
+      "description": "Via Google Cloud Vertex AI",
+      "icon": "🟦"
+    },
+    {
+      "id": "aws",
+      "label": "AWS",
+      "description": "Via AWS Bedrock eller SageMaker",
+      "icon": "🟧"
+    },
+    {
+      "id": "local",
+      "label": "Lokal/Self-hosted",
+      "description": "Körs på egen hårdvara eller privat server",
+      "icon": "💻"
+    },
+    {
+      "id": "onprem_enterprise",
+      "label": "On-Premises Enterprise",
+      "description": "Företagsdistribution bakom företagsbrandvägg",
+      "icon": "🏢"
+    }
+  ],
+
+  "tools": [
+    {
+      "id": "github_copilot",
+      "name": "GitHub Copilot",
+      "category": "commercial",
+      "vendor": "GitHub (Microsoft)",
+      "launched": "2021-06-29",
+      "website": "https://github.com/features/copilot",
+      "description": "AI-powered code completion och chat baserad på OpenAI Codex och GPT-4",
+
+      "features": {
+        "code_completion": {
+          "supported": true,
+          "since": "2021-06",
+          "notes": "Inline suggestions och autocomplete"
+        },
+        "chat_interface": {
+          "supported": true,
+          "since": "2023-03",
+          "notes": "GitHub Copilot Chat i IDE"
+        },
+        "agentic_coding": {
+          "supported": true,
+          "since": "2025-02",
+          "notes": "Agent Mode (feb 2025) och Coding Agent (maj 2025) - autonom multi-file editing"
+        },
+        "mcp_support": {
+          "supported": true,
+          "since": "2025-07",
+          "notes": "MCP support GA i VS Code (juli 2025), JetBrains/Eclipse/Xcode (aug 2025)"
+        },
+        "multifile_edit": {
+          "supported": true,
+          "since": "2024-10",
+          "notes": "GitHub Copilot Workspace för multi-file changes"
+        },
+        "terminal_integration": {
+          "supported": true,
+          "since": "2023-07",
+          "notes": "CLI-kommandon med GitHub Copilot CLI"
+        },
+        "codebase_indexing": {
+          "supported": true,
+          "since": "2023-11",
+          "notes": "Indexerar codebase för bättre kontext"
+        },
+        "config_files": {
+          "supported": false
+        },
+        "voice_input": {
+          "supported": false
+        },
+        "test_generation": {
+          "supported": true,
+          "since": "2023-06",
+          "notes": "Kan generera unit tests"
+        }
+      },
+
+      "standards": {
+        "iso_27001": true,
+        "soc2": true,
+        "gdpr": true,
+        "hipaa": false,
+        "ccpa": true
+      },
+
+      "deployment": {
+        "saas": true,
+        "azure_openai": false,
+        "google_cloud": false,
+        "aws": false,
+        "local": false,
+        "onprem_enterprise": false
+      },
+
+      "ideSupport": {
+        "vscode": {
+          "supported": true,
+          "quality": "native",
+          "notes": "Officiell extension"
+        },
+        "jetbrains": {
+          "supported": true,
+          "quality": "native",
+          "notes": "Officiell plugin för IntelliJ IDEA, PyCharm, WebStorm etc"
+        },
+        "vim": {
+          "supported": true,
+          "quality": "plugin",
+          "notes": "Community plugin via copilot.vim"
+        },
+        "neovim": {
+          "supported": true,
+          "quality": "plugin",
+          "notes": "Community plugin"
+        },
+        "visualstudio": {
+          "supported": true,
+          "quality": "native"
+        }
+      },
+
+      "pricing": {
+        "free_tier": true,
+        "individual": {
+          "price": 10,
+          "currency": "USD",
+          "period": "month",
+          "notes": "GitHub Copilot Individual"
+        },
+        "business": {
+          "price": 19,
+          "currency": "USD",
+          "period": "month",
+          "per_user": true,
+          "notes": "GitHub Copilot Business"
+        },
+        "enterprise": {
+          "price": 39,
+          "currency": "USD",
+          "period": "month",
+          "per_user": true,
+          "notes": "GitHub Copilot Enterprise med extra features"
+        }
+      },
+
+      "metrics": {
+        "users": "1.8M+",
+        "lastUpdated": "2025-12",
+        "adoption": "Över 50,000 företag"
+      },
+
+      "sources": [
+        {
+          "title": "GitHub Copilot Documentation",
+          "url": "https://docs.github.com/en/copilot",
+          "type": "docs"
+        },
+        {
+          "title": "GitHub Copilot: Meet the new coding agent",
+          "url": "https://github.blog/news-insights/product-news/github-copilot-meet-the-new-coding-agent/",
+          "type": "announcement"
+        },
+        {
+          "title": "About GitHub Copilot coding agent",
+          "url": "https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent",
+          "type": "docs"
+        },
+        {
+          "title": "Model Context Protocol (MCP) support in VS Code",
+          "url": "https://docs.github.com/en/copilot/concepts/context/mcp",
+          "type": "docs"
+        },
+        {
+          "title": "GitHub Copilot Pricing",
+          "url": "https://github.com/features/copilot#pricing",
+          "type": "pricing"
+        },
+        {
+          "title": "GitHub Security",
+          "url": "https://github.com/security",
+          "type": "security"
+        }
+      ]
+    },
+
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "category": "commercial",
+      "vendor": "Anysphere",
+      "launched": "2023-03-14",
+      "website": "https://cursor.sh",
+      "description": "AI-first code editor (VSCode fork) med Composer för multi-file editing",
+
+      "features": {
+        "code_completion": {
+          "supported": true,
+          "since": "2023-03",
+          "notes": "Tab completion med multiple AI models"
+        },
+        "chat_interface": {
+          "supported": true,
+          "since": "2023-03",
+          "notes": "Inbyggd AI chat"
+        },
+        "agentic_coding": {
+          "supported": true,
+          "since": "2024-08",
+          "notes": "Cursor Composer för autonom multi-file implementation"
+        },
+        "mcp_support": {
+          "supported": false,
+          "notes": "Planerat enligt roadmap"
+        },
+        "multifile_edit": {
+          "supported": true,
+          "since": "2024-08",
+          "notes": "Composer kan ändra flera filer samtidigt"
+        },
+        "terminal_integration": {
+          "supported": true,
+          "since": "2023-06"
+        },
+        "codebase_indexing": {
+          "supported": true,
+          "since": "2023-05",
+          "notes": "@codebase for full codebase context"
+        },
+        "config_files": {
+          "supported": true,
+          "since": "2024-02",
+          "notes": ".cursorrules för custom instructions"
+        },
+        "voice_input": {
+          "supported": false
+        },
+        "test_generation": {
+          "supported": true,
+          "since": "2023-09"
+        }
+      },
+
+      "standards": {
+        "iso_27001": false,
+        "soc2": true,
+        "gdpr": true,
+        "hipaa": false,
+        "ccpa": true
+      },
+
+      "deployment": {
+        "saas": true,
+        "azure_openai": true,
+        "google_cloud": false,
+        "aws": false,
+        "local": false,
+        "onprem_enterprise": false
+      },
+
+      "ideSupport": {
+        "vscode": {
+          "supported": true,
+          "quality": "fork",
+          "notes": "Cursor är en VSCode fork"
+        },
+        "jetbrains": {
+          "supported": false
+        },
+        "vim": {
+          "supported": false
+        },
+        "neovim": {
+          "supported": false
+        }
+      },
+
+      "pricing": {
+        "free_tier": true,
+        "free_notes": "2000 completions + 50 slow premium requests/month",
+        "individual": {
+          "price": 20,
+          "currency": "USD",
+          "period": "month",
+          "notes": "Pro: Unlimited completions + 500 fast premium requests"
+        },
+        "business": {
+          "price": 40,
+          "currency": "USD",
+          "period": "month",
+          "per_user": true,
+          "notes": "Business: Centralized billing, admin dashboard, enforced privacy mode"
+        }
+      },
+
+      "metrics": {
+        "users": "30K+",
+        "lastUpdated": "2025-12",
+        "growth": "En av snabbast växande code editors 2024"
+      },
+
+      "sources": [
+        {
+          "title": "Cursor - The AI Code Editor",
+          "url": "https://cursor.sh",
+          "type": "website"
+        },
+        {
+          "title": "Cursor Docs",
+          "url": "https://docs.cursor.sh",
+          "type": "docs"
+        },
+        {
+          "title": "Cursor Pricing",
+          "url": "https://cursor.sh/pricing",
+          "type": "pricing"
+        }
+      ]
+    },
+
+    {
+      "id": "claude_code",
+      "name": "Claude Code",
+      "category": "commercial",
+      "vendor": "Anthropic",
+      "launched": "2024-12-17",
+      "website": "https://www.anthropic.com/claude-code",
+      "description": "Terminal-baserad AI-kodningsagent med MCP-stöd, driven av Claude 3.5 Sonnet",
+
+      "features": {
+        "code_completion": {
+          "supported": false,
+          "notes": "Inte en code completion tool, utan en agentic assistant"
+        },
+        "chat_interface": {
+          "supported": true,
+          "since": "2024-12",
+          "notes": "Konversationsbaserad kodhjälp i terminalen"
+        },
+        "agentic_coding": {
+          "supported": true,
+          "since": "2024-12",
+          "notes": "Fullt autonom - kan läsa, skriva, köra kommandon"
+        },
+        "mcp_support": {
+          "supported": true,
+          "since": "2024-12",
+          "notes": "Nativt stöd för Model Context Protocol"
+        },
+        "multifile_edit": {
+          "supported": true,
+          "since": "2024-12",
+          "notes": "Kan ändra flera filer i en operation"
+        },
+        "terminal_integration": {
+          "supported": true,
+          "since": "2024-12",
+          "notes": "Körs direkt i terminalen"
+        },
+        "codebase_indexing": {
+          "supported": true,
+          "since": "2024-12",
+          "notes": "Indexerar projekt för kontext"
+        },
+        "config_files": {
+          "supported": true,
+          "since": "2024-12",
+          "notes": ".claude.md för projektspecifika instruktioner"
+        },
+        "voice_input": {
+          "supported": false
+        },
+        "test_generation": {
+          "supported": true,
+          "since": "2024-12"
+        }
+      },
+
+      "standards": {
+        "iso_27001": true,
+        "soc2": true,
+        "gdpr": true,
+        "hipaa": true,
+        "ccpa": true
+      },
+
+      "deployment": {
+        "saas": true,
+        "azure_openai": true,
+        "google_cloud": true,
+        "aws": true,
+        "local": false,
+        "onprem_enterprise": false
+      },
+
+      "ideSupport": {
+        "vscode": {
+          "supported": true,
+          "quality": "extension",
+          "notes": "VSCode extension available"
+        },
+        "jetbrains": {
+          "supported": false,
+          "notes": "Planerat"
+        },
+        "vim": {
+          "supported": false,
+          "notes": "Fungerar via terminal"
+        },
+        "neovim": {
+          "supported": false,
+          "notes": "Fungerar via terminal"
+        }
+      },
+
+      "pricing": {
+        "free_tier": false,
+        "individual": {
+          "price": 20,
+          "currency": "USD",
+          "period": "month",
+          "notes": "Kräver Claude Pro subscription ($20/mån)"
+        }
+      },
+
+      "metrics": {
+        "users": "N/A",
+        "lastUpdated": "2024-12",
+        "status": "Nyligen lanserad (Dec 2024)"
+      },
+
+      "sources": [
+        {
+          "title": "Introducing Claude Code",
+          "url": "https://www.anthropic.com/news/claude-code",
+          "type": "announcement"
+        },
+        {
+          "title": "Claude Code Documentation",
+          "url": "https://docs.anthropic.com/claude-code",
+          "type": "docs"
+        },
+        {
+          "title": "Anthropic Security & Compliance",
+          "url": "https://www.anthropic.com/security",
+          "type": "security"
+        }
+      ]
+    },
+
+    {
+      "id": "cline",
+      "name": "Cline",
+      "category": "opensource",
+      "vendor": "Saoud Rizwan / Cline Community",
+      "launched": "2024-06-01",
+      "website": "https://cline.bot/",
+      "repository": "https://github.com/cline/cline",
+      "description": "Autonom VSCode AI-kodningsagent med MCP-stöd - kan skapa/redigera filer, köra kommandon och använda browser",
+
+      "features": {
+        "code_completion": {
+          "supported": false,
+          "notes": "Inte en autocomplete tool, utan agentic assistant"
+        },
+        "chat_interface": {
+          "supported": true,
+          "since": "2024-06",
+          "notes": "Interaktiv chat med human-in-the-loop approval"
+        },
+        "agentic_coding": {
+          "supported": true,
+          "since": "2024-06",
+          "notes": "Autonom kodningsagent - kärnfunktion från start"
+        },
+        "mcp_support": {
+          "supported": true,
+          "since": "2024-11",
+          "notes": "Nativt stöd för Model Context Protocol, kan skapa och installera MCP-verktyg"
+        },
+        "multifile_edit": {
+          "supported": true,
+          "since": "2024-06",
+          "notes": "Kan läsa, refaktorera och uppdatera flera filer samtidigt"
+        },
+        "terminal_integration": {
+          "supported": true,
+          "since": "2024-06",
+          "notes": "Kan köra terminal-kommandon med användarens godkännande"
+        },
+        "codebase_indexing": {
+          "supported": false
+        },
+        "config_files": {
+          "supported": true,
+          "since": "2024-10",
+          "notes": ".clinerules för projektspecifika instruktioner (version-controlled, AI-editable)"
+        },
+        "voice_input": {
+          "supported": false
+        },
+        "test_generation": {
+          "supported": true,
+          "since": "2024-06"
+        }
+      },
+
+      "standards": {
+        "iso_27001": null,
+        "soc2": null,
+        "gdpr": null,
+        "hipaa": null,
+        "ccpa": null
+      },
+
+      "deployment": {
+        "saas": false,
+        "azure_openai": true,
+        "google_cloud": true,
+        "aws": true,
+        "local": true,
+        "onprem_enterprise": true
+      },
+
+      "ideSupport": {
+        "vscode": {
+          "supported": true,
+          "quality": "native",
+          "notes": "Officiell VSCode extension - primär plattform"
+        },
+        "jetbrains": {
+          "supported": false
+        },
+        "vim": {
+          "supported": false
+        },
+        "neovim": {
+          "supported": false
+        }
+      },
+
+      "pricing": {
+        "free_tier": true,
+        "license": "Open Source",
+        "notes": "Gratis open source - bring your own API keys (stöder OpenRouter, Anthropic, OpenAI, Google Gemini, AWS Bedrock, Azure, GCP Vertex, lokala modeller)"
+      },
+
+      "metrics": {
+        "stars": "30,000+",
+        "contributors": "N/A",
+        "lastUpdated": "2026-01",
+        "users": "4M+ developers"
+      },
+
+      "sources": [
+        {
+          "title": "Cline - GitHub Repository",
+          "url": "https://github.com/cline/cline",
+          "type": "code"
+        },
+        {
+          "title": "Cline - AI Coding, Open Source and Uncompromised",
+          "url": "https://cline.bot/",
+          "type": "website"
+        },
+        {
+          "title": "Cline Documentation",
+          "url": "https://docs.cline.bot/",
+          "type": "docs"
+        },
+        {
+          "title": "Cline - Visual Studio Marketplace",
+          "url": "https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev",
+          "type": "marketplace"
+        },
+        {
+          "title": ".clinerules: Version-Controlled, Shareable, and AI-Editable Instructions",
+          "url": "https://cline.bot/blog/clinerules-version-controlled-shareable-and-ai-editable-instructions",
+          "type": "blog"
+        }
+      ]
+    },
+
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "category": "opensource",
+      "vendor": "SST (Dax, Adam)",
+      "launched": "2024-07-01",
+      "website": "https://opencode.ai",
+      "repository": "https://github.com/sst/opencode",
+      "description": "Terminal-fokuserad AI-kodningsagent med built-in agents (build, plan) - provider-agnostic, 650,000+ utvecklare",
+
+      "features": {
+        "code_completion": {
+          "supported": false,
+          "notes": "Terminal/TUI-baserad, inte autocomplete"
+        },
+        "chat_interface": {
+          "supported": true,
+          "since": "2024-07",
+          "notes": "Terminal User Interface (TUI) för interaktion"
+        },
+        "agentic_coding": {
+          "supported": true,
+          "since": "2024-07",
+          "notes": "Built-in agents: 'build' (full access) och 'plan' (read-only för analys)"
+        },
+        "mcp_support": {
+          "supported": false,
+          "notes": "Egen agent-arkitektur"
+        },
+        "multifile_edit": {
+          "supported": true,
+          "since": "2024-07",
+          "notes": "Kan ändra flera filer samtidigt"
+        },
+        "terminal_integration": {
+          "supported": true,
+          "since": "2024-07",
+          "notes": "Byggd för terminalen - kärnfunktion"
+        },
+        "codebase_indexing": {
+          "supported": false
+        },
+        "config_files": {
+          "supported": false
+        },
+        "voice_input": {
+          "supported": false
+        },
+        "test_generation": {
+          "supported": true,
+          "since": "2024-07"
+        }
+      },
+
+      "standards": {
+        "iso_27001": null,
+        "soc2": null,
+        "gdpr": null,
+        "hipaa": null,
+        "ccpa": null
+      },
+
+      "deployment": {
+        "saas": false,
+        "azure_openai": true,
+        "google_cloud": true,
+        "aws": true,
+        "local": true,
+        "onprem_enterprise": true
+      },
+
+      "ideSupport": {
+        "vscode": {
+          "supported": true,
+          "quality": "extension",
+          "notes": "IDE extension tillgänglig"
+        },
+        "jetbrains": {
+          "supported": false
+        },
+        "vim": {
+          "supported": false
+        },
+        "neovim": {
+          "supported": true,
+          "quality": "terminal",
+          "notes": "Fungerar via terminal - byggd av neovim-användare"
+        }
+      },
+
+      "pricing": {
+        "free_tier": true,
+        "license": "MIT",
+        "notes": "Gratis open source - provider-agnostic (Claude, OpenAI, Google, lokala modeller)"
+      },
+
+      "metrics": {
+        "stars": "45,000+",
+        "contributors": "500+",
+        "lastUpdated": "2026-01",
+        "users": "650,000+ monthly developers"
+      },
+
+      "sources": [
+        {
+          "title": "OpenCode - GitHub Repository (SST)",
+          "url": "https://github.com/sst/opencode",
+          "type": "code"
+        },
+        {
+          "title": "OpenCode | The open source AI coding agent",
+          "url": "https://opencode.ai",
+          "type": "website"
+        },
+        {
+          "title": "OpenCode Documentation",
+          "url": "https://opencode.ai/docs/",
+          "type": "docs"
+        },
+        {
+          "title": "Terminal User Interfaces: Review of Crush (Ex-OpenCode Al)",
+          "url": "https://thenewstack.io/terminal-user-interfaces-review-of-crush-ex-opencode-al/",
+          "type": "article"
+        }
+      ]
+    }
+  ],
+
+  "convergenceTimeline": [
+    {
+      "year": 2021,
+      "quarter": "Q2",
+      "event": "Code Completion Era Begins",
+      "description": "GitHub Copilot lanseras, AI code completion blir mainstream",
+      "adopters": ["github_copilot"],
+      "features": ["code_completion"],
+      "significance": "high"
+    },
+    {
+      "year": 2023,
+      "quarter": "Q1",
+      "event": "Chat Interfaces Everywhere",
+      "description": "ChatGPT-inspirerade chat interfaces i kodverktyg. GitHub Copilot Chat lanseras.",
+      "adopters": ["github_copilot", "cursor"],
+      "features": ["chat_interface"],
+      "significance": "medium"
+    },
+    {
+      "year": 2023,
+      "quarter": "Q2",
+      "event": "Open Source Agentic Movement",
+      "description": "Open source-community pioneerar agentic coding med autonoma kodningsagenter",
+      "adopters": [],
+      "features": ["agentic_coding", "multifile_edit", "terminal_integration"],
+      "significance": "medium"
+    },
+    {
+      "year": 2023,
+      "quarter": "Q3",
+      "event": "Codebase Indexing Becomes Standard",
+      "description": "Verktyg börjar indexera hela kodbaser för bättre kontext. Cursor och GitHub Copilot implementerar indexering.",
+      "adopters": ["cursor", "github_copilot"],
+      "features": ["codebase_indexing"],
+      "significance": "medium"
+    },
+    {
+      "year": 2024,
+      "quarter": "Q1",
+      "event": "Config Files (.md) Emergence",
+      "description": "Cursor introducerar .cursorrules - markdown config-filer för anpassning",
+      "adopters": ["cursor"],
+      "features": ["config_files"],
+      "significance": "medium"
+    },
+    {
+      "year": 2024,
+      "quarter": "Q2",
+      "event": "VSCode Agentic Extensions Explode",
+      "description": "Cline (tidigare Claude Dev) lanseras som populär open source VSCode-agent, når 4M+ användare",
+      "adopters": ["cline"],
+      "features": ["agentic_coding", "multifile_edit", "terminal_integration"],
+      "significance": "high"
+    },
+    {
+      "year": 2024,
+      "quarter": "Q3",
+      "event": "Commercial & Terminal Agentic Breakthrough",
+      "description": "Cursor Composer lanseras (aug). OpenCode når 650k+ användare med terminal-fokuserad agent.",
+      "adopters": ["cursor", "opencode"],
+      "features": ["agentic_coding", "multifile_edit"],
+      "significance": "high"
+    },
+    {
+      "year": 2024,
+      "quarter": "Q4",
+      "event": "MCP Protocol & .md Config Convergence",
+      "description": "Anthropic lanserar MCP + .claude.md. Cline adopterar MCP och introducerar .clinerules. Config-filer (.md) blir de facto standard.",
+      "adopters": ["claude_code", "cline", "cursor"],
+      "features": ["mcp_support", "config_files"],
+      "significance": "high"
+    },
+    {
+      "year": 2025,
+      "quarter": "Q1-Q2",
+      "event": "GitHub Copilot Goes Fully Agentic",
+      "description": "GitHub Copilot lanserar Agent Mode (feb) och Coding Agent (maj). MCP-stöd blir GA. Alla större verktyg har nu agentic capabilities.",
+      "adopters": ["github_copilot"],
+      "features": ["agentic_coding", "mcp_support"],
+      "significance": "high"
+    }
+  ]
+}
