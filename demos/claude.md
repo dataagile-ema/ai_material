@@ -10,15 +10,12 @@ Texter i presentationsmaterial ska vara:
 - Var koncis - säg det som behöver sägas, inget mer
 
 ### 2. Beskrivande
-- Förklara vad som visas på ett konkret sätt
-- Fokusera på vad användaren faktiskt ser i diagrammen och data
+- Beskriv på ett sakligt sätt, utan att lägga till överdriven eller säljande jargong.
 - Undvik vaga eller abstrakta beskrivningar
 
 ### 3. Faktamässigt korrekta
 - Var noggrann med fakta och tekniska beskrivningar
 - Undvik överdrifter eller förenklingar som kan bli missvisande
-- Exempel: Säg inte "exponentiell tillväxt" när benchmarks närmar sig 100% (mättnad)
-- Använd endast tekniska termer när de är korrekta och nödvändiga
 
 ## Exempel
 
