@@ -28,3 +28,10 @@ Texter i presentationsmaterial ska vara:
 ## Undantag
 
 För specifika mätvärden där exponentiell tillväxt faktiskt observeras (t.ex. METR Time Horizon) är det korrekt att beskriva det som exponentiellt, särskilt när fördubblingstid kan anges.
+
+## Validering och Korrigeringar
+
+När vi gör validering av demos och hittar fel som behöver rättas:
+- Alla korrigeringar ska dokumenteras i `corrections_log.md`
+- Inkludera vad som var fel och hur det korrigerades
+- Detta ger spårbarhet och hjälper till att undvika samma fel i framtiden

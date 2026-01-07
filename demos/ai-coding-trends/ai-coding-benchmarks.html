@@ -790,8 +790,8 @@
         <div class="chart-section">
             <div class="chart-header">
                 <div>
-                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">3.</span>Konsistens: TAU-bench (pass^k)</h2>
-                    <p class="chart-description">Hur pålitliga är AI-agenter? pass^k mäter om modellen lyckas k gånger i rad - ett hårt test på konsistens.</p>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">3.</span>Konsistens: TAU-bench (pass^4)</h2>
+                    <p class="chart-description">Hur pålitliga är AI-agenter? pass^4 mäter om modellen lyckas 4 gånger i rad - ett hårt test på konsistens.</p>
                 </div>
                 <button class="info-btn" onclick="openModal('taubench-modal')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1148,7 +1148,7 @@
                     <h4>Nyckelmetrik: pass^k</h4>
                     <p>Medan <strong>pass@k</strong> ("minst ett av k försök lyckas") är standard, introducerar TAU-bench <strong>pass^k</strong> ("alla k försök lyckas"). Detta är ett mycket hårdare test:</p>
                     <ul>
-                        <li>En modell med 90% pass@1 har bara 43% pass^8</li>
+                        <li>En modell med 90% pass^1 har 66% pass^4 (0.9^4 = 0.656)</li>
                         <li>Formeln: pass^k = p^k (exponentiellt avtagande)</li>
                         <li>Visar att även "bra" modeller är opålitliga vid upprepad användning</li>
                     </ul>
@@ -1156,41 +1156,62 @@
 
                 <div class="modal-stats">
                     <div class="modal-stat">
-                        <div class="modal-stat-value">&lt;50%</div>
-                        <div class="modal-stat-label">GPT-4o pass@1 (2024)</div>
+                        <div class="modal-stat-value">60.4%</div>
+                        <div class="modal-stat-label">GPT-4o pass^1 (2024)</div>
                     </div>
                     <div class="modal-stat">
-                        <div class="modal-stat-value">~25%</div>
-                        <div class="modal-stat-label">GPT-4o pass^8</div>
+                        <div class="modal-stat-value">38.3%</div>
+                        <div class="modal-stat-label">GPT-4o pass^4 (2024)</div>
                     </div>
                     <div class="modal-stat">
-                        <div class="modal-stat-value">~97%</div>
-                        <div class="modal-stat-label">GPT-5 pass@1 (2025)</div>
+                        <div class="modal-stat-value">88.9%</div>
+                        <div class="modal-stat-label">Claude Opus 4.5 pass^1 (2025)</div>
                     </div>
                 </div>
 
                 <div class="modal-section">
                     <h4>Varför viktigt?</h4>
-                    <p>I produktion räcker det inte att en AI-agent "ibland" fungerar. TAU-bench avslöjar hur opålitliga även toppmodeller är - GPT-4o lyckades bara 25% av gångerna när samma uppgift upprepades 8 gånger. Anthropic har anammat pass^k i sina model cards som ett viktigt pålitlighetsmått.</p>
+                    <p>I produktion räcker det inte att en AI-agent "ibland" fungerar. TAU-bench avslöjar hur opålitliga även toppmodeller är - GPT-4o lyckas 60% av gångerna (pass^1), men endast 38% när samma uppgift upprepas 4 gånger i rad (pass^4). Anthropic har anammat pass^k i sina model cards som ett viktigt pålitlighetsmått.</p>
                 </div>
 
-                <a href="https://sierra.ai/blog/tau-bench-shaping-development-evaluation-agents" target="_blank" class="modal-link">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15 3 21 3 21 9"/>
-                        <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    Sierra: TAU-bench Blog
-                </a>
-                <br>
-                <a href="https://github.com/sierra-research/tau-bench" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15 3 21 3 21 9"/>
-                        <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    GitHub: sierra-research/tau-bench
-                </a>
+                <div class="modal-section">
+                    <h4>Källor</h4>
+                    <a href="https://github.com/sierra-research/tau-bench" target="_blank" class="modal-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        TAU-bench (original) - GitHub
+                    </a>
+                    <br>
+                    <a href="https://github.com/sierra-research/tau2-bench" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        TAU²-bench (2025) - GitHub
+                    </a>
+                    <br>
+                    <a href="https://taubench.com" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        Officiell Leaderboard
+                    </a>
+                    <br>
+                    <a href="https://sierra.ai/blog/tau-bench-shaping-development-evaluation-agents" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        Sierra Blog
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -1706,14 +1727,14 @@
             data: {
                 datasets: [
                     {
-                        label: 'pass@1 (Retail)',
+                        label: 'pass^1 (Retail)',
                         data: [
-                            { x: '2024-06-01', y: 50, model: 'GPT-4o' },
-                            { x: '2024-10-01', y: 62, model: 'Claude 3.5 Sonnet' },
-                            { x: '2025-02-01', y: 74, model: 'GPT-4.1' },
-                            { x: '2025-03-01', y: 78, model: 'Claude 3.7 Sonnet' },
-                            { x: '2025-09-01', y: 85, model: 'Claude 4 Sonnet' },
-                            { x: '2025-12-01', y: 97, model: 'GPT-5' }
+                            { x: '2024-05-01', y: 60.4, model: 'GPT-4o' },
+                            { x: '2024-06-01', y: 62.6, model: 'Claude 3.5 Sonnet' },
+                            { x: '2025-02-01', y: 81.2, model: 'Claude 3.7 Sonnet' },
+                            { x: '2025-05-01', y: 80.5, model: 'Claude Sonnet 4' },
+                            { x: '2025-08-01', y: 81.1, model: 'GPT-5' },
+                            { x: '2025-11-01', y: 88.9, model: 'Claude Opus 4.5' }
                         ],
                         borderColor: colors.cyan,
                         backgroundColor: 'rgba(123, 163, 176, 0.15)',
@@ -1724,14 +1745,10 @@
                         borderWidth: 2.5
                     },
                     {
-                        label: 'pass^8 (Retail)',
+                        label: 'pass^4 (Retail)',
                         data: [
-                            { x: '2024-06-01', y: 25, model: 'GPT-4o' },
-                            { x: '2024-10-01', y: 35, model: 'Claude 3.5 Sonnet' },
-                            { x: '2025-02-01', y: 42, model: 'GPT-4.1' },
-                            { x: '2025-03-01', y: 48, model: 'Claude 3.7 Sonnet' },
-                            { x: '2025-09-01', y: 58, model: 'Claude 4 Sonnet' },
-                            { x: '2025-12-01', y: 78, model: 'GPT-5' }
+                            { x: '2024-05-01', y: 38.3, model: 'GPT-4o' },
+                            { x: '2024-06-01', y: 38.7, model: 'Claude 3.5 Sonnet' }
                         ],
                         borderColor: colors.red,
                         backgroundColor: 'rgba(217, 133, 148, 0.15)',

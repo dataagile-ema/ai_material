@@ -8,11 +8,12 @@
 
 ## Sammanfattning
 
-**Totalt 18 korrigeringar** genomförda över 3 filer:
+**Totalt 19+ korrigeringar** genomförda över 4 filer:
 - 12 releasedatum korrigerade
 - 4 benchmark-scores korrigerade
 - 1 timeline benchmark-korrigering
 - 1 ny modell tillagd (Gemini Ultra 1.0)
+- 1 TAU-bench metrik-korrigering (pass^8 → pass^4, 10+ modeller uppdaterade)
 
 **Resultat**:
 - Alla 19 modeller verifierade som existerande ✅
@@ -356,6 +357,105 @@ Gemini Ultra → Gemini Pro (för toppmodeller):
 - Alla ändringar baserade på officiella källor från modellskapare
 - Flera källor verifierade för varje kritisk ändring
 - Inga spekulationer eller uppskattningar - endast verifierad data
+
+---
+
+## 🔧 TAU-BENCH METRIK-KORRIGERING (2026-01-07)
+
+**Granskare**: Claude Opus 4.5
+**Anledning**: Användaren upptäckte inkonsekvens - grafen visade "pass^8" men källorna visade "pass^4"
+
+### Problem identifierade
+
+1. **Fel metrik**: Grafen visade "pass^8 (Retail)" men TAU-bench rapporterar endast pass^1 till pass^4
+2. **Overifierade värden**: Hårdkodade pass^8-värden (25, 35, 42, 48, 58, 78) saknade källattribuering
+3. **Felaktig modal-text**: Påstod "GPT-4o bara 25% vid pass^8" utan verifikation
+4. **Felaktiga pass@1-värden**: Originalvärdena (50, 62, 74, 78, 85, 97) matchade inte verklig TAU-bench-data
+
+### Utredning
+
+Efter grundlig research av officiella källor hittades:
+
+**TAU-bench GitHub leaderboard (verifierad data):**
+- GPT-4o: 60.4% (pass^1), 49.1% (pass^2), 43.0% (pass^3), 38.3% (pass^4)
+- Claude 3.5 Sonnet (juni 2024): 62.6% (pass^1), 50.6% (pass^2), 43.5% (pass^3), 38.7% (pass^4)
+- Claude 3.5 Sonnet (okt 2024): 69.2% (pass^1), 57.6% (pass^2), 50.9% (pass^3), 46.2% (pass^4)
+
+**AI-företagens marknadsföringsmaterial (endast pass^1):**
+- Claude 3.7 Sonnet: 81.2% pass^1
+- Claude Sonnet 4: 80.5% pass^1
+- GPT-5: 81.1% pass^1
+- Claude Opus 4.5: 88.9% pass^1
+
+### Korrigeringar genomförda
+
+#### Fil: `demos/ai-coding-trends/data/benchmark-data.json`
+
+**A. Ny metrik tillagd:**
+```json
+{
+  "id": "taubench_pass4",
+  "label": "TAU-bench pass^4 (Retail)",
+  "color": "#d98594",
+  "unit": "percentage",
+  "sourceUrl": "https://github.com/sierra-research/tau-bench"
+}
+```
+
+**B. Befintlig TAU-bench-metrik uppdaterad:**
+- Label: "TAU-bench pass@1" → "TAU-bench pass^1 (Retail)"
+- Förtydligar att det är pass^1-metriken
+
+**C. Modeller uppdaterade med verifierad data:**
+
+| Modell | Före (pass@1) | Efter (pass^1) | pass^4 | Källa |
+|--------|---------------|----------------|--------|-------|
+| GPT-4o | 50% | 60.4% | 38.3% | TAU-bench GitHub |
+| Claude 3.5 Sonnet | 62% | 62.6% | 38.7% | TAU-bench GitHub |
+| Claude 3.7 Sonnet | 78% | 81.2% | null | Anthropic |
+| Claude Sonnet 4 | 85% | 80.5% | null | DataCamp |
+| GPT-5 | 97% | 81.1% | null | Passionfruit Blog |
+| Claude Opus 4.5 | 92% | 88.9% | null | Anthropic |
+| GPT-5.2 | 98% | null | null | Ingen data |
+| Gemini 2.5 Pro | 70% | null | null | Ingen data |
+| Gemini 3 Pro | 88% | null | null | Ingen data |
+| Mistral Large 3 | 78% | null | null | Ingen data |
+
+#### Fil: `demos/ai-coding-trends/ai-coding-benchmarks.html`
+
+**A. Titel och beskrivning:**
+- Före: "Konsistens: TAU-bench (pass^k)"
+- Efter: "Konsistens: TAU-bench (pass^4)"
+- Beskrivning: "k gånger i rad" → "4 gånger i rad"
+
+**B. Graf-data:**
+- pass@1-linjen: Uppdaterad med korrekta pass^1-värden
+- pass^8-linjen: Bytt till pass^4 med verifierad data (endast 2 punkter: GPT-4o och Claude 3.5 Sonnet)
+
+**C. Modal-text korrigerad:**
+- Före: "En modell med 90% pass@1 har bara 43% pass^8"
+- Efter: "En modell med 90% pass^1 har 66% pass^4 (0.9^4 = 0.656)"
+- Statistik uppdaterad till verkliga värden (GPT-4o: 60.4%/38.3%)
+
+**D. Källattribuering tillagd:**
+- TAU-bench (original) - GitHub
+- TAU²-bench (2025) - GitHub
+- Officiell Leaderboard (taubench.com)
+- Sierra Blog
+
+### Källor
+
+- [TAU-bench GitHub](https://github.com/sierra-research/tau-bench)
+- [TAU²-bench GitHub](https://github.com/sierra-research/tau2-bench)
+- [TAU-bench Paper](https://arxiv.org/abs/2406.12045)
+- [Sierra Blog: Benchmarking AI Agents](https://sierra.ai/blog/benchmarking-ai-agents)
+- [Anthropic Claude 3.7 Sonnet](https://www.anthropic.com/news/claude-3-7-sonnet)
+- [Anthropic Claude Opus 4.5](https://www.anthropic.com/news/claude-opus-4-5)
+- [TAU-bench Leaderboard](https://taubench.com)
+
+### Viktig insikt
+
+TAU-bench introducerar **pass^k** (alla k försök lyckas) till skillnad från **pass@k** (minst ett lyckas). Den officiella leaderboarden rapporterar pass^1, pass^2, pass^3, och pass^4 - **inte pass^8**. AI-företag rapporterar mestadels endast pass^1 i sina pressreleaser, vilket gör fullständig pass^4-data svåråtkomlig för nyare modeller.
 
 ---
 
