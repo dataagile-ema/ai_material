@@ -418,9 +418,10 @@
         { "date": "2020-09-01", "topModel": "GPT-3 175B", "value": 43.9 },
         { "date": "2022-04-01", "topModel": "Chinchilla", "value": 67.6 },
         { "date": "2023-03-14", "topModel": "GPT-4", "value": 86.4 },
+        { "date": "2024-02-08", "topModel": "Gemini Ultra 1.0", "value": 90.0 },
         { "date": "2024-03-04", "topModel": "Claude 3 Opus", "value": 86.8 },
         { "date": "2024-06-20", "topModel": "Claude 3.5 Sonnet", "value": 88.3 },
-        { "date": "2024-12-01", "topModel": "Gemini 2.0", "value": 90.5 }
+        { "date": "2024-12-19", "topModel": "o1", "value": 91.8 }
       ]
     },
     {

@@ -144,21 +144,30 @@ claude mcp list
 claude mcp remove my-server
 ```
 
-## Användbara Kommandon
+## Vanliga Slash Commands
 
-| Kommando | Funktion |
-|----------|----------|
-| `/init` | Skapa initial CLAUDE.md |
-| `/memory` | Redigera CLAUDE.md filer |
-| `/agents` | Hantera subagenter |
-| `/skills` | Se tillgängliga skills |
-| `/hooks` | Konfigurera hooks |
-| `/mcp` | MCP server-meny |
-| `/plugin` | Hantera plugins |
-| `/config` | Inställningar |
-| `/permissions` | Hantera verktygs-permissions |
-| `/output-style` | Välj output style |
-| `/status` | Se current setup |
+| Kommando | Vad det gör | Exempel |
+|----------|-------------|---------|
+| `/init` | Skapar initial CLAUDE.md fil för projektet | `/init` |
+| `/memory` | Öppnar och redigerar CLAUDE.md filer (projekt och personliga) | `/memory` |
+| `/agents` | Öppnar meny för att skapa och hantera subagenter | `/agents` |
+| `/skills` | Visar lista över tillgängliga skills | `/skills` |
+| `/hooks` | Interaktiv UI för att konfigurera hooks (event-triggers) | `/hooks` |
+| `/mcp` | MCP server-hanteringsmeny (lägg till, ta bort, lista) | `/mcp` |
+| `/plugin` | Hantera plugins (installera, avinstallera, sök) | `/plugin install plugin-name` |
+| `/config` | Öppnar inställningsmeny för Claude Code | `/config` |
+| `/permissions` | Hantera verktygs-permissions (vilka verktyg får köras automatiskt) | `/permissions` |
+| `/output-style` | Välj eller ändra output style | `/output-style minimal` |
+| `/status` | Visar aktuell setup (aktiva skills, agents, MCP servers, etc.) | `/status` |
+| `/help` | Visa hjälp och dokumentation | `/help` |
+| `/clear` | Rensa konversationshistorik | `/clear` |
+| `/tasks` | Visa pågående bakgrundsuppgifter | `/tasks` |
+| `/rewind` | Gå tillbaka till en tidigare punkt i konversationen | `/rewind` |
+| `/undo` | Ångra senaste åtgärd/ändringar | `/undo` |
+| `/commit` | Skapa git commit (skill från official plugins) | `/commit` |
+| `/review-pr` | Granska pull request (skill från official plugins) | `/review-pr 123` |
+
+**Tips:** Kör `/help` för att se alla tillgängliga kommandon inklusive projekt-specifika slash commands.
 
 ## Prioritetsordning
 
@@ -188,6 +197,26 @@ När flera anpassningar finns:
 - **Arguments**: Slash commands stödjer `$1, $2, $ARGUMENTS`
 - **Files**: `@path` inkluderar filinnehåll i prompts
 - **Bash**: `!command` kör och inkluderar output
+
+## Starta Claude Code
+
+### Från Terminalen
+
+```bash
+# Grundläggande start
+claude
+
+# Med Chrome-integration (webbläsarautomation)
+claude --chrome
+
+# YOLO-mode (hoppar över alla säkerhetsprompts)
+claude --dangerously-skip-permissions
+
+# Kombinera flaggor
+claude --chrome --dangerously-skip-permissions
+```
+
+**OBS:** `--dangerously-skip-permissions` kör alla verktyg automatiskt utan att fråga om tillåtelse. Använd med försiktighet!
 
 ## Snabbstart
 

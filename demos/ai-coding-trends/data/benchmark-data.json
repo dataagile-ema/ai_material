@@ -188,9 +188,9 @@
     {
       "id": "gpt5",
       "name": "GPT-5",
-      "displayName": "GPT-5 (2025)",
-      "date": "2025",
-      "releaseDate": "2025-01-01",
+      "displayName": "GPT-5 (Aug 2025)",
+      "date": "Aug 2025",
+      "releaseDate": "2025-08-07",
       "companyId": "openai",
       "company": "OpenAI",
       "scores": {
@@ -199,7 +199,7 @@
           "source": "https://github.com/openai/human-eval"
         },
         "swebench_verified": {
-          "value": 72,
+          "value": 74.9,
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": {
@@ -221,7 +221,7 @@
       "name": "GPT-5.2 Thinking",
       "displayName": "GPT-5.2 Thinking (Dec 2025)",
       "date": "Dec 2025",
-      "releaseDate": "2025-12-15",
+      "releaseDate": "2025-12-11",
       "companyId": "openai",
       "company": "OpenAI",
       "scores": {
@@ -241,6 +241,25 @@
           "value": 98,
           "source": "https://github.com/sierra-research/tau-bench"
         },
+        "metr": null
+      }
+    },
+    {
+      "id": "gemini_ultra_10",
+      "name": "Gemini Ultra 1.0",
+      "displayName": "Gemini Ultra 1.0 (Feb 2024)",
+      "date": "Feb 2024",
+      "releaseDate": "2024-02-08",
+      "companyId": "google",
+      "company": "Google",
+      "scores": {
+        "humaneval": {
+          "value": 74.4,
+          "source": "https://github.com/openai/human-eval"
+        },
+        "swebench_verified": null,
+        "swebench_pro": null,
+        "taubench": null,
         "metr": null
       }
     },
@@ -296,7 +315,7 @@
       "name": "Claude 3.7 Sonnet",
       "displayName": "Claude 3.7 Sonnet (Feb 2025)",
       "date": "Feb 2025",
-      "releaseDate": "2025-02-15",
+      "releaseDate": "2025-02-24",
       "companyId": "anthropic",
       "company": "Anthropic",
       "scores": {
@@ -321,10 +340,10 @@
     },
     {
       "id": "claude4sonnet",
-      "name": "Claude 4 Sonnet",
-      "displayName": "Claude 4 Sonnet (2025)",
-      "date": "2025",
-      "releaseDate": "2025-01-01",
+      "name": "Claude Sonnet 4",
+      "displayName": "Claude Sonnet 4 (May 2025)",
+      "date": "May 2025",
+      "releaseDate": "2025-05-22",
       "companyId": "anthropic",
       "company": "Anthropic",
       "scores": {
@@ -333,7 +352,7 @@
           "source": "https://github.com/openai/human-eval"
         },
         "swebench_verified": {
-          "value": 75.2,
+          "value": 72.7,
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": {
@@ -355,7 +374,7 @@
       "name": "Claude 4.5 Opus",
       "displayName": "Claude 4.5 Opus (Nov 2025)",
       "date": "Nov 2025",
-      "releaseDate": "2025-11-15",
+      "releaseDate": "2025-11-24",
       "companyId": "anthropic",
       "company": "Anthropic",
       "scores": {
@@ -384,9 +403,9 @@
     {
       "id": "gemini25pro",
       "name": "Gemini 2.5 Pro",
-      "displayName": "Gemini 2.5 Pro (2025)",
-      "date": "2025",
-      "releaseDate": "2025-01-01",
+      "displayName": "Gemini 2.5 Pro (Mar 2025)",
+      "date": "Mar 2025",
+      "releaseDate": "2025-03-25",
       "companyId": "google",
       "company": "Google",
       "scores": {
@@ -414,7 +433,7 @@
       "name": "Gemini 3 Pro",
       "displayName": "Gemini 3 Pro (Nov 2025)",
       "date": "Nov 2025",
-      "releaseDate": "2025-11-15",
+      "releaseDate": "2025-11-18",
       "companyId": "google",
       "company": "Google",
       "scores": {
@@ -423,7 +442,7 @@
           "source": "https://github.com/openai/human-eval"
         },
         "swebench_verified": {
-          "value": 77.4,
+          "value": 76.2,
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": {
@@ -549,9 +568,9 @@
     {
       "id": "mistral_large3",
       "name": "Mistral Large 3",
-      "displayName": "Mistral Large 3 (Dec 2025)",
+      "displayName": "Mistral Large 3 (Dec 2 2025)",
       "date": "Dec 2025",
-      "releaseDate": "2025-12-15",
+      "releaseDate": "2025-12-02",
       "companyId": "mistral",
       "company": "Mistral (Open Source)",
       "scores": {
@@ -582,7 +601,7 @@
       "name": "Devstral 2 123B",
       "displayName": "Devstral 2 123B (Dec 2025)",
       "date": "Dec 2025",
-      "releaseDate": "2025-12-15",
+      "releaseDate": "2025-12-09",
       "companyId": "mistral",
       "company": "Mistral (Open Source)",
       "scores": {
@@ -613,7 +632,7 @@
       "name": "Devstral Small 2 24B",
       "displayName": "Devstral Small 2 24B (Dec 2025)",
       "date": "Dec 2025",
-      "releaseDate": "2025-12-15",
+      "releaseDate": "2025-12-09",
       "companyId": "mistral",
       "company": "Mistral (Open Source)",
       "scores": {
@@ -622,7 +641,7 @@
           "source": "https://github.com/openai/human-eval"
         },
         "swebench_verified": {
-          "value": 52,
+          "value": 68.0,
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": {
@@ -642,9 +661,9 @@
     {
       "id": "gpt_oss_120b",
       "name": "GPT-OSS 120B",
-      "displayName": "GPT-OSS 120B (2025)",
-      "date": "2025",
-      "releaseDate": "2025-01-01",
+      "displayName": "GPT-OSS 120B (Aug 2025)",
+      "date": "Aug 2025",
+      "releaseDate": "2025-08-05",
       "companyId": "openai_oss",
       "company": "OpenAI (Open Source)",
       "scores": {
@@ -673,9 +692,9 @@
     {
       "id": "gpt_oss_20b",
       "name": "GPT-OSS 20B",
-      "displayName": "GPT-OSS 20B (2025)",
-      "date": "2025",
-      "releaseDate": "2025-01-01",
+      "displayName": "GPT-OSS 20B (Aug 2025)",
+      "date": "Aug 2025",
+      "releaseDate": "2025-08-05",
       "companyId": "openai_oss",
       "company": "OpenAI (Open Source)",
       "scores": {
