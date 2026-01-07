@@ -459,6 +459,70 @@ TAU-bench introducerar **pass^k** (alla k försök lyckas) till skillnad från *
 
 ---
 
+## 🔄 BYTE TILL τ²-BENCH TELECOM (2026-01-07)
+
+**Granskare**: Claude Opus 4.5
+**Anledning**: Användaren föreslog att byta till τ²-bench (nyare benchmark) istället för TAU-bench (retail)
+
+### Motivering
+
+τ²-bench (tau-squared bench) är Sierra Research's uppföljare till TAU-bench med:
+- **Ny Telecom-domän** - Svåraste domänen, visar stora skillnader mellan modeller
+- **Mer verifierad data** för 2025-modeller
+- **Bättre jämförelse** - Retail-värden saknade verifikation för nyare modeller
+
+### Korrigeringar genomförda
+
+#### Fil: `demos/ai-coding-trends/data/benchmark-data.json`
+
+**A. Metrik bytt:**
+- `taubench` → `tau2bench_telecom`
+- `taubench_pass4` → borttagen (ingen telecom pass^4 data)
+- Label: "TAU-bench pass^1 (Retail)" → "τ²-bench pass^1 (Telecom)"
+- Källa uppdaterad till tau2-bench GitHub
+
+**B. Modeller med verifierad τ²-bench Telecom-data:**
+
+| Modell | Telecom pass^1 | Källa |
+|--------|----------------|-------|
+| Claude Opus 4.5 | 98.2% | Vellum Benchmarks |
+| GPT-5.2 Thinking | 94.5% | Vellum Benchmarks |
+| Gemini 3 Pro | 85.4% | Vellum Benchmarks |
+| Claude 3.7 Sonnet | 49% | arXiv paper |
+
+**C. Modeller utan verifierad telecom-data satta till null:**
+- GPT-4o, GPT-5, Claude 3.5 Sonnet, Claude Sonnet 4
+- Alla open source-modeller (Llama, DeepSeek, Qwen, Mistral, etc.)
+
+#### Fil: `demos/ai-coding-trends/ai-coding-benchmarks.html`
+
+**A. Titel och beskrivning:**
+- Före: "Konsistens: TAU-bench (pass^4)"
+- Efter: "Konsistens: τ²-bench (Telecom)"
+
+**B. Graf-data uppdaterad med telecom-värden:**
+- Claude 3.7 Sonnet: 49% (2025-02-24)
+- Gemini 3 Pro: 85.4% (2025-11-18)
+- Claude Opus 4.5: 98.2% (2025-11-24)
+- GPT-5.2 Thinking: 94.5% (2025-12-11)
+
+**C. Info-modal helt omskriven:**
+- Förklarar τ²-bench och varför Telecom är svårast
+- Uppdaterade statistik-kort med telecom-värden
+- Nya källor: τ²-bench GitHub, arXiv paper, Vellum Benchmarks
+
+**D. Länkar uppdaterade:**
+- TAU-bench → τ²-bench i alla källförteckningar
+
+### Källor
+
+- [τ²-bench GitHub](https://github.com/sierra-research/tau2-bench)
+- [τ²-bench Paper (arXiv)](https://arxiv.org/abs/2506.07982)
+- [Vellum GPT-5.2 Benchmarks](https://www.vellum.ai/blog/gpt-5-2-benchmarks)
+- [Officiell Leaderboard](https://taubench.com)
+
+---
+
 ## ✅ SLUTSATS
 
 Granskningen har identifierat och korrigerat systematiska fel i releasedatum (ofta avrundade till månadsstart) och benchmark-scores. Alla modeller existerar och är legitima, men datumen var ofta felaktiga med 4 dagar till 7 månader.

@@ -28,18 +28,11 @@
         "sourceUrl": "https://scale.com/leaderboard/swe_bench_pro_public"
       },
       {
-        "id": "taubench",
-        "label": "TAU-bench pass^1 (Retail)",
+        "id": "tau2bench_telecom",
+        "label": "τ²-bench pass^1 (Telecom)",
         "color": "#7ba3b0",
         "unit": "percentage",
-        "sourceUrl": "https://github.com/sierra-research/tau-bench"
-      },
-      {
-        "id": "taubench_pass4",
-        "label": "TAU-bench pass^4 (Retail)",
-        "color": "#d98594",
-        "unit": "percentage",
-        "sourceUrl": "https://github.com/sierra-research/tau-bench"
+        "sourceUrl": "https://github.com/sierra-research/tau2-bench"
       },
       {
         "id": "metr",
@@ -65,15 +58,10 @@
         "modelId": "gpt52",
         "modelName": "GPT-5.2 Thinking"
       },
-      "taubench": {
-        "value": 88.9,
+      "tau2bench_telecom": {
+        "value": 98.2,
         "modelId": "claude45opus",
         "modelName": "Claude 4.5 Opus"
-      },
-      "taubench_pass4": {
-        "value": 38.7,
-        "modelId": "claude35sonnet",
-        "modelName": "Claude 3.5 Sonnet"
       },
       "metr": {
         "value": 289,
@@ -140,7 +128,7 @@
         },
         "swebench_verified": null,
         "swebench_pro": null,
-        "taubench": null,
+        "tau2bench_telecom": null,
         "metr": {
           "value": 55,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -168,14 +156,7 @@
           "value": 5,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 60.4,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
-        "taubench_pass4": {
-          "value": 38.3,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": null
       }
     },
@@ -197,7 +178,7 @@
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": null,
-        "taubench": null,
+        "tau2bench_telecom": null,
         "metr": null
       }
     },
@@ -222,12 +203,8 @@
           "value": 23,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 81.1,
-          "source": "https://www.getpassionfruit.com/blog/chatgpt-5-vs-gpt-5-pro-vs-gpt-4o-vs-o3-performance-benchmark-comparison-recommendation-of-openai-s-2025-models"
-        },
-        "taubench_pass4": null,
-        "metr": {
+        "tau2bench_telecom": null,
+                "metr": {
           "value": 137,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
         }
@@ -254,8 +231,10 @@
           "value": 55.6,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": null,
-        "taubench_pass4": null,
+        "tau2bench_telecom": {
+          "value": 94.5,
+          "source": "https://www.vellum.ai/blog/gpt-5-2-benchmarks"
+        },
         "metr": null
       }
     },
@@ -274,7 +253,7 @@
         },
         "swebench_verified": null,
         "swebench_pro": null,
-        "taubench": null,
+        "tau2bench_telecom": null,
         "metr": null
       }
     },
@@ -293,7 +272,7 @@
         },
         "swebench_verified": null,
         "swebench_pro": null,
-        "taubench": null,
+        "tau2bench_telecom": null,
         "metr": null
       }
     },
@@ -315,14 +294,7 @@
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": null,
-        "taubench": {
-          "value": 62.6,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
-        "taubench_pass4": {
-          "value": 38.7,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": {
           "value": 60,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -347,12 +319,11 @@
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": null,
-        "taubench": {
-          "value": 81.2,
-          "source": "https://www.anthropic.com/news/claude-3-7-sonnet"
+        "tau2bench_telecom": {
+          "value": 49,
+          "source": "https://arxiv.org/pdf/2506.07982"
         },
-        "taubench_pass4": null,
-        "metr": {
+                "metr": {
           "value": 120,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
         }
@@ -379,12 +350,8 @@
           "value": 18,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 80.5,
-          "source": "https://www.datacamp.com/blog/claude-4"
-        },
-        "taubench_pass4": null,
-        "metr": {
+        "tau2bench_telecom": null,
+                "metr": {
           "value": 180,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
         }
@@ -411,11 +378,10 @@
           "value": 46,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 88.9,
-          "source": "https://www.anthropic.com/news/claude-opus-4-5"
+        "tau2bench_telecom": {
+          "value": 98.2,
+          "source": "https://www.vellum.ai/blog/gpt-5-2-benchmarks"
         },
-        "taubench_pass4": null,
         "metr": {
           "value": 289,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -443,9 +409,8 @@
           "value": 14,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": null,
-        "taubench_pass4": null,
-        "metr": null
+        "tau2bench_telecom": null,
+                "metr": null
       }
     },
     {
@@ -469,8 +434,10 @@
           "value": 43,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": null,
-        "taubench_pass4": null,
+        "tau2bench_telecom": {
+          "value": 85.4,
+          "source": "https://www.vellum.ai/blog/gpt-5-2-benchmarks"
+        },
         "metr": {
           "value": 200,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -495,10 +462,7 @@
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": null,
-        "taubench": {
-          "value": 48,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": null
       }
     },
@@ -520,10 +484,7 @@
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": null,
-        "taubench": {
-          "value": 52,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": null
       }
     },
@@ -548,10 +509,7 @@
           "value": 8,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 58,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": {
           "value": 45,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -576,10 +534,7 @@
           "source": "https://www.swebench.com/"
         },
         "swebench_pro": null,
-        "taubench": {
-          "value": 55,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": null
       }
     },
@@ -604,9 +559,8 @@
           "value": 28,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": null,
-        "taubench_pass4": null,
-        "metr": {
+        "tau2bench_telecom": null,
+                "metr": {
           "value": 110,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
         }
@@ -633,10 +587,7 @@
           "value": 35,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 82,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": {
           "value": 130,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -664,10 +615,7 @@
           "value": 15,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 65,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": {
           "value": 60,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -695,10 +643,7 @@
           "value": 18,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 88,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": {
           "value": 95,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
@@ -726,10 +671,7 @@
           "value": 10,
           "source": "https://scale.com/leaderboard/swe_bench_pro_public"
         },
-        "taubench": {
-          "value": 72,
-          "source": "https://github.com/sierra-research/tau-bench"
-        },
+        "tau2bench_telecom": null,
         "metr": {
           "value": 55,
           "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"

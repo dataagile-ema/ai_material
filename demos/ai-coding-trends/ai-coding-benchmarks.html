@@ -790,15 +790,15 @@
         <div class="chart-section">
             <div class="chart-header">
                 <div>
-                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">3.</span>Konsistens: TAU-bench (pass^4)</h2>
-                    <p class="chart-description">Hur pålitliga är AI-agenter? pass^4 mäter om modellen lyckas 4 gånger i rad - ett hårt test på konsistens.</p>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">3.</span>Konsistens: τ²-bench (Telecom)</h2>
+                    <p class="chart-description">Hur pålitliga är AI-agenter i komplexa telekomscenarier? τ²-bench testar verktygsanvändning och koordination i svåra kundtjänstfall.</p>
                 </div>
                 <button class="info-btn" onclick="openModal('taubench-modal')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="12" r="10"/>
                         <path d="M12 16v-4M12 8h.01"/>
                     </svg>
-                    Om TAU-bench
+                    Om τ²-bench
                 </button>
             </div>
             <div class="chart-container">
@@ -866,7 +866,7 @@
                         <a href="https://www.swebench.com/" target="_blank">SWE-bench</a>
                         <a href="https://scale.com/leaderboard/swe_bench_pro_public" target="_blank">SWE-bench Pro</a>
                         <a href="https://github.com/openai/human-eval" target="_blank">HumanEval</a>
-                        <a href="https://github.com/sierra-research/tau-bench" target="_blank">TAU-bench</a>
+                        <a href="https://github.com/sierra-research/tau2-bench" target="_blank">τ²-bench</a>
                         <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank">METR</a>
                         <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard" target="_blank">Open LLM Leaderboard</a>
                     </div>
@@ -977,7 +977,7 @@
             <p>Data sammanställd från
             <a href="https://www.swebench.com/" target="_blank">SWE-bench</a>,
             <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank">METR</a>,
-            <a href="https://github.com/sierra-research/tau-bench" target="_blank">TAU-bench</a>,
+            <a href="https://github.com/sierra-research/tau2-bench" target="_blank">τ²-bench</a>,
             <a href="https://github.com/openai/human-eval" target="_blank">HumanEval</a>, och
             <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/technical-performance" target="_blank">Stanford AI Index</a></p>
             <p style="margin-top: 0.5rem;">Genererad januari 2026</p>
@@ -1122,76 +1122,77 @@
         </div>
     </div>
 
-    <!-- TAU-bench Modal -->
+    <!-- τ²-bench Modal -->
     <div class="modal-overlay" id="taubench-modal" onclick="closeModalOnOverlay(event)">
         <div class="modal">
             <div class="modal-header">
-                <h3 class="modal-title">TAU-bench</h3>
+                <h3 class="modal-title">τ²-bench (Telecom)</h3>
                 <button class="modal-close" onclick="closeModal('taubench-modal')">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="modal-section">
-                    <h4>Vad är TAU-bench?</h4>
-                    <p>TAU-bench (Tool-Agent-User benchmark) är ett benchmark skapat av Sierra i juni 2024 för att testa AI-agenters <strong>konsistens och pålitlighet</strong> i verklighetstrogna kundtjänstscenarier. Till skillnad från andra benchmarks mäter det inte bara om en agent <em>kan</em> lyckas, utan om den lyckas <em>varje gång</em>.</p>
+                    <h4>Vad är τ²-bench?</h4>
+                    <p>τ²-bench (tau-squared bench) är Sierra Research's uppföljare till TAU-bench, släppt 2025. Det testar AI-agenters förmåga att hantera <strong>komplexa kundtjänstscenarier</strong> där både agent och användare använder verktyg i koordinerade interaktioner. Telecom-domänen är den svåraste.</p>
                 </div>
 
                 <div class="modal-section">
                     <h4>Domäner</h4>
                     <ul>
-                        <li><strong>Retail</strong> - E-handelskundtjänst (enklare)</li>
-                        <li><strong>Airline</strong> - Flygbolags kundtjänst (svårare)</li>
-                        <li><strong>Telecom</strong> - Telekomkundtjänst (nytt i TAU2, svårast)</li>
+                        <li><strong>Retail</strong> - E-handelskundtjänst (enklast)</li>
+                        <li><strong>Airline</strong> - Flygbolags kundtjänst (medium)</li>
+                        <li><strong>Telecom</strong> - Telekomfelsökning (svårast, visas i grafen)</li>
                     </ul>
                 </div>
 
                 <div class="modal-section">
-                    <h4>Nyckelmetrik: pass^k</h4>
-                    <p>Medan <strong>pass@k</strong> ("minst ett av k försök lyckas") är standard, introducerar TAU-bench <strong>pass^k</strong> ("alla k försök lyckas"). Detta är ett mycket hårdare test:</p>
+                    <h4>Varför Telecom är svårast</h4>
+                    <p>Telecom-domänen kräver att AI-agenter:</p>
                     <ul>
-                        <li>En modell med 90% pass^1 har 66% pass^4 (0.9^4 = 0.656)</li>
-                        <li>Formeln: pass^k = p^k (exponentiellt avtagande)</li>
-                        <li>Visar att även "bra" modeller är opålitliga vid upprepad användning</li>
+                        <li>Koordinerar med simulerade kunder som också använder verktyg</li>
+                        <li>Felsöker komplexa tekniska problem (router, nätverk, tjänster)</li>
+                        <li>Följer strikta policyer medan de hjälper användaren</li>
+                        <li>Hanterar flera beroende system samtidigt</li>
                     </ul>
                 </div>
 
                 <div class="modal-stats">
                     <div class="modal-stat">
-                        <div class="modal-stat-value">60.4%</div>
-                        <div class="modal-stat-label">GPT-4o pass^1 (2024)</div>
+                        <div class="modal-stat-value">98.2%</div>
+                        <div class="modal-stat-label">Claude Opus 4.5 (bäst)</div>
                     </div>
                     <div class="modal-stat">
-                        <div class="modal-stat-value">38.3%</div>
-                        <div class="modal-stat-label">GPT-4o pass^4 (2024)</div>
+                        <div class="modal-stat-value">94.5%</div>
+                        <div class="modal-stat-label">GPT-5.2 Thinking</div>
                     </div>
                     <div class="modal-stat">
-                        <div class="modal-stat-value">88.9%</div>
-                        <div class="modal-stat-label">Claude Opus 4.5 pass^1 (2025)</div>
+                        <div class="modal-stat-value">85.4%</div>
+                        <div class="modal-stat-label">Gemini 3 Pro</div>
                     </div>
                 </div>
 
                 <div class="modal-section">
                     <h4>Varför viktigt?</h4>
-                    <p>I produktion räcker det inte att en AI-agent "ibland" fungerar. TAU-bench avslöjar hur opålitliga även toppmodeller är - GPT-4o lyckas 60% av gångerna (pass^1), men endast 38% när samma uppgift upprepas 4 gånger i rad (pass^4). Anthropic har anammat pass^k i sina model cards som ett viktigt pålitlighetsmått.</p>
+                    <p>τ²-bench avslöjar stora skillnader mellan toppmodeller som annars presterar likartat. Claude Opus 4.5 (98.2%) dominerar över GPT-5.2 (94.5%) och Gemini 3 Pro (85.4%). Claude 3.7 Sonnet når bara 49% - telecom är verkligt svårt!</p>
                 </div>
 
                 <div class="modal-section">
                     <h4>Källor</h4>
-                    <a href="https://github.com/sierra-research/tau-bench" target="_blank" class="modal-link">
+                    <a href="https://github.com/sierra-research/tau2-bench" target="_blank" class="modal-link">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                             <polyline points="15 3 21 3 21 9"/>
                             <line x1="10" y1="14" x2="21" y2="3"/>
                         </svg>
-                        TAU-bench (original) - GitHub
+                        τ²-bench GitHub
                     </a>
                     <br>
-                    <a href="https://github.com/sierra-research/tau2-bench" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                    <a href="https://arxiv.org/abs/2506.07982" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                             <polyline points="15 3 21 3 21 9"/>
                             <line x1="10" y1="14" x2="21" y2="3"/>
                         </svg>
-                        TAU²-bench (2025) - GitHub
+                        τ²-bench Paper (arXiv)
                     </a>
                     <br>
                     <a href="https://taubench.com" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
@@ -1203,13 +1204,13 @@
                         Officiell Leaderboard
                     </a>
                     <br>
-                    <a href="https://sierra.ai/blog/tau-bench-shaping-development-evaluation-agents" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                    <a href="https://www.vellum.ai/blog/gpt-5-2-benchmarks" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                             <polyline points="15 3 21 3 21 9"/>
                             <line x1="10" y1="14" x2="21" y2="3"/>
                         </svg>
-                        Sierra Blog
+                        Vellum Benchmarks
                     </a>
                 </div>
             </div>
@@ -1380,7 +1381,7 @@
                         humaneval: model.scores.humaneval?.value ?? null,
                         swebench_verified: model.scores.swebench_verified?.value ?? null,
                         swebench_pro: model.scores.swebench_pro?.value ?? null,
-                        taubench: model.scores.taubench?.value ?? null,
+                        tau2bench_telecom: model.scores.tau2bench_telecom?.value ?? null,
                         metr: model.scores.metr?.value ?? null
                     };
                 });
@@ -1719,7 +1720,7 @@
             }
         });
 
-        // TAU-bench Chart
+        // τ²-bench Telecom Chart
         const tauBenchCtx = document.getElementById('tauBenchChart').getContext('2d');
         new Chart(tauBenchCtx, {
             type: 'line',
@@ -1727,14 +1728,12 @@
             data: {
                 datasets: [
                     {
-                        label: 'pass^1 (Retail)',
+                        label: 'pass^1 (Telecom)',
                         data: [
-                            { x: '2024-05-01', y: 60.4, model: 'GPT-4o' },
-                            { x: '2024-06-01', y: 62.6, model: 'Claude 3.5 Sonnet' },
-                            { x: '2025-02-01', y: 81.2, model: 'Claude 3.7 Sonnet' },
-                            { x: '2025-05-01', y: 80.5, model: 'Claude Sonnet 4' },
-                            { x: '2025-08-01', y: 81.1, model: 'GPT-5' },
-                            { x: '2025-11-01', y: 88.9, model: 'Claude Opus 4.5' }
+                            { x: '2025-02-24', y: 49, model: 'Claude 3.7 Sonnet' },
+                            { x: '2025-11-18', y: 85.4, model: 'Gemini 3 Pro' },
+                            { x: '2025-11-24', y: 98.2, model: 'Claude Opus 4.5' },
+                            { x: '2025-12-11', y: 94.5, model: 'GPT-5.2 Thinking' }
                         ],
                         borderColor: colors.cyan,
                         backgroundColor: 'rgba(123, 163, 176, 0.15)',
@@ -1742,21 +1741,6 @@
                         tension: 0.2,
                         pointRadius: 5,
                         pointBackgroundColor: colors.cyan,
-                        borderWidth: 2.5
-                    },
-                    {
-                        label: 'pass^4 (Retail)',
-                        data: [
-                            { x: '2024-05-01', y: 38.3, model: 'GPT-4o' },
-                            { x: '2024-06-01', y: 38.7, model: 'Claude 3.5 Sonnet' }
-                        ],
-                        borderColor: colors.red,
-                        backgroundColor: 'rgba(217, 133, 148, 0.15)',
-                        fill: false,
-                        tension: 0.2,
-                        pointRadius: 5,
-                        pointBackgroundColor: colors.red,
-                        borderDash: [5, 5],
                         borderWidth: 2.5
                     }
                 ]
@@ -1972,7 +1956,7 @@
 
         function createModelChart(modelKey) {
             const model = modelData[modelKey];
-            const benchmarks = ['humaneval', 'swebench_verified', 'swebench_pro', 'taubench', 'metr'];
+            const benchmarks = ['humaneval', 'swebench_verified', 'swebench_pro', 'tau2bench_telecom', 'metr'];
 
             const labels = benchmarks.map(b => {
                 if (b === 'metr') return 'METR (% av SOTA)';
@@ -2163,7 +2147,7 @@
                 { label: 'HumanEval', value: model.humaneval, best: bestScores.humaneval },
                 { label: 'SWE-bench Verified', value: model.swebench_verified, best: bestScores.swebench_verified },
                 { label: 'SWE-bench Pro', value: model.swebench_pro, best: bestScores.swebench_pro },
-                { label: 'TAU-bench', value: model.taubench, best: bestScores.taubench },
+                { label: 'τ²-bench (Telecom)', value: model.tau2bench_telecom, best: bestScores.tau2bench_telecom },
                 { label: 'METR Time Horizon', value: model.metr, best: bestScores.metr, isTime: true }
             ];
 
