@@ -221,3 +221,32 @@ Detta var en total sammanblandning av två olika produkter (Cline vs Roo Code).
 
 **Slutresultat:** 196/199 påståenden verifierade (98.5% coverage)
 
+---
+
+## 2026-01-08 - Borttagning av oklara påståenden
+
+### Åtgärd: Ta bort 3 påståenden med otillräcklig dokumentation från HTML
+
+**Problem:** 3 påståenden kunde inte verifieras pga. bristande eller otillgänglig dokumentation
+
+**Borttagna påståenden:**
+
+1. **OpenAI Codex CLI - Output (rad 1915):**
+   - **Påstående:** "Pager disable via CLINE_ACTIVE detection"
+   - **Problem:** Ingen dokumentation funnen för CLINE_ACTIVE miljövariabel
+   - **Åtgärd:** Borttagen från Format Options-listan
+
+2. **Cline - Settings (rad 2191):**
+   - **Påstående:** "Blocked directories"
+   - **Problem:** Refereras i navigering men inga detaljer i tillgänglig dokumentation
+   - **Åtgärd:** Borttagen från Konfiguration-listan
+
+3. **Cline - Settings (rad 2202):**
+   - **Påstående:** "Secret storage: encrypted API keys (system keychain)"
+   - **Problem:** Inga detaljer om keychain-integration i tillgänglig dokumentation
+   - **Åtgärd:** Borttagen från Storage-listan
+
+**Motivering:** För att säkerställa 100% verifierbarhet och undvika potentiellt vilseledande information valde vi att ta bort påståenden som inte kunde bekräftas med dokumentation.
+
+**Slutresultat:** 196/196 påståenden i HTML är nu fullständigt verifierade (100% coverage)
+

@@ -145,16 +145,16 @@ Verifierade tidigare oklara påståenden:
 
 ### Framsteg
 - **Modaler färdiga:** 36/36 (100%) ✅
-- **Påståenden verifierade:** 196/199 (98.5%)
+- **Påståenden verifierade:** 196/196 (100%) ✅
 - **Fel funna och rättade:** 8
   - GitHub Copilot: 6 fel
   - Cline: 2 MASSIVA fel
   - Claude Code: 0 fel
   - OpenAI Codex CLI: 0 fel
-- **Oklara påståenden:** 3 (av 199 totalt)
-  - OpenAI Codex CLI CLINE_ACTIVE pager detection (ingen dokumentation funnen)
-  - Cline blocked directories (refereras men ej detaljer)
-  - Cline system keychain för API keys (ej detaljer)
+- **Oklara påståenden borttagna:** 3 (togs bort från HTML)
+  - OpenAI Codex CLI CLINE_ACTIVE pager detection (ingen dokumentation)
+  - Cline blocked directories (otillräcklig dokumentation)
+  - Cline system keychain för API keys (otillräcklig dokumentation)
 
 ### Tid
 - **Fas 1-2 tid:** ~45 minuter
@@ -183,4 +183,4 @@ Verifierade tidigare oklara påståenden:
 - ✅ Session 5: Kompletteringsverifiering av 19 tidigare oklara påståenden
 
 ### Slutsats:
-Verifieringen är komplett. Totalt **196/199 påståenden verifierade (98.5%)**. HTML-filen innehöll 8 fel (6 i Copilot, 2 i Cline), varav 2 var MASSIVA (Roo Code-förväxling). Claude Code hade perfekt noggrannhet. 3 påståenden förblir oklara pga. bristande dokumentation (1 Codex CLI, 2 Cline).
+Verifieringen är komplett. Totalt **196/196 påståenden verifierade (100%)**. HTML-filen innehöll 8 fel (6 i Copilot, 2 i Cline), varav 2 var MASSIVA (Roo Code-förväxling). Claude Code hade perfekt noggrannhet. 3 oklara påståenden togs bort från HTML pga. bristande dokumentation (1 Codex CLI, 2 Cline). Nu innehåller HTML endast fullt verifierade påståenden.
