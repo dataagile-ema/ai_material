@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-kodverktyg: Jämförelse av anpassningsmetoder</title>
+    <link rel="stylesheet" href="../shared/demos-common.css">
+    <style>
+        /* Tabell-specifika styles */
+        .comparison-table {
+            min-width: 900px;
+            border-collapse: collapse;
+            background: var(--color-surface);
+        }
+
+        .comparison-table th {
+            position: sticky;
+            top: 0;
+            background: var(--color-section-bg);
+            z-index: 10;
+            padding: 1.25rem 1rem;
+            color: var(--color-accent);
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-border);
+            text-align: center;
+        }
+
+        .comparison-table th:first-child {
+            min-width: 220px;
+            text-align: left;
+        }
+
+        .comparison-cell {
+            min-width: 180px;
+            padding: 1.25rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 3px solid transparent;
+            border-bottom: 1px solid var(--color-border);
+            text-align: center;
+        }
+
+        .comparison-cell:hover {
+            background: var(--color-section-bg);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .comparison-cell.status-full { border-left-color: var(--color-success); }
+        .comparison-cell.status-partial { border-left-color: var(--color-warning); }
+        .comparison-cell.status-missing { border-left-color: #6b6b7a; }
+        .comparison-cell.status-different { border-left-color: var(--color-accent); }
+
+        .cell-content {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        .status-icon {
+            font-size: 1.75rem;
+            line-height: 1;
+        }
+
+        .cell-name {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            font-family: 'Courier New', monospace;
+            word-break: break-word;
+        }
+
+        .method-name {
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        /* Status badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .status-badge.status-full {
+            background: rgba(155, 194, 105, 0.2);
+            color: var(--color-success);
+        }
+
+        .status-badge.status-partial {
+            background: rgba(212, 198, 141, 0.2);
+            color: var(--color-warning);
+        }
+
+        .status-badge.status-missing {
+            background: rgba(107, 107, 122, 0.2);
+            color: #9a9aaa;
+        }
+
+        .status-badge.status-different {
+            background: rgba(123, 163, 176, 0.2);
+            color: var(--color-accent);
+        }
+
+        /* Code styling */
+        code {
+            background: var(--color-bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--color-accent);
+            font-size: 0.9em;
+        }
+
+        /* Modal visibility - hide by default, show when active */
+        .modal-overlay {
+            display: none !important;
+        }
+
+        .modal-overlay.active {
+            display: flex !important;
+        }
+
+        /* Modal customizations */
+        .modal-section {
+            margin-bottom: 1.75rem;
+        }
+
+        .modal-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-section h4 {
+            color: var(--color-accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .modal-section li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        .modal-section li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+
+        .modal-link {
+            display: inline-block;
+            margin-top: 0.5rem;
+            margin-right: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--color-section-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            color: var(--color-accent);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .modal-link:hover {
+            border-color: var(--color-accent);
+            background: var(--color-accent);
+            color: white;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: var(--color-surface);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-icon {
+            font-size: 1.25rem;
+        }
+
+        .legend-text {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Stats cards customization */
+        .tool-card {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--color-accent);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tool-card h3 {
+            color: var(--color-accent);
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+        }
+
+        .tool-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .tool-card li {
+            padding: 0.5rem 0;
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Sources grid */
+        .sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .source-group h4 {
+            color: var(--color-accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .source-group a {
+            display: block;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            padding: 0.375rem 0;
+            transition: color 0.3s;
+        }
+
+        .source-group a:hover {
+            color: var(--color-accent);
+        }
+
+        @media (max-width: 768px) {
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .cell-content {
+                gap: 0.25rem;
+            }
+
+            .status-icon {
+                font-size: 1.5rem;
+            }
+
+            .cell-name {
+                font-size: 0.75rem;
+            }
+
+            .modal {
+                padding: 2rem 1.5rem;
+            }
+
+            .legend {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header style="text-align: center; margin-bottom: 4rem;">
+            <h1 style="margin-bottom: 1rem;">AI-kodverktyg: Jämförelse av anpassningsmetoder</h1>
+            <p style="font-size: 1.1rem; color: var(--color-text-secondary); max-width: 800px; margin: 0 auto;">
+                Översikt över hur Claude Code's anpassningsmetoder motsvaras i Cline, GitHub Copilot och OpenAI Codex CLI. Klicka på en cell för detaljerad information.
+            </p>
+        </header>
+
+        <div class="section">
+            <h2 class="section-title">Symboler</h2>
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="legend-icon">✅</span>
+                    <span class="legend-text">Fullt stöd / Direkt motsvarighet</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">⚠️</span>
+                    <span class="legend-text">Partial stöd / Alternativ lösning</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">❌</span>
+                    <span class="legend-text">Saknas / Inget stöd</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon">🔄</span>
+                    <span class="legend-text">Annan approach (samma resultat)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title" style="margin-bottom: 1rem;">Jämförelsetabell</h2>
+            <p style="color: var(--color-text-secondary); margin-bottom: 2rem;">Klicka på en cell för att se detaljerad information, implementation och länkar.</p>
+
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Anpassningsmetod</th>
+                            <th>Claude Code</th>
+                            <th>Cline</th>
+                            <th>GitHub Copilot</th>
+                            <th>OpenAI Codex CLI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1: Projektinstruktioner -->
+                        <tr>
+                            <td class="method-name">Projektinstruktioner</td>
+                            <td class="comparison-cell status-full" onclick="openModal('proj-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">CLAUDE.md</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('proj-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">.clinerules/</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('proj-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">copilot-instructions.md</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('proj-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">AGENTS.md</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 2: Specialiserade agenter -->
+                        <tr>
+                            <td class="method-name">Specialiserade agenter</td>
+                            <td class="comparison-cell status-full" onclick="openModal('agent-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Subagents</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-partial" onclick="openModal('agent-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">⚠️</span>
+                                    <span class="cell-name">Operativa modes</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('agent-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Agent Mode + Coding Agent</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-partial" onclick="openModal('agent-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">⚠️</span>
+                                    <span class="cell-name">Community MCP</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 3: Skills -->
+                        <tr>
+                            <td class="method-name">Återanvändbara capabilities</td>
+                            <td class="comparison-cell status-full" onclick="openModal('skill-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Skills</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-different" onclick="openModal('skill-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">🔄</span>
+                                    <span class="cell-name">MCP servers</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('skill-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Agent Skills</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('skill-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Custom prompts + MCP</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 4: Hooks -->
+                        <tr>
+                            <td class="method-name">Event automation</td>
+                            <td class="comparison-cell status-full" onclick="openModal('hook-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Hooks</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('hook-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Hooks</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-missing" onclick="openModal('hook-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">❌</span>
+                                    <span class="cell-name">Saknas</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-missing" onclick="openModal('hook-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">❌</span>
+                                    <span class="cell-name">Notifications endast</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 5: MCP -->
+                        <tr>
+                            <td class="method-name">Externa verktyg</td>
+                            <td class="comparison-cell status-full" onclick="openModal('mcp-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">MCP servers</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('mcp-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">MCP servers</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('mcp-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">MCP servers</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('mcp-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">MCP servers</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 6: Commands -->
+                        <tr>
+                            <td class="method-name">Custom commands</td>
+                            <td class="comparison-cell status-full" onclick="openModal('cmd-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Slash commands</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('cmd-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Workflows + slash</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('cmd-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Omfattande slash</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('cmd-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Slash commands</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 7: Output -->
+                        <tr>
+                            <td class="method-name">Output-anpassning</td>
+                            <td class="comparison-cell status-full" onclick="openModal('output-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Output styles</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-partial" onclick="openModal('output-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">⚠️</span>
+                                    <span class="cell-name">Begränsad</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-partial" onclick="openModal('output-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">⚠️</span>
+                                    <span class="cell-name">Prompt-baserad</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('output-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Reasoning controls</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 8: Plugin -->
+                        <tr>
+                            <td class="method-name">Plugin-system</td>
+                            <td class="comparison-cell status-full" onclick="openModal('plugin-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Plugins</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-different" onclick="openModal('plugin-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">🔄</span>
+                                    <span class="cell-name">MCP istället</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('plugin-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Skillsets + Agents</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-different" onclick="openModal('plugin-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">🔄</span>
+                                    <span class="cell-name">MCP istället</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Row 9: Settings -->
+                        <tr>
+                            <td class="method-name">Permissions/Settings</td>
+                            <td class="comparison-cell status-full" onclick="openModal('settings-claude')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Settings</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('settings-cline')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Permissions config</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('settings-copilot')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Enterprise-granulär</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('settings-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Sandbox/approval</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title" style="margin-bottom: 2rem;">Slutsatser</h2>
+            <div class="stats-grid">
+                <div class="tool-card">
+                    <h3>Claude Code</h3>
+                    <ul>
+                        <li>✅ Komplett anpassnings-suite med alla features native</li>
+                        <li>✅ Bäst output-style customization</li>
+                        <li>✅ Tydlig struktur för projekt-delning via git</li>
+                        <li>✅ Stark hooks-support</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h3>Cline</h3>
+                    <ul>
+                        <li>✅ Bästa hooks-system med 4 event-typer</li>
+                        <li>✅ Automatisk MCP marketplace</li>
+                        <li>✅ AI-redigerbara rules</li>
+                        <li>⚠️ Begränsad output-style customization</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h3>GitHub Copilot</h3>
+                    <ul>
+                        <li>✅ Mest mogen agent-arkitektur</li>
+                        <li>✅ Rikaste extension-ekosystem</li>
+                        <li>✅ Bäst enterprise-governance</li>
+                        <li>⚠️ Svagare event-automation</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h3>OpenAI Codex CLI</h3>
+                    <ul>
+                        <li>✅ Starkast säkerhetsfokus med sandbox modes</li>
+                        <li>✅ Bra reasoning controls</li>
+                        <li>✅ Utmärkt för CI/CD-integration</li>
+                        <li>⚠️ Saknar native sub-agents</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; padding: 3rem 0;">
+            <div class="sources-grid" style="text-align: left;">
+                <div class="source-group">
+                    <h4>Claude Code</h4>
+                    <a href="https://code.claude.com/docs" target="_blank">Dokumentation</a>
+                    <a href="https://github.com/anthropics/claude-code" target="_blank">GitHub</a>
+                </div>
+                <div class="source-group">
+                    <h4>Cline</h4>
+                    <a href="https://docs.cline.bot/" target="_blank">Dokumentation</a>
+                    <a href="https://github.com/cline/cline" target="_blank">GitHub</a>
+                    <a href="https://docs.cline.bot/features/hooks" target="_blank">Hooks</a>
+                </div>
+                <div class="source-group">
+                    <h4>GitHub Copilot</h4>
+                    <a href="https://docs.github.com/copilot/customizing-copilot/" target="_blank">Customizing Copilot</a>
+                    <a href="https://code.visualstudio.com/docs/copilot/customization/" target="_blank">VS Code Docs</a>
+                    <a href="https://github.blog/ai-and-ml/github-copilot/agent-mode-101-all-about-github-copilots-powerful-mode/" target="_blank">Agent Mode</a>
+                </div>
+                <div class="source-group">
+                    <h4>OpenAI Codex CLI</h4>
+                    <a href="https://developers.openai.com/codex/" target="_blank">Dokumentation</a>
+                    <a href="https://developers.openai.com/codex/guides/agents-md/" target="_blank">AGENTS.md</a>
+                    <a href="https://github.com/openai/codex" target="_blank">GitHub</a>
+                </div>
+            </div>
+            <p style="margin-top: 2rem; color: var(--color-text-muted);">Genererad 2026-01-07</p>
+        </footer>
+    </div>
+
+    <!-- MODALS START -->
+
+    <!-- Projektinstruktioner Modals -->
+    <div class="modal-overlay" id="modal-proj-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Projektinstruktioner • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('proj-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Markdown-filer som laddas automatiskt vid start och innehåller projektspecifika instruktioner, kodstandarder och kontext.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.claude/CLAUDE.md</code> (projekt, version-controllable)</li>
+                        <li><code>~/.claude/CLAUDE.md</code> (användare, personligt)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Path-specifika regler med glob patterns</li>
+                        <li>Git-vänlig struktur för team-delning</li>
+                        <li>Stödjer @imports för att inkludera andra filer</li>
+                        <li>Redigeras via <code>/memory</code> kommando</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/memory" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-proj-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Projektinstruktioner • Cline</h3>
+                <button class="modal-close" onclick="closeModal('proj-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Mapp med Markdown-filer där alla filer automatiskt kombineras till ett regelverk. Filer kan numreras för sortering (01-coding.md, 02-testing.md).</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.clinerules/</code> (projekt)</li>
+                        <li><code>~/Documents/Cline/Rules</code> (globalt)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>AI-redigerbar: Cline kan modifiera rules när du frågar</li>
+                        <li>Automatisk kombination av alla MD-filer i mappen</li>
+                        <li>Skapas via <code>+</code> button eller <code>/newrule</code></li>
+                        <li>Stödjer AGENTS.md som fallback</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/features/cline-rules" target="_blank" class="modal-link">Rules Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-proj-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Projektinstruktioner • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('proj-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Mest granulär</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Repository-wide instruktioner plus path-specifika instruktioner med glob patterns för olika delar av projektet.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.github/copilot-instructions.md</code> (repository-wide)</li>
+                        <li><code>.github/instructions/*.md</code> (path-specifika)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Path-specifika instruktioner med <code>applyTo: "app/models/**/*.rb"</code></li>
+                        <li>Kan exkludera från specifika agents med <code>excludeAgent</code></li>
+                        <li>Instruktioner verifieras i References-listan</li>
+                        <li>Tar effekt omedelbart vid sparning</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.github.com/copilot/customizing-copilot/adding-custom-instructions-for-github-copilot" target="_blank" class="modal-link">Custom Instructions</a>
+                    <a href="https://code.visualstudio.com/docs/copilot/customization/custom-instructions" target="_blank" class="modal-link">VS Code Docs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-proj-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Projektinstruktioner • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('proj-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>AGENTS.md-filer med multi-level hierarchy som kaskaderas nedåt genom mappar. Codex bygger en instruction chain per session.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>~/.codex/AGENTS.md</code> (global)</li>
+                        <li><code>./AGENTS.md</code> (projekt root)</li>
+                        <li><code>./AGENTS.override.md</code> (lokal override på vilken nivå som helst)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Multi-level hierarchy med kaskadning</li>
+                        <li>Override-möjlighet på alla nivåer</li>
+                        <li>Content limit: 32 KiB combined</li>
+                        <li>Läses före arbete och bygger instruction chain</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://developers.openai.com/codex/guides/agents-md/" target="_blank" class="modal-link">AGENTS.md Guide</a>
+                    <a href="https://github.com/agentsmd/agents.md" target="_blank" class="modal-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Specialiserade agenter Modals -->
+    <div class="modal-overlay" id="modal-agent-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Specialiserade agenter • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('agent-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Native subagents</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Native subagents med separata context-fönster som kan delegeras specifika uppgifter. Varje subagent har egna verktyg och instruktioner.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.claude/agents/</code> (projekt)</li>
+                        <li><code>~/.claude/agents/</code> (användare)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Separata context-fönster per agent</li>
+                        <li>Konfigurerbara verktyg och permissions</li>
+                        <li>Automatisk delegation baserat på description</li>
+                        <li>Hanteras via <code>/agents</code> kommando</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/subagents" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-agent-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Specialiserade agenter • Cline</h3>
+                <button class="modal-close" onclick="closeModal('agent-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-partial">
+                    <span class="status-icon">⚠️</span>
+                    <span>Partial stöd - Operativa modes</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Två operativa modes: Plan Mode (read-only analys) och Act Mode (implementation med fil-ändringar).</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Tillgängliga modes</h4>
+                    <ul>
+                        <li><strong>Plan Mode</strong>: Read-only access, analyserar codebase och skapar strategi utan fil-ändringar</li>
+                        <li><strong>Act Mode</strong>: Full verktygsåtkomst för implementation, behåller context från Plan Mode</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <ul>
+                        <li>Inte fullständiga sub-agenter med egna contexts</li>
+                        <li>Endast två modes (Plan och Act), inte specifika modes för olika uppgiftstyper</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/features/plan-and-act" target="_blank" class="modal-link">Plan & Act</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-agent-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Specialiserade agenter • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('agent-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Mest sofistikerad</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Tre typer av agent-funktionalitet: Real-time Agent Mode, asynkron Coding Agent, och domain-expert participants.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Agent-typer</h4>
+                    <ul>
+                        <li><strong>Agent Mode</strong>: Real-time, multi-step autonomous coding</li>
+                        <li><strong>Coding Agent</strong>: Asynkron i GitHub Actions, skapar PRs</li>
+                        <li><strong>@workspace</strong>: Förstår codebase</li>
+                        <li><strong>@github</strong>: GitHub-specifika skills (PRs, issues)</li>
+                        <li><strong>@terminal</strong>: Terminal-exekvering</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Fördelar</h4>
+                    <ul>
+                        <li>Mest mogen agent-arkitektur</li>
+                        <li>Både synkrona och asynkrona workflows</li>
+                        <li>Self-correction loops</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://github.blog/ai-and-ml/github-copilot/agent-mode-101-all-about-github-copilots-powerful-mode/" target="_blank" class="modal-link">Agent Mode Guide</a>
+                    <a href="https://docs.github.com/en/copilot/concepts/agents/coding-agent/about-coding-agent" target="_blank" class="modal-link">Coding Agent</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-agent-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Specialiserade agenter • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('agent-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-partial">
+                    <span class="status-icon">⚠️</span>
+                    <span>Partial stöd - Community MCP</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Saknar native sub-agent support. Community har byggt MCP-baserade lösningar som workaround.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Community-lösningar</h4>
+                    <ul>
+                        <li><strong>codex-subagents-mcp</strong>: Claude-style sub-agents (reviewer, debugger, security)</li>
+                        <li><strong>codex-specialized-subagents</strong>: Delegate_autopilot, delegate_run, delegate_resume</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Status</h4>
+                    <ul>
+                        <li>Feature request finns (Issue #2604)</li>
+                        <li>Måste använda community MCP servers</li>
+                        <li>Ingen official native support planerad ännu</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://github.com/leonardsellem/codex-subagents-mcp" target="_blank" class="modal-link">codex-subagents-mcp</a>
+                    <a href="https://github.com/openai/codex/issues/2604" target="_blank" class="modal-link">Feature Request</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Modals -->
+    <div class="modal-overlay" id="modal-skill-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Återanvändbara capabilities • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('skill-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Skills system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Skills-system med YAML frontmatter och instruktioner. Automatisk application när request matchar description.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.claude/skills/namn/SKILL.md</code> (projekt)</li>
+                        <li><code>~/.claude/skills/namn/SKILL.md</code> (användare)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>YAML frontmatter med name, description, allowed-tools, model</li>
+                        <li>Automatisk discovery och application</li>
+                        <li>Verktygs-begränsningar per skill</li>
+                        <li>Visas med <code>What skills are available?</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/skills" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-skill-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Återanvändbara capabilities • Cline</h3>
+                <button class="modal-close" onclick="closeModal('skill-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-different">
+                    <span class="status-icon">🔄</span>
+                    <span>Annan approach - MCP servers</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>MCP servers fungerar som standardiserade "skills". Istället för ett dedikerat skills-system använder Cline MCP för externa integrationer.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>One-click installation från MCP Marketplace</li>
+                        <li>Cline kan autonomt skapa custom MCP servers</li>
+                        <li>Cline Personas MCP för komponenter/personas</li>
+                        <li>Mustache-style variables för återanvändning</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Fördelar</h4>
+                    <ul>
+                        <li>MCP är universal standard (fungerar i andra verktyg)</li>
+                        <li>Automatisk marketplace</li>
+                        <li>Stark community ecosystem</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://cline.bot/blog/mcp-servers-explained-what-they-are-how-they-work-and-why-cline-is-revolutionizing-ai-tools" target="_blank" class="modal-link">MCP Explained</a>
+                    <a href="https://www.pulsemcp.com/servers/bradfair-cline-personas" target="_blank" class="modal-link">Cline Personas MCP</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-skill-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Återanvändbara capabilities • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('skill-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Agent Skills</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Agent Skills - öppen standard som fungerar över GitHub Copilot, Copilot CLI och Coding Agent. Progressive disclosure med metadata-driven discovery.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.github/skills/skillnamn/SKILL.md</code></li>
+                        <li>YAML frontmatter med <code>name</code> och <code>description</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Progressive disclosure: metadata → instructions → resources</li>
+                        <li>Max 64 tecken namn, 1024 tecken description</li>
+                        <li>Fungerar cross-platform (Copilot, CLI, agent)</li>
+                        <li>Skillsets: upp till 5 skills per set</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.visualstudio.com/docs/copilot/customization/agent-skills" target="_blank" class="modal-link">Agent Skills Guide</a>
+                    <a href="https://docs.github.com/en/copilot/building-copilot-extensions/building-a-copilot-skillset-for-your-copilot-extension/about-copilot-skillsets" target="_blank" class="modal-link">Skillsets</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-skill-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Återanvändbara capabilities • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('skill-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Custom prompts + MCP</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Två mekanismer: Custom prompts för återanvändbara markdown-prompts, och MCP-integration för avancerade capabilities.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Custom Prompts</h4>
+                    <ul>
+                        <li>Filplacering: <code>~/.codex/prompts/</code></li>
+                        <li>Invoke via <code>/prompts:draftpr</code></li>
+                        <li>Stödjer positional arguments (<code>$1</code>-<code>$9</code>)</li>
+                        <li>Named variables (<code>$FILE</code>)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>MCP Integration</h4>
+                    <ul>
+                        <li>STDIO och HTTP streaming servers</li>
+                        <li>Populära: Context7, Figma, Playwright, Chrome DevTools</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://developers.openai.com/codex/custom-prompts/" target="_blank" class="modal-link">Custom Prompts</a>
+                    <a href="https://developers.openai.com/codex/mcp/" target="_blank" class="modal-link">MCP Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hooks Modals -->
+    <div class="modal-overlay" id="modal-hook-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Event automation • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('hook-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Hooks system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Hooks-system för att köra shell-kommandon vid specifika events. Konfigureras via <code>/hooks</code> UI eller <code>.claude/settings.json</code>.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Event-typer</h4>
+                    <ul>
+                        <li><strong>PreToolUse</strong>: Före verktygsanvändning</li>
+                        <li><strong>PostToolUse</strong>: Efter verktygsanvändning</li>
+                        <li>Pattern matchers för specifika verktyg (Write, Edit, etc.)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Use cases</h4>
+                    <ul>
+                        <li>Auto-format kod efter Write/Edit (prettier, eslint)</li>
+                        <li>Code review automation</li>
+                        <li>Security enforcement</li>
+                        <li>Metrics tracking</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/hooks" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-hook-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Event automation • Cline</h3>
+                <button class="modal-close" onclick="closeModal('hook-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Bästa hooks-system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Omfattande hooks-system med 4 event-typer. Hooks placeras i <code>~/Documents/Cline/Hooks/</code> (global) eller <code>.clinerules/hooks/</code> (projekt).</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Event-typer</h4>
+                    <ul>
+                        <li><strong>TaskStart</strong>: När nya tasks initieras</li>
+                        <li><strong>PreToolUse</strong>: Före verktyg (kan blockera actions)</li>
+                        <li><strong>PostToolUse</strong>: Efter verktyg (metrics, learning)</li>
+                        <li><strong>UserPromptSubmit</strong>: När användare skickar meddelanden</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Fördelar</h4>
+                    <ul>
+                        <li>Mest omfattande event coverage</li>
+                        <li>Kan blockera problematiska actions</li>
+                        <li>Plattformsstöd: Windows, macOS, Linux</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/features/hooks" target="_blank" class="modal-link">Hooks Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-hook-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Event automation • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('hook-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-missing">
+                    <span class="status-icon">❌</span>
+                    <span>Saknas - Inget hooks-system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>GitHub Copilot har inget dedikerat hooks- eller event automation-system för custom automation vid verktygsanvändning.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <ul>
+                        <li>Inget hooks-system i GitHub Copilot Chat</li>
+                        <li>Ingen PreToolUse/PostToolUse event automation</li>
+                        <li>Ingen möjlighet att köra custom kommandon vid events</li>
+                        <li>Kan inte blockera eller modifiera actions automatiskt</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.github.com/copilot/" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-hook-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Event automation • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('hook-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-missing">
+                    <span class="status-icon">❌</span>
+                    <span>Minimal support - Notifications endast</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Mycket begränsad hook-support. Endast en notification hook när agenten avslutar en turn.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Nuvarande capability</h4>
+                    <ul>
+                        <li>Notification hook vid agent turn completion</li>
+                        <li>Inga PreToolUse/PostToolUse hooks</li>
+                        <li>Inga pattern matchers</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Community feedback</h4>
+                    <ul>
+                        <li>Active feature requests för event-driven automation</li>
+                        <li>Discussion #2150, Issue #2109</li>
+                        <li>Workflow automation via <code>codex exec</code> för CI/CD</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://github.com/openai/codex/discussions/2150" target="_blank" class="modal-link">Feature Request</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MCP Modals -->
+    <div class="modal-overlay" id="modal-mcp-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Externa verktyg • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('mcp-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - MCP servers</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Full Model Context Protocol support för att ansluta externa verktyg, API:er och databaser.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Användning</h4>
+                    <ul>
+                        <li>Kommando: <code>claude mcp add --transport stdio server -- node server.js</code></li>
+                        <li>HTTP: <code>claude mcp add --transport http github https://api.example.com/mcp/</code></li>
+                        <li>Interaktiv meny: <code>/mcp</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>STDIO och HTTP transport</li>
+                        <li>Resurser: <code>@server:protocol://path</code></li>
+                        <li>Automatisk verktygsdetektering</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/mcp" target="_blank" class="modal-link">Dokumentation</a>
+                    <a href="https://github.com/modelcontextprotocol/servers" target="_blank" class="modal-link">MCP Servers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-mcp-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Externa verktyg • Cline</h3>
+                <button class="modal-close" onclick="closeModal('mcp-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - MCP är kärnfunktion</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>MCP är en kärnfunktion i Cline med one-click marketplace och autonomous server creation.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>One-click installation från MCP Marketplace</li>
+                        <li>Cline kan autonomt skapa custom MCP servers</li>
+                        <li>Läs dokumentation och skapa tool connections automatiskt</li>
+                        <li>Isolerar credentials, kräver explicit approval</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Populära integrations</h4>
+                    <ul>
+                        <li>Git, Notion, GitHub, Azure</li>
+                        <li>Databaser och APIs</li>
+                        <li>Web search</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/mcp/mcp-overview" target="_blank" class="modal-link">MCP Overview</a>
+                    <a href="https://cline.bot/blog/mcp-servers-explained-what-they-are-how-they-work-and-why-cline-is-revolutionizing-ai-tools" target="_blank" class="modal-link">MCP Explained</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-mcp-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Externa verktyg • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('mcp-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - MCP servers</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Full MCP-support i VS Code 1.99+. Fungerar med både Copilot Chat och coding agent.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Konfiguration</h4>
+                    <ul>
+                        <li>Manual: <code>.vscode/mcp.json</code> eller IDE settings</li>
+                        <li>GitHub MCP Registry för curated servers</li>
+                        <li>Både local och remote MCP servers</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Populära servers</h4>
+                    <ul>
+                        <li>GitHub MCP server (repos, PRs, issues)</li>
+                        <li>File system MCP (read, write, search)</li>
+                        <li>Fetch MCP (web content)</li>
+                        <li>Database interaction servers</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.github.com/copilot/customizing-copilot/using-model-context-protocol/extending-copilot-chat-with-mcp" target="_blank" class="modal-link">MCP Guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-mcp-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Externa verktyg • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('mcp-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - MCP servers</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Omfattande MCP-integration med STDIO och HTTP transporter. Config delas mellan CLI och IDE extension.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Konfiguration</h4>
+                    <ul>
+                        <li><code>codex mcp add</code> kommandon</li>
+                        <li>Direkt i <code>~/.codex/config.toml</code></li>
+                        <li>Tool allow/deny lists</li>
+                        <li>Custom timeouts</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Unika funktioner</h4>
+                    <ul>
+                        <li>Codex kan köra som MCP server för andra agents</li>
+                        <li>Integration med Agents SDK</li>
+                        <li>Expose codex() och codex-reply() till workflows</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://developers.openai.com/codex/mcp/" target="_blank" class="modal-link">MCP Documentation</a>
+                    <a href="https://developers.openai.com/codex/guides/agents-sdk/" target="_blank" class="modal-link">Agents SDK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Commands Modals -->
+    <div class="modal-overlay" id="modal-cmd-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Custom commands • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('cmd-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Slash commands</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Återanvändbara prompt-mallar med kortkommandon. Filnamn blir kommandots namn.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.claude/commands/kommando-namn.md</code></li>
+                        <li>Invoke: <code>/kommando-namn arg1 arg2</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Stödjer <code>$ARGUMENTS</code>, <code>$1</code>, <code>$2</code>, etc.</li>
+                        <li><code>@path</code> inkluderar filinnehåll</li>
+                        <li><code>!command</code> kör och inkluderar output</li>
+                        <li>YAML frontmatter med description och argument-hint</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/slash-commands" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-cmd-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Custom commands • Cline</h3>
+                <button class="modal-close" onclick="closeModal('cmd-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Workflows + slash</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Workflows-system plus built-in slash commands. Workflow markdown-filer i <code>.clinerules/workflows/</code>.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Built-in commands</h4>
+                    <ul>
+                        <li><code>/newtask</code> - Skapa ny task</li>
+                        <li><code>/newrule</code> - Skapa ny rule</li>
+                        <li><code>/explain-changes</code>, <code>/smol</code>, <code>/reportbug</code>, <code>/deep-planning</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Custom Workflows</h4>
+                    <ul>
+                        <li>Placering: <code>.clinerules/workflows/</code></li>
+                        <li>Invoke: <code>/filename</code></li>
+                        <li>Exempel: <code>/pr-review</code>, <code>/deploy-staging</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/features/slash-commands/workflows" target="_blank" class="modal-link">Workflows Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-cmd-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Custom commands • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('cmd-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Omfattande slash commands</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Rikaste uppsättning built-in slash commands plus <code>@mentions</code> syntax för domain experts.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Built-in commands</h4>
+                    <ul>
+                        <li><code>/explain</code> - Förklara kod eller koncept</li>
+                        <li><code>/fix</code> - Fixa errors eller linting</li>
+                        <li><code>/tests</code> - Generera unit tests</li>
+                        <li><code>/doc</code> - Generera dokumentation</li>
+                        <li><code>/new</code> - Skapa nya workspaces/filer</li>
+                        <li><code>/search</code> - Generera search query</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>@mentions</h4>
+                    <ul>
+                        <li><code>@workspace</code>, <code>@github</code>, <code>@terminal</code></li>
+                        <li><code>#codebase</code>, <code>#fetch &lt;URL&gt;</code>, <code>#githubRepo</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.github.com/en/copilot/reference/cheat-sheet" target="_blank" class="modal-link">Cheat Sheet</a>
+                    <a href="https://code.visualstudio.com/docs/copilot/reference/copilot-vscode-features" target="_blank" class="modal-link">VS Code Features</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-cmd-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Custom commands • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('cmd-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Slash commands</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Custom prompts system plus omfattande built-in slash commands.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Built-in commands</h4>
+                    <ul>
+                        <li><code>/model</code> - Switch model (gpt-5-codex, gpt-5)</li>
+                        <li><code>/status</code> - Active model, approval policy, token usage</li>
+                        <li><code>/diff</code> - Review git changes</li>
+                        <li><code>/review</code> - Request analysis of working tree</li>
+                        <li><code>/compact</code> - Summarize conversation</li>
+                        <li><code>/undo</code> - Revert most recent action</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Custom Prompts</h4>
+                    <ul>
+                        <li>Invoke: <code>/prompts:&lt;name&gt;</code></li>
+                        <li>Arguments: <code>$1</code>-<code>$9</code>, <code>$FILE</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://developers.openai.com/codex/cli/slash-commands/" target="_blank" class="modal-link">Slash Commands</a>
+                    <a href="https://developers.openai.com/codex/custom-prompts/" target="_blank" class="modal-link">Custom Prompts</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Output Modals -->
+    <div class="modal-overlay" id="modal-output-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Output-anpassning • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('output-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Output styles</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Output styles-system som överskriver system prompt för att ändra Claude's beteende och kommunikationsstil.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>~/.claude/output-styles/stylename.md</code></li>
+                        <li>YAML frontmatter med style-definition</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Användning</h4>
+                    <ul>
+                        <li><code>/output-style</code> (välj från meny)</li>
+                        <li><code>/output-style stylename</code> (direkt)</li>
+                        <li>Överskriver system prompt</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Kontroll över ton, detalj nivå, format</li>
+                        <li>Persisterar över sessions</li>
+                        <li>Kan återställas till default</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/output-styles" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-output-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Output-anpassning • Cline</h3>
+                <button class="modal-close" onclick="closeModal('output-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-partial">
+                    <span class="status-icon">⚠️</span>
+                    <span>Partial stöd - Begränsad UI customization</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Begränsad output-customization. Mest UI-anpassningar snarare än beteende-styling.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Tillgängliga anpassningar</h4>
+                    <ul>
+                        <li>Sidebar positioning (höger/vänster)</li>
+                        <li>Dark/light mode med system detection</li>
+                        <li>Font customization (Geist Sans)</li>
+                        <li>Terminal environment variables</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <ul>
+                        <li>Inget output-style template system</li>
+                        <li>Community requests för mer UI customization</li>
+                        <li>Kan inte ändra AI's kommunikationsstil som Claude Code kan</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-output-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Output-anpassning • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('output-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-partial">
+                    <span class="status-icon">⚠️</span>
+                    <span>Partial stöd - Prompt-baserad styling</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Output-customization via natural language i prompts. Inget dedikerat template-system.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Metoder</h4>
+                    <ul>
+                        <li>Natural language: "respond in bullet points"</li>
+                        <li>Custom instructions i <code>.github/copilot-instructions.md</code></li>
+                        <li>Slash commands sätter implicit format (t.ex. <code>/doc</code>)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Formats</h4>
+                    <ul>
+                        <li>VS Code returnerar alltid Markdown</li>
+                        <li>Reusable Prompt Files</li>
+                        <li>Markdown formatting i responses</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <ul>
+                        <li>Inget built-in response template system</li>
+                        <li>Förlitar sig på natural language instructions</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.github.com/copilot/customizing-copilot/" target="_blank" class="modal-link">Customization Docs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-output-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Output-anpassning • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('output-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Reasoning controls</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Output-customization via reasoning controls och format flags.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Reasoning Controls</h4>
+                    <ul>
+                        <li><code>model_reasoning_summary</code> - Toggle reasoning display</li>
+                        <li><code>model_reasoning_summary_format</code> (experimental)</li>
+                        <li>Raw reasoning content när emitted</li>
+                        <li>Ctrl+T för adjust detail level interaktivt</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Format Options</h4>
+                    <ul>
+                        <li><code>--json</code> flag för newline-delimited JSON events</li>
+                        <li>ANSI color control</li>
+                        <li>Pager disable via CLINE_ACTIVE detection</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Aliases med custom reasoning settings</li>
+                        <li>Per-invocation overrides</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://developers.openai.com/codex/cli/reference/" target="_blank" class="modal-link">CLI Reference</a>
+                    <a href="https://developers.openai.com/codex/config-reference/" target="_blank" class="modal-link">Config Reference</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plugin Modals -->
+    <div class="modal-overlay" id="modal-plugin-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Plugin-system • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('plugin-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Plugin system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Dedikerat plugin-system för att paketera commands, agents, skills och MCP servers tillsammans.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Struktur</h4>
+                    <ul>
+                        <li><code>plugin.json</code> - Plugin manifest</li>
+                        <li>Kan innehålla: commands, agents, skills, MCP servers</li>
+                        <li>Installeras via <code>/plugin install plugin-name</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Plugin marketplace för discovery</li>
+                        <li>Komponenter blir automatiskt tillgängliga efter install</li>
+                        <li>Versionering och uppdateringar</li>
+                        <li>Delning via git eller marketplace</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/plugins" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-plugin-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Plugin-system • Cline</h3>
+                <button class="modal-close" onclick="closeModal('plugin-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-different">
+                    <span class="status-icon">🔄</span>
+                    <span>Annan approach - MCP istället</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Inget native plugin-system. Använder MCP som extension mechanism plus open-source contributions.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Extension methods</h4>
+                    <ul>
+                        <li>MCP servers från marketplace (universal approach)</li>
+                        <li>Open-source architecture för community bidrag</li>
+                        <li>Cline Personas MCP för behavioral customization</li>
+                        <li>GitHub resources och templates</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Fördelar</h4>
+                    <ul>
+                        <li>MCP-based extensions fungerar cross-tool</li>
+                        <li>Enklare arkitektur</li>
+                        <li>Community-driven ecosystem</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/mcp/mcp-overview" target="_blank" class="modal-link">MCP Overview</a>
+                    <a href="https://github.com/cline/cline" target="_blank" class="modal-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-plugin-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Plugin-system • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('plugin-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Mest mogen ecosystem</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Mest sofistikerade extension-ekosystemet med både lightweight och heavyweight approaches.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Extension types</h4>
+                    <ul>
+                        <li><strong>Skillsets</strong>: Lightweight, upp till 5 skills per set</li>
+                        <li><strong>Agents</strong>: Full kontroll över requests och responses</li>
+                        <li><strong>GitHub Copilot Extensions</strong>: Partner integrations</li>
+                        <li><strong>MCP Servers</strong>: Standardized tool integration</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Ecosystem</h4>
+                    <ul>
+                        <li>Extension Registry med curated extensions</li>
+                        <li>18+ partner-built custom agents</li>
+                        <li>Copilot Studio för building custom agents</li>
+                        <li>Platform handles routing och prompt crafting</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.github.com/copilot/building-copilot-extensions/" target="_blank" class="modal-link">Building Extensions</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-plugin-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Plugin-system • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('plugin-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-different">
+                    <span class="status-icon">🔄</span>
+                    <span>Annan approach - MCP istället</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Inget traditionellt plugin-system. MCP servers fungerar som extension mechanism.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Extensibility methods</h4>
+                    <ul>
+                        <li>Model Context Protocol (MCP) servers</li>
+                        <li>Custom prompts för lightweight reusability</li>
+                        <li>Agents SDK integration för orkestration</li>
+                        <li>Community MCP server ecosystem</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Fördelar</h4>
+                    <ul>
+                        <li>MCP är öppen standard</li>
+                        <li>Mindre komplexitet än proprietary plugins</li>
+                        <li>Focus på interoperability</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://developers.openai.com/codex/mcp/" target="_blank" class="modal-link">MCP Documentation</a>
+                    <a href="https://developers.openai.com/codex/guides/agents-sdk/" target="_blank" class="modal-link">Agents SDK</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modals -->
+    <div class="modal-overlay" id="modal-settings-claude">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Permissions/Settings • Claude Code</h3>
+                <button class="modal-close" onclick="closeModal('settings-claude')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Settings system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Settings-system för konfiguration av beteende, permissions och verktygsåtkomst.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.claude/settings.json</code> (projekt)</li>
+                        <li><code>~/.claude/settings.json</code> (användare)</li>
+                        <li>Hierarki: local → projekt → användare → enterprise</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Konfiguration</h4>
+                    <ul>
+                        <li><code>/config</code> - UI för alla inställningar</li>
+                        <li><code>/permissions</code> - Verktygs-permissions</li>
+                        <li>API provider selection</li>
+                        <li>Auto-approve patterns</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://code.claude.com/docs/en/settings" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-settings-cline">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Permissions/Settings • Cline</h3>
+                <button class="modal-close" onclick="closeModal('settings-cline')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Permissions config</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Omfattande permissions och settings med multi-level approval policies.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Permission levels</h4>
+                    <ul>
+                        <li><strong>Manual Approval</strong>: Review varje action (default)</li>
+                        <li><strong>Auto-Approve</strong>: Specifika operationer auto-approved</li>
+                        <li><strong>Maximum Requests</strong>: Safety limit på consecutive actions</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Konfiguration</h4>
+                    <ul>
+                        <li>API provider selection (OpenRouter, Anthropic, OpenAI, etc.)</li>
+                        <li>Blocked directories</li>
+                        <li>Workspace root definition</li>
+                        <li>Cost tracking (token usage, API spend)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Storage</h4>
+                    <ul>
+                        <li>Global state: provider/model</li>
+                        <li>Workspace state: projekt settings</li>
+                        <li>Secret storage: encrypted API keys (system keychain)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.cline.bot/" target="_blank" class="modal-link">Dokumentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-settings-copilot">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Permissions/Settings • GitHub Copilot</h3>
+                <button class="modal-close" onclick="closeModal('settings-copilot')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Enterprise-granulär</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Mest granulära settings med multi-level konfiguration för personal, workspace och organization.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Personal Settings</h4>
+                    <ul>
+                        <li>Data collection preferences</li>
+                        <li>Public code matching control</li>
+                        <li>Coding agent repository access</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Organization-Level</h4>
+                    <ul>
+                        <li>Privacy och feature availability policies</li>
+                        <li>Model selection och availability</li>
+                        <li>MCP servers policy (Business/Enterprise)</li>
+                        <li>Repository-level access controls</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Workspace-Level (2026)</h4>
+                    <ul>
+                        <li>Per-workspace configuration overrides</li>
+                        <li>Different Copilot behavior per project</li>
+                        <li>Committed via VS Code workspace config</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-in-your-organization/managing-policies-for-copilot-in-your-organization" target="_blank" class="modal-link">Managing Policies</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-settings-codex">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Permissions/Settings • OpenAI Codex CLI</h3>
+                <button class="modal-close" onclick="closeModal('settings-codex')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Säkerhetsfokus</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Sofistikerat säkerhetssystem med approval policies och sandbox modes. Config i <code>~/.codex/config.toml</code>.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Approval Policies</h4>
+                    <ul>
+                        <li><strong>untrusted</strong>: Approval för alla kommandon</li>
+                        <li><strong>on-request</strong>: Approval för risky operations</li>
+                        <li><strong>on-failure</strong>: Approval endast efter failures</li>
+                        <li><strong>never</strong>: Inga approval prompts</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Sandbox Modes</h4>
+                    <ul>
+                        <li><strong>read-only</strong>: Inga write operations eller network</li>
+                        <li><strong>workspace-write</strong>: Read/write inom workspace (recommended)</li>
+                        <li><strong>danger-full-access</strong>: Full system access</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Advanced</h4>
+                    <ul>
+                        <li>Profiles: Named config overrides</li>
+                        <li>Enterprise constraints via requirements.toml</li>
+                        <li>CLI overrides: <code>--config key=value</code></li>
+                        <li>Network access disabled by default</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://developers.openai.com/codex/security/" target="_blank" class="modal-link">Security</a>
+                    <a href="https://developers.openai.com/codex/config-reference/" target="_blank" class="modal-link">Config Reference</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            const modal = document.getElementById('modal-' + modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById('modal-' + modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close on overlay click
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
+</body>
+</html>
