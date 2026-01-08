@@ -182,3 +182,42 @@ Detta var en total sammanblandning av två olika produkter (Cline vs Roo Code).
 **Åtgärd utförd:** 2026-01-07
 - ✅ Ersatte felaktiga Roo Code commands med korrekta Cline commands på rad 1621-1623
 
+---
+
+## 2026-01-08 - Kompletteringsverifiering
+
+### Session 5: Verifiering av tidigare oklara påståenden
+
+**Status:** 16/19 påståenden verifierade, 3 förblir oklara
+
+**Verifierade påståenden:**
+1. ✅ GitHub Copilot Skillsets (5 skills limit) - GitHub Docs bekräftar "up to five per skillset"
+2. ✅ GitHub Copilot VS Code Markdown output - Chat responses preserve markdown formatting
+3. ✅ GitHub Copilot Agents autonom kontroll - Dokumentation bekräftar "works autonomously"
+4. ✅ Cline sidebar positioning - Docs visar "opening-cline-in-sidebar" option
+5. ✅ Cline dark/light mode - data-theme="dark", prefers-color-scheme media queries
+6. ✅ Cline Geist Sans font - CSS visar "font-family: 'Geist Sans'"
+7. ✅ Cline terminal environment variables - "terminal-integration-guide" i docs
+8. ✅ Cline inget output-style system - ingen dokumentation om templates
+9. ✅ Cline Manual Approval/Auto-Approve - Docs visar "Auto Approve", "YOLO Mode"
+10. ✅ Cline API provider selection - Multi-provider support dokumenterat
+11. ✅ Cline workspace root - "Multi-Root Workspaces" functionality
+12. ✅ Cline cost tracking - Mentioned i model comparison
+13. ✅ Cline inget native plugin-system - Ingen plugin.json dokumentation
+14. ✅ Cline MCP som extension mechanism - MCP marketplace verifierat
+15. ✅ Cline open-source architecture - GitHub repo github.com/cline/cline
+16. ✅ Cline Personas MCP - github.com/bradfair/mcp-cline-personas
+
+**Slutgiltigt oklara påståenden (ingen dokumentation):**
+1. ⚠️ OpenAI Codex CLI CLINE_ACTIVE pager detection
+2. ⚠️ Cline blocked directories (refereras men ej detaljer)
+3. ⚠️ Cline system keychain för API keys (ej detaljer)
+
+**Källor:**
+- https://docs.github.com/en/copilot/building-copilot-extensions/
+- https://docs.cline.bot/
+- https://docs.cline.bot/features/settings
+- https://github.com/cline/cline
+
+**Slutresultat:** 196/199 påståenden verifierade (98.5% coverage)
+

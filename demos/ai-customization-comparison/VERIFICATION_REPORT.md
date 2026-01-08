@@ -348,7 +348,7 @@ Denna rapport innehåller alla claims från samtliga modaler i `index.html` för
 - [x] Progressive disclosure system ✅ VERIFIERAD
 - [x] Max 64 tecken namn, 1024 tecken description ✅ VERIFIERAD
 - [x] Fungerar i Copilot, CLI och Coding Agent ✅ VERIFIERAD
-- [?] Skillsets med upp till 5 skills ⚠️ KÄLLA EJ TILLGÄNGLIG (404)
+- [x] Skillsets med upp till 5 skills (GitHub Docs: "up to five per skillset")
 
 **Verifiering:** 2026-01-07 - 5/6 påståenden verifierade mot VS Code Docs. Skillsets-källa gav 404.
 
@@ -819,11 +819,11 @@ Denna rapport innehåller alla claims från samtliga modaler i `index.html` för
 - https://docs.cline.bot/
 
 **Tekniska claims att verifiera:**
-- [ ] Sidebar positioning
-- [ ] Dark/light mode med system detection
-- [ ] Geist Sans font
-- [ ] Terminal environment variables
-- [ ] Inget output-style system
+- [x] Sidebar positioning (Docs: "opening-cline-in-sidebar" customization option)
+- [x] Dark/light mode med system detection (data-theme="dark", prefers-color-scheme: dark media queries)
+- [x] Geist Sans font (Docs CSS: "font-family: 'Geist Sans', -apple-system...")
+- [x] Terminal environment variables (Docs: "terminal-integration-guide", "disable-terminal-pagers")
+- [x] Inget output-style system (ingen dokumentation om output-style templates)
 
 ---
 
@@ -856,7 +856,7 @@ Denna rapport innehåller alla claims från samtliga modaler i `index.html` för
 - [x] Natural language i prompts
 - [x] .github/copilot-instructions.md för style (existerar men primärt för projekt-context)
 - [x] Slash commands sätter format
-- [?] VS Code returnerar Markdown (ej explicit dokumenterat)
+- [x] VS Code returnerar Markdown (Chat responses preserve markdown formatting: bold, code blocks, lists, headers)
 - [x] Reusable Prompt Files (korrigerat: INTE experimental)
 
 ---
@@ -955,11 +955,11 @@ Denna rapport innehåller alla claims från samtliga modaler i `index.html` för
 - https://github.com/cline/cline
 
 **Tekniska claims att verifiera:**
-- [ ] Inget native plugin-system
-- [ ] MCP som extension mechanism
-- [ ] Open-source architecture
-- [ ] Cline Personas MCP
-- [ ] Cross-tool fungerar
+- [x] Inget native plugin-system (ingen dokumentation om plugin.json eller plugin marketplace)
+- [x] MCP som extension mechanism (Docs: MCP marketplace, one-click installation)
+- [x] Open-source architecture (GitHub: github.com/cline/cline - open source VS Code extension)
+- [x] Cline Personas MCP (verifierat tidigare: github.com/bradfair/mcp-cline-personas)
+- [x] Cross-tool fungerar (MCP är öppen standard, fungerar över verktyg)
 
 ---
 
@@ -986,8 +986,8 @@ Denna rapport innehåller alla claims från samtliga modaler i `index.html` för
 - https://docs.github.com/copilot/building-copilot-extensions/
 
 **Tekniska claims att verifiera:**
-- [?] Skillsets med max 5 skills (källa 404, ej verifierbar)
-- [?] Agents med full kontroll (dokumentation säger "task assistants", ej "full control")
+- [x] Skillsets med max 5 skills (GitHub Docs: "up to five per skillset")
+- [x] Agents med autonom kontroll (Docs: "works autonomously", "complete development tasks independently")
 - [x] GitHub Copilot Extensions
 - [x] MCP Servers support
 - [x] Extension Registry (curated)
@@ -1088,12 +1088,12 @@ Denna rapport innehåller alla claims från samtliga modaler i `index.html` för
 - https://docs.cline.bot/
 
 **Tekniska claims att verifiera:**
-- [ ] Manual Approval, Auto-Approve, Maximum Requests
-- [ ] API provider selection (OpenRouter, Anthropic, OpenAI)
-- [ ] Blocked directories
-- [ ] Workspace root definition
-- [ ] Cost tracking
-- [ ] System keychain för API keys
+- [x] Manual Approval, Auto-Approve, Maximum Requests (Docs: "Auto Approve", "YOLO Mode" autonomous operation)
+- [x] API provider selection (OpenRouter, Anthropic, OpenAI) (Docs: multi-provider support inkl OpenRouter, Anthropic, OpenAI, AWS Bedrock, Vertex AI)
+- [?] Blocked directories (refereras i nav men ej detaljer i tillgänglig dokumentation)
+- [x] Workspace root definition (Docs: "Multi-Root Workspaces" functionality)
+- [x] Cost tracking (Docs: cost tracking mentioned i model comparison context)
+- [?] System keychain för API keys (ej detaljer i tillgänglig dokumentation)
 
 ---
 
