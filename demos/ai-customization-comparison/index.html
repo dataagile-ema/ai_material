@@ -8,7 +8,7 @@
     <style>
         /* Tabell-specifika styles */
         .comparison-table {
-            min-width: 900px;
+            min-width: 1120px;
             border-collapse: collapse;
             background: var(--color-surface);
         }
@@ -339,6 +339,7 @@
                             <th>Cline</th>
                             <th>GitHub Copilot</th>
                             <th>OpenAI Codex CLI</th>
+                            <th>OpenCode</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -364,6 +365,12 @@
                                 </div>
                             </td>
                             <td class="comparison-cell status-full" onclick="openModal('proj-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">AGENTS.md</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('proj-opencode')">
                                 <div class="cell-content">
                                     <span class="status-icon">✅</span>
                                     <span class="cell-name">AGENTS.md</span>
@@ -398,6 +405,12 @@
                                     <span class="cell-name">Community MCP</span>
                                 </div>
                             </td>
+                            <td class="comparison-cell status-full" onclick="openModal('agents-opencode')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Primary/Subagents</span>
+                                </div>
+                            </td>
                         </tr>
 
                         <!-- Row 3: Skills -->
@@ -425,6 +438,12 @@
                                 <div class="cell-content">
                                     <span class="status-icon">✅</span>
                                     <span class="cell-name">Custom prompts + MCP</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('skills-opencode')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Skills system</span>
                                 </div>
                             </td>
                         </tr>
@@ -456,6 +475,12 @@
                                     <span class="cell-name">Notifications endast</span>
                                 </div>
                             </td>
+                            <td class="comparison-cell status-partial" onclick="openModal('hook-opencode')">
+                                <div class="cell-content">
+                                    <span class="status-icon">⚠️</span>
+                                    <span class="cell-name">Plugin hooks</span>
+                                </div>
+                            </td>
                         </tr>
 
                         <!-- Row 5: MCP -->
@@ -480,6 +505,12 @@
                                 </div>
                             </td>
                             <td class="comparison-cell status-full" onclick="openModal('mcp-codex')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">MCP servers</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('mcp-opencode')">
                                 <div class="cell-content">
                                     <span class="status-icon">✅</span>
                                     <span class="cell-name">MCP servers</span>
@@ -514,6 +545,12 @@
                                     <span class="cell-name">Slash commands</span>
                                 </div>
                             </td>
+                            <td class="comparison-cell status-full" onclick="openModal('cmd-opencode')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">CLI commands</span>
+                                </div>
+                            </td>
                         </tr>
 
                         <!-- Row 7: Output -->
@@ -541,6 +578,12 @@
                                 <div class="cell-content">
                                     <span class="status-icon">✅</span>
                                     <span class="cell-name">Reasoning controls</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('output-opencode')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Themes/formatters</span>
                                 </div>
                             </td>
                         </tr>
@@ -572,6 +615,12 @@
                                     <span class="cell-name">MCP istället</span>
                                 </div>
                             </td>
+                            <td class="comparison-cell status-partial" onclick="openModal('plugin-opencode')">
+                                <div class="cell-content">
+                                    <span class="status-icon">⚠️</span>
+                                    <span class="cell-name">Hooks + LSP</span>
+                                </div>
+                            </td>
                         </tr>
 
                         <!-- Row 9: Settings -->
@@ -599,6 +648,12 @@
                                 <div class="cell-content">
                                     <span class="status-icon">✅</span>
                                     <span class="cell-name">Sandbox/approval</span>
+                                </div>
+                            </td>
+                            <td class="comparison-cell status-full" onclick="openModal('settings-opencode')">
+                                <div class="cell-content">
+                                    <span class="status-icon">✅</span>
+                                    <span class="cell-name">Permissions config</span>
                                 </div>
                             </td>
                         </tr>
@@ -674,8 +729,15 @@
                     <a href="https://developers.openai.com/codex/guides/agents-md/" target="_blank">AGENTS.md</a>
                     <a href="https://github.com/openai/codex" target="_blank">GitHub</a>
                 </div>
+                <div class="source-group">
+                    <h4>OpenCode</h4>
+                    <a href="https://opencode.ai" target="_blank">Official Site</a>
+                    <a href="https://opencode.ai/docs/" target="_blank">Dokumentation</a>
+                    <a href="https://github.com/opencode-ai/opencode" target="_blank">GitHub</a>
+                    <a href="https://opencode.ai/docs/plugins/" target="_blank">Plugins</a>
+                </div>
             </div>
-            <p style="margin-top: 2rem; color: var(--color-text-muted);">Genererad 2026-01-07</p>
+            <p style="margin-top: 2rem; color: var(--color-text-muted);">Genererad 2026-01-10</p>
         </footer>
     </div>
 
@@ -2311,6 +2373,452 @@
                     <h4>Länkar</h4>
                     <a href="https://developers.openai.com/codex/security/" target="_blank" class="modal-link">Security</a>
                     <a href="https://developers.openai.com/codex/config-reference/" target="_blank" class="modal-link">Config Reference</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OpenCode Modals -->
+
+    <!-- Modal: Projektinstruktioner - OpenCode -->
+    <div class="modal-overlay" id="modal-proj-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Projektinstruktioner • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('proj-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>AGENTS.md-fil som innehåller projektspecifika instruktioner genererade genom analys av projektstruktur och kodmönster. Fungerar som kontext för AI-agenten.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>AGENTS.md</code> (projekt root, version-controllable)</li>
+                        <li><code>~/.config/opencode/AGENTS.md</code> (globalt, personligt)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Automatisk projektanalys och generering av instruktioner</li>
+                        <li>Git-vänlig struktur för team-delning</li>
+                        <li>Globala och projekt-specifika regler</li>
+                        <li>Inkluderas i LLM-kontext vid varje session</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/" target="_blank" class="modal-link">Dokumentation</a>
+                    <a href="https://github.com/opencode-ai/opencode" target="_blank" class="modal-link">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Specialiserade agenter - OpenCode -->
+    <div class="modal-overlay" id="modal-agents-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Specialiserade agenter • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('agents-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Primary/Subagent system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Agent-system med två typer: Primary agents (huvudassistenter för direkt interaktion) och Subagents (specialiserade assistenter som anropas automatiskt eller via @mention). Konfigureras via opencode.json eller Markdown-filer i agent-mappar.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>opencode.json</code> (JSON-konfiguration med mode, model, tools)</li>
+                        <li><code>.opencode/agent/*.md</code> (projekt-specifika agents)</li>
+                        <li><code>~/.config/opencode/agent/*.md</code> (globala agents)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Primary agents: Build (default) och Plan (restricted) built-in</li>
+                        <li>Subagents: General (research) och Explore (codebase navigation)</li>
+                        <li>Växla mellan primary agents med Tab-knapp</li>
+                        <li>Per-agent permissions och verktygsåtkomst</li>
+                        <li>Custom model och temperature per agent</li>
+                        <li>Automatisk delegation via @mention-syntax</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/agents/" target="_blank" class="modal-link">Agent Documentation</a>
+                    <a href="https://opencode.ai/docs/config/" target="_blank" class="modal-link">Configuration</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Återanvändbara capabilities - OpenCode -->
+    <div class="modal-overlay" id="modal-skills-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Återanvändbara capabilities • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('skills-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Native skills system</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Skills-system med återanvändbara instruktionsset som laddas on-demand. Varje skill är en mapp innehållande SKILL.md med YAML frontmatter som definierar namn, beskrivning och permissions.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>.opencode/skill/&lt;name&gt;/SKILL.md</code> (projekt)</li>
+                        <li><code>.claude/skills/&lt;name&gt;/SKILL.md</code> (Claude-kompatibelt)</li>
+                        <li><code>~/.config/opencode/skill/&lt;name&gt;/SKILL.md</code> (globalt)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Native <code>skill</code> tool för discovery och exekvering</li>
+                        <li>YAML frontmatter med required fields (name, description)</li>
+                        <li>Permission control (allow/deny/ask) per skill</li>
+                        <li>Upward directory walk till git worktree root</li>
+                        <li>Wildcard-patterns för permission management</li>
+                        <li>Kan disablas per agent via tools config</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/skills/" target="_blank" class="modal-link">Skills Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Event automation - OpenCode -->
+    <div class="modal-overlay" id="modal-hook-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Event automation • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('hook-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-partial">
+                    <span class="status-icon">⚠️</span>
+                    <span>Partial stöd - Plugin hooks</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Plugin-system med 30+ hooks för event automation. Hooks kan triggas före/efter verktygsanvändning, vid sessions-events, fil-ändringar, LSP-diagnostik och UI-händelser.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Tillgängliga hooks</h4>
+                    <ul>
+                        <li>Tool operations: <code>tool.execute.before</code>, <code>tool.execute.after</code></li>
+                        <li>Session events: <code>session.created</code>, <code>session.compacted</code>, <code>session.idle</code>, <code>session.error</code></li>
+                        <li>File watchers: <code>file.edited</code>, <code>file.watcher.updated</code></li>
+                        <li>LSP integration: <code>lsp.client.diagnostics</code>, <code>lsp.updated</code></li>
+                        <li>UI events: <code>tui.prompt.append</code>, <code>tui.toast.show</code>, <code>tui.command.execute</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <ul>
+                        <li>Inget explicit pre/post action hook-system som Clines hooks</li>
+                        <li>Kräver JavaScript/TypeScript-plugins (inte deklarativa hooks)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/plugins/" target="_blank" class="modal-link">Plugins</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Externa verktyg - OpenCode -->
+    <div class="modal-overlay" id="modal-mcp-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Externa verktyg • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('mcp-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>MCP (Model Context Protocol) servers konfigureras via opencode.json med stöd för stdio-baserade servrar. Remote configs kan specificera MCP-servrar som lokala configs kan override:a.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Konfiguration</h4>
+                    <ul>
+                        <li><code>opencode.json</code> under <code>mcp</code>-sektion</li>
+                        <li>Remote config från <code>.well-known/opencode</code></li>
+                        <li>Local overrides i projekt eller global config</li>
+                        <li>CLI-kommandon: <code>opencode mcp add</code>, <code>list</code>, <code>auth</code>, <code>debug</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Stöd för stdio-baserade MCP-servrar</li>
+                        <li>Server properties: <code>type</code>, <code>url</code>, <code>enabled</code></li>
+                        <li>Auto-installation via Bun package manager</li>
+                        <li>Environment variable substitution: <code>{env:VARIABLE_NAME}</code></li>
+                        <li>Per-server authentication med <code>opencode mcp auth</code></li>
+                        <li>Debug-läge för server troubleshooting</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/config/" target="_blank" class="modal-link">Configuration</a>
+                    <a href="https://opencode.ai/docs/cli/" target="_blank" class="modal-link">CLI Commands</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Custom commands - OpenCode -->
+    <div class="modal-overlay" id="modal-cmd-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Custom commands • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('cmd-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd - Rich CLI</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Omfattande CLI med kommandon för agent-management, MCP-servrar, sessions, GitHub-integration och server-infrastruktur. Stödjer både positionella argument och flag-baserade options.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Built-in commands</h4>
+                    <ul>
+                        <li>Agent: <code>opencode agent create</code>, <code>opencode agent list</code></li>
+                        <li>MCP: <code>opencode mcp add</code>, <code>list</code>, <code>auth</code>, <code>logout</code>, <code>debug</code></li>
+                        <li>Sessions: <code>opencode session list</code>, <code>export</code>, <code>import</code></li>
+                        <li>GitHub: <code>opencode github install</code>, <code>opencode github run</code></li>
+                        <li>Auth: <code>opencode auth login</code>, <code>logout</code>, <code>list</code></li>
+                        <li>Infrastruktur: <code>opencode serve</code>, <code>web</code>, <code>attach</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Flags</h4>
+                    <ul>
+                        <li><code>--session</code> / <code>-s</code>: Continue existing session</li>
+                        <li><code>--model</code> / <code>-m</code>: Override model selection</li>
+                        <li><code>--file</code> / <code>-f</code>: Attach files</li>
+                        <li><code>--format</code>: Output format (json, table)</li>
+                        <li><code>--port</code>, <code>--hostname</code>, <code>--mdns</code>: Server config</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/cli/" target="_blank" class="modal-link">CLI Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Output-anpassning - OpenCode -->
+    <div class="modal-overlay" id="modal-output-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Output-anpassning • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('output-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Output-customization via themes, code formatters och model-parametrar. Konfigurera visuellt utseende, kodformatering och LLM-beteende direkt i config-filen.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Anpassningar</h4>
+                    <ul>
+                        <li><strong>Themes</strong>: Konfigurerbart via <code>theme</code>-option i opencode.json</li>
+                        <li><strong>Formatters</strong>: Built-in (Prettier) eller custom formatters med command arrays</li>
+                        <li><strong>Model temperature</strong>: Per-agent temperature control (0.0-1.0)</li>
+                        <li><strong>Response behavior</strong>: Via custom system prompts per agent</li>
+                        <li><strong>Output format</strong>: CLI flags för json/table format</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Filplacering</h4>
+                    <ul>
+                        <li><code>opencode.json</code> (global: <code>~/.config/opencode/opencode.json</code>)</li>
+                        <li><code>.opencode/opencode.json</code> (projekt-specifik)</li>
+                        <li>Per-agent frontmatter i <code>.opencode/agent/*.md</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/config/" target="_blank" class="modal-link">Configuration</a>
+                    <a href="https://opencode.ai/docs/agents/" target="_blank" class="modal-link">Agent Customization</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Plugin-system - OpenCode -->
+    <div class="modal-overlay" id="modal-plugin-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Plugin-system • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('plugin-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-partial">
+                    <span class="status-icon">⚠️</span>
+                    <span>Partial stöd - Hooks + LSP, inget plugin marketplace</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Plugin-system baserat på JavaScript/TypeScript-hooks och LSP-integration. Plugins laddas från lokala filer, npm-paket eller auto-installeras via Bun. LSP-integration för 30+ språkservrar med auto-detection.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Plugin-system</h4>
+                    <ul>
+                        <li>Lokala plugins: <code>.opencode/plugin/</code> (projekt), <code>~/.config/opencode/plugin/</code> (globalt)</li>
+                        <li>npm-paket: Specificeras i opencode.json</li>
+                        <li>Auto-installation: Bun caching i <code>~/.cache/opencode/node_modules/</code></li>
+                        <li>30+ hook events för lifecycle management</li>
+                        <li>Custom tools via Zod schema validation</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>LSP Integration</h4>
+                    <ul>
+                        <li>30+ language servers (auto-detected)</li>
+                        <li>Operations: goToDefinition, findReferences, hover, documentSymbol, workspaceSymbol</li>
+                        <li>Config: <code>lsp</code>-sektion i opencode.json</li>
+                        <li>Auto-spawn servers on demand</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <ul>
+                        <li>Inget formellt plugin marketplace (community plugins existerar)</li>
+                        <li>Kräver JavaScript/TypeScript-kunskap för plugin-utveckling</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/plugins/" target="_blank" class="modal-link">Plugins</a>
+                    <a href="https://opencode.ai/docs/lsp/" target="_blank" class="modal-link">LSP Servers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Permissions/Settings - OpenCode -->
+    <div class="modal-overlay" id="modal-settings-opencode">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Permissions/Settings • OpenCode</h3>
+                <button class="modal-close" onclick="closeModal('settings-opencode')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="status-badge status-full">
+                    <span class="status-icon">✅</span>
+                    <span>Fullt stöd</span>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Implementation</h4>
+                    <p>Omfattande permissions-system med tre nivåer (allow/deny/ask) för verktygsåtkomst. Konfigurera globala defaults med per-agent overrides via opencode.json eller agent-frontmatter.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Permission levels</h4>
+                    <ul>
+                        <li><strong>allow</strong>: Omedelbar åtkomst utan prompt</li>
+                        <li><strong>deny</strong>: Dold från agent (verktyg ej tillgängligt)</li>
+                        <li><strong>ask</strong>: Kräver användargodkännande före exekvering</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Konfiguration</h4>
+                    <ul>
+                        <li>Globala permissions i opencode.json under <code>permission</code>-sektion</li>
+                        <li>Per-agent overrides i agent frontmatter eller config</li>
+                        <li>Bash-kommandon: Glob patterns (t.ex. <code>"git status": "allow"</code>)</li>
+                        <li>Skills permissions: Wildcard matching (t.ex. <code>"internal-*": "deny"</code>)</li>
+                        <li>Task permissions: Kontrollera vilka subagents som får anropas</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Funktioner</h4>
+                    <ul>
+                        <li>Hierarkisk config: Remote → Global → Custom → Project</li>
+                        <li>MaxSteps limit för agent iterations</li>
+                        <li>Tool enable/disable per agent (<code>tools: { skill: false }</code>)</li>
+                        <li>Permission cascading från global till agent-specifik</li>
+                        <li>Environment variables: <code>{env:VARIABLE_NAME}</code></li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Länkar</h4>
+                    <a href="https://opencode.ai/docs/config/" target="_blank" class="modal-link">Configuration</a>
+                    <a href="https://opencode.ai/docs/agents/" target="_blank" class="modal-link">Agent Permissions</a>
                 </div>
             </div>
         </div>

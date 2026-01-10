@@ -250,3 +250,57 @@ Detta var en total sammanblandning av två olika produkter (Cline vs Roo Code).
 
 **Slutresultat:** 196/196 påståenden i HTML är nu fullständigt verifierade (100% coverage)
 
+---
+
+## 2026-01-10 - OpenCode column addition
+
+### Åtgärd: Lagt till OpenCode som 5:e kolumn i jämförelsetabellen
+
+**Motivering:** Utöka jämförelsen med ytterligare ett prominent open-source AI-kodverktyg för att ge användare en bredare översikt.
+
+### Ändringar
+
+**1. Tabell-struktur:**
+- Lagt till 5:e kolumn i header efter OpenAI Codex CLI
+- Lagt till 9 nya table cells (en per anpassningsmetod)
+- Uppdaterat CSS min-width från 900px till 1120px för 5-kolumns layout
+
+**2. Nya modaler (9 st):**
+- `modal-proj-opencode`: AGENTS.md för projektinstruktioner
+- `modal-agents-opencode`: Primary/Subagent system
+- `modal-skills-opencode`: Skills system med SKILL.md
+- `modal-hook-opencode`: Plugin hooks (30+ event types)
+- `modal-mcp-opencode`: MCP server support
+- `modal-cmd-opencode`: Rich CLI commands
+- `modal-output-opencode`: Themes, formatters, temperature
+- `modal-plugin-opencode`: Hook-baserat plugin-system + LSP
+- `modal-settings-opencode`: Permission system (allow/deny/ask)
+
+**3. Status-fördelning:**
+- ✅ Fullt stöd: 7/9 (Projektinstruktioner, Agenter, Skills, MCP, Commands, Output, Settings)
+- ⚠️ Partial stöd: 2/9 (Event automation, Plugin-system)
+
+**4. Footer:**
+- Lagt till OpenCode source group med 4 länkar (Official Site, Dokumentation, GitHub, Plugins)
+- Uppdaterat genereringsdatum till 2026-01-10
+
+### Verifiering
+
+Alla tekniska claims verifierade mot opencode.ai officiell dokumentation. 100% verifieringsgrad för tekniska funktioner.
+
+**Källor:**
+- https://opencode.ai/docs/
+- https://opencode.ai/docs/agents/
+- https://opencode.ai/docs/skills/
+- https://opencode.ai/docs/config/
+- https://opencode.ai/docs/cli/
+- https://opencode.ai/docs/plugins/
+- https://opencode.ai/docs/lsp/
+- https://github.com/opencode-ai/opencode
+
+### Statistik-anmärkning
+
+OpenCode's officiella webbplats (opencode.ai) anger 50,000+ GitHub stars och 650,000 monthly users. GitHub-repositoryt (github.com/opencode-ai/opencode) visar däremot 9.9k stars och arkiverades September 2025, med hänvisning att projektet fortsätter som "Crush" under Charm team.
+
+**Hantering:** Statistiken från webbplatsen kan inte oberoende verifieras från GitHub. Jämförelsen fokuserar på tekniska funktioner (fully verifiable) snarare än användningsstatistik. All teknisk dokumentation är verifierbar och aktuell per 2026-01-10.
+
