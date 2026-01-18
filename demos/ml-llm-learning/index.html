@@ -56,7 +56,7 @@
             flex-direction: column;
             gap: 20px;
             height: 100%;
-            overflow: hidden;
+            overflow: auto;
         }
 
         .card {
@@ -75,79 +75,43 @@
             font-weight: 600;
         }
 
-        /* Sentence display */
-        .sentence-display {
-            flex-shrink: 0;
-        }
-
-        .sentence {
-            font-size: 2rem;
-            line-height: 1.6;
-            color: #fff;
-        }
-
-        .sentence .context {
-            color: #ccd6f6;
-        }
-
-        .sentence .blank {
-            display: inline-block;
-            min-width: 140px;
-            border-bottom: 4px solid var(--color-accent);
-            margin: 0 8px;
-            text-align: center;
-            color: var(--color-accent);
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .sentence .blank.correct {
-            color: var(--color-success);
-            border-color: var(--color-success);
-        }
-
         /* Prediction bars */
         .predictions-card {
             flex: 1 1 auto;
-            min-height: 0;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
 
         .predictions {
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            overflow: hidden;
+            gap: 8px;
             justify-content: center;
         }
 
         .prediction-row {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             flex-shrink: 0;
         }
 
         .word-label {
-            width: 100px;
-            font-size: 1.3rem;
+            width: 110px;
+            font-size: 1.1rem;
             text-align: right;
             color: var(--color-text-secondary);
             font-weight: 500;
         }
 
-        .word-label.target {
-            color: var(--color-success);
-        }
 
         .bar-container {
             flex: 1;
-            height: 36px;
+            height: 28px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             position: relative;
         }
@@ -155,18 +119,15 @@
         .bar {
             height: 100%;
             background: linear-gradient(90deg, var(--color-accent), var(--color-chart-2));
-            border-radius: 8px;
+            border-radius: 6px;
             transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             min-width: 2px;
         }
 
-        .bar.target {
-            background: linear-gradient(90deg, var(--color-success), var(--color-chart-3));
-        }
 
         .probability {
-            width: 70px;
-            font-size: 1.2rem;
+            width: 60px;
+            font-size: 1rem;
             color: #ccd6f6;
             font-weight: 600;
             font-variant-numeric: tabular-nums;
@@ -261,23 +222,6 @@
             height: 100%;
         }
 
-        .loss-value {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 2rem;
-            font-weight: 300;
-            color: #ff7043;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .loss-label {
-            font-size: 0.8rem;
-            color: var(--color-text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
         /* Controls */
         .controls {
             display: flex;
@@ -369,24 +313,36 @@
             letter-spacing: 1px;
         }
 
-        /* Info box */
-        .info-box {
-            background: rgba(100, 255, 218, 0.1);
-            border: 1px solid rgba(155, 194, 105, 0.2);
-            border-radius: 12px;
-            padding: 15px 20px;
-            margin-top: auto;
+        /* Training data list */
+        .training-data-card {
             flex-shrink: 0;
         }
 
-        .info-box p {
-            font-size: 1rem;
-            color: #a8b2d1;
-            line-height: 1.5;
+        .training-sentences {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .info-box strong {
-            color: var(--color-success);
+        .training-sentence {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .training-sentence .bullet {
+            color: var(--color-accent);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .training-sentence .text {
+            font-size: 1.1rem;
+            color: #ccd6f6;
         }
 
         /* Animations */
@@ -409,12 +365,10 @@
 
         <div class="main-content">
             <div class="left-panel">
-                <div class="card sentence-display">
-                    <div class="card-title">Träningsdata</div>
-                    <div class="sentence">
-                        <span class="context" id="context-before"></span>
-                        <span class="blank" id="prediction-display">?</span>
-                        <span class="context" id="context-after"></span>
+                <div class="card training-data-card">
+                    <div class="card-title">Träningsdata (tränas varje runda)</div>
+                    <div class="training-sentences" id="training-sentences">
+                        <!-- Generated by JS -->
                     </div>
                 </div>
 
@@ -425,9 +379,6 @@
                     </div>
                 </div>
 
-                <div class="info-box">
-                    <p><strong>Kärnidén:</strong> AI-modeller som ChatGPT och Claude bygger på detta: träna en modell att förutsäga nästa ord, miljarder gånger, på enorma mängder text. Ingen kodar in regler för hand – modellen <strong>lär sig mönster från data</strong>.</p>
-                </div>
             </div>
 
             <div class="right-panel">
@@ -457,29 +408,25 @@
                 </div>
 
                 <div class="card loss-card">
-                    <div class="card-title">Träningsfel (Loss)</div>
+                    <div class="card-title">Sannolikhet per ord</div>
                     <div class="chart-container">
                         <canvas id="lossChart" class="chart-canvas"></canvas>
-                        <div class="loss-value">
-                            <span id="current-loss">2.30</span>
-                            <div class="loss-label">Nuvarande fel</div>
-                        </div>
                     </div>
                 </div>
 
                 <div class="stats">
                     <div class="stat">
                         <div class="stat-value" id="iteration-count">0</div>
-                        <div class="stat-label">Träningssteg</div>
+                        <div class="stat-label">Rundor</div>
                     </div>
                     <div class="stat">
                         <div class="stat-value" id="accuracy">0%</div>
-                        <div class="stat-label">Konfidens rätt ord</div>
+                        <div class="stat-label">Summa giltiga ord</div>
                     </div>
                 </div>
 
                 <div class="controls">
-                    <button class="btn-train" id="btn-train">Träna ett steg</button>
+                    <button class="btn-train" id="btn-train">Träna en runda</button>
                     <button class="btn-auto" id="btn-auto">Auto-träna</button>
                     <button class="btn-reset" id="btn-reset">Börja om</button>
                 </div>
@@ -488,46 +435,80 @@
     </div>
 
     <script>
-        // Training examples
-        const examples = [
-            { before: "Solen skiner på", target: "himlen", after: "idag.", alternatives: ["bordet", "katten", "himlen", "boken", "stolen"] },
-            { before: "Katten sover på", target: "soffan", after: ".", alternatives: ["soffan", "taket", "mattan", "molnet", "havet"] },
-            { before: "Jag dricker", target: "kaffe", after: "på morgonen.", alternatives: ["stenar", "kaffe", "bilar", "moln", "musik"] },
-            { before: "Fågeln flyger över", target: "träden", after: ".", alternatives: ["träden", "golvet", "tanken", "tiden", "smaken"] },
-            { before: "Barnen leker i", target: "parken", after: ".", alternatives: ["parken", "molnen", "tystnaden", "teorin", "historien"] }
-        ];
+        // Kontexten (samma för alla träningsmeningar)
+        const context = {
+            before: "Katten sover på",
+            after: "."
+        };
 
-        let currentExample = 0;
+        // Träningsexempel - ord som är rätt svar i datasetet
+        const validWords = ["soffan", "mattan", "golvet", "sängen"];
+
+        // Nonsens-ord - finns aldrig som rätt svar
+        const nonsenseWords = ["demokrati", "avundsjuka", "snabbt", "telefon"];
+
         let probabilities = {};
         let iteration = 0;
-        let lossHistory = [];
+        let probabilityHistory = {};  // { "soffan": [0.12, 0.18, ...], ... }
+        let displayOrder = [];  // Shuffled order for display
         let isAutoTraining = false;
         let autoTrainInterval = null;
-        let currentStep = 0;
+
+        // Shuffle array (Fisher-Yates)
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
 
         // Initialize
         function init() {
-            loadExample(currentExample);
+            renderTrainingSentences();
             initProbabilities();
+            recordHistory();  // Record initial state
             updateDisplay();
-            drawLossChart();
+            drawProbabilityChart();
         }
 
-        function loadExample(index) {
-            const ex = examples[index];
-            document.getElementById('context-before').textContent = ex.before + " ";
-            document.getElementById('context-after').textContent = " " + ex.after;
+        function renderTrainingSentences() {
+            const container = document.getElementById('training-sentences');
+            container.innerHTML = '';
+
+            validWords.forEach((word, index) => {
+                const sentence = document.createElement('div');
+                sentence.className = 'training-sentence';
+                sentence.innerHTML = `
+                    <div class="bullet">•</div>
+                    <div class="text">${context.before} <strong>${word}</strong>${context.after}</div>
+                `;
+                container.appendChild(sentence);
+            });
         }
 
         function initProbabilities() {
-            const ex = examples[currentExample];
             probabilities = {};
-            // Start with roughly equal probabilities (with small random variations)
-            ex.alternatives.forEach(word => {
-                probabilities[word] = 0.15 + Math.random() * 0.1;
+            probabilityHistory = {};
+            // Samla alla ord och skapa slumpad visningsordning
+            const allWords = [...validWords, ...nonsenseWords];
+            displayOrder = shuffle(allWords);
+
+            // Start med varierade sannolikheter (olika för varje ord)
+            allWords.forEach((word, i) => {
+                // Ge varje ord en unik startvikt
+                probabilities[word] = 0.8 + Math.random() * 0.4;
+                probabilityHistory[word] = [];
             });
-            // Normalize
+            // Normalisera så summan blir 1
             normalize();
+        }
+
+        function recordHistory() {
+            for (let word in probabilities) {
+                probabilityHistory[word].push(probabilities[word]);
+            }
         }
 
         function normalize() {
@@ -538,28 +519,18 @@
         }
 
         function updateDisplay() {
-            const ex = examples[currentExample];
             const predictionsDiv = document.getElementById('predictions');
             predictionsDiv.innerHTML = '';
 
-            // Sort by probability
-            const sorted = Object.entries(probabilities).sort((a, b) => b[1] - a[1]);
-            const topPrediction = sorted[0][0];
-
-            // Update blank display
-            const blank = document.getElementById('prediction-display');
-            blank.textContent = topPrediction;
-            blank.className = 'blank' + (topPrediction === ex.target ? ' correct' : '');
-
-            // Create bars
-            sorted.forEach(([word, prob]) => {
-                const isTarget = word === ex.target;
+            // Create bars in shuffled order
+            displayOrder.forEach(word => {
+                const prob = probabilities[word];
                 const row = document.createElement('div');
                 row.className = 'prediction-row';
                 row.innerHTML = `
-                    <div class="word-label ${isTarget ? 'target' : ''}">${word}</div>
+                    <div class="word-label">${word}</div>
                     <div class="bar-container">
-                        <div class="bar ${isTarget ? 'target' : ''}" style="width: ${prob * 100}%"></div>
+                        <div class="bar" style="width: ${prob * 100}%"></div>
                     </div>
                     <div class="probability">${(prob * 100).toFixed(1)}%</div>
                 `;
@@ -568,48 +539,40 @@
 
             // Update stats
             document.getElementById('iteration-count').textContent = iteration;
-            document.getElementById('accuracy').textContent = (probabilities[ex.target] * 100).toFixed(1) + '%';
-
-            // Calculate and display loss
-            const loss = calculateLoss();
-            document.getElementById('current-loss').textContent = loss.toFixed(2);
+            // Sum of all valid words' probabilities
+            const validSum = validWords.reduce((sum, w) => sum + probabilities[w], 0);
+            document.getElementById('accuracy').textContent = (validSum * 100).toFixed(1) + '%';
         }
 
-        function calculateLoss() {
-            const ex = examples[currentExample];
-            // Cross-entropy loss: -log(p_correct)
-            const p = Math.max(probabilities[ex.target], 0.001);
-            return -Math.log(p);
-        }
+        function trainBatch() {
+            const baseLearningRate = 0.15;
 
-        function trainStep() {
-            const ex = examples[currentExample];
+            // Träna på ALLA valid-ord i en runda (med lite variation)
+            validWords.forEach(targetWord => {
+                const lr = baseLearningRate * (0.85 + Math.random() * 0.3);
+                probabilities[targetWord] += lr * (1 - probabilities[targetWord]);
+            });
 
-            // Simulate gradient descent step
-            const learningRate = 0.15;
+            // Decay nonsens-ord (de tränas aldrig, med lite variation)
+            nonsenseWords.forEach(word => {
+                const decay = 0.65 + Math.random() * 0.1;
+                probabilities[word] *= decay;
+            });
 
-            // Increase probability of correct answer
-            const targetProb = probabilities[ex.target];
-            const gradient = 1 - targetProb; // Simplified gradient
-            probabilities[ex.target] += learningRate * gradient;
-
-            // Decrease others proportionally
-            const decrease = learningRate * gradient / (ex.alternatives.length - 1);
+            // Sätt minimum så ord inte försvinner helt
             for (let word in probabilities) {
-                if (word !== ex.target) {
-                    probabilities[word] = Math.max(0.01, probabilities[word] - decrease);
-                }
+                probabilities[word] = Math.max(0.01, probabilities[word]);
             }
 
             normalize();
 
-            // Record loss
-            const loss = calculateLoss();
-            lossHistory.push(loss);
+            // Spara historik för graf
+            recordHistory();
 
             iteration++;
+
             updateDisplay();
-            drawLossChart();
+            drawProbabilityChart();
         }
 
         async function animateTrainingStep() {
@@ -622,7 +585,7 @@
                 document.getElementById(steps[i]).classList.add('active');
 
                 if (i === 2) { // Adjust step
-                    trainStep();
+                    trainBatch();
                 }
 
                 await sleep(200);
@@ -635,7 +598,7 @@
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        function drawLossChart() {
+        function drawProbabilityChart() {
             const canvas = document.getElementById('lossChart');
             const ctx = canvas.getContext('2d');
 
@@ -646,72 +609,98 @@
 
             const width = canvas.offsetWidth;
             const height = canvas.offsetHeight;
-            const padding = 40;
+            const padding = { top: 20, right: 100, bottom: 40, left: 50 };
 
             ctx.clearRect(0, 0, width, height);
+
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
 
             // Draw axes
             ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
             ctx.lineWidth = 1;
             ctx.beginPath();
-            ctx.moveTo(padding, padding);
-            ctx.lineTo(padding, height - padding);
-            ctx.lineTo(width - padding, height - padding);
+            ctx.moveTo(padding.left, padding.top);
+            ctx.lineTo(padding.left, height - padding.bottom);
+            ctx.lineTo(width - padding.right, height - padding.bottom);
             ctx.stroke();
 
-            // Draw labels
-            ctx.fillStyle = 'var(--color-text-secondary)';
-            ctx.font = '12px Segoe UI';
-            ctx.fillText('Högt', padding - 35, padding + 10);
-            ctx.fillText('Lågt', padding - 35, height - padding);
-            ctx.fillText('Träningssteg →', width/2 - 40, height - 10);
+            // Draw Y-axis labels
+            ctx.fillStyle = '#8892b0';
+            ctx.font = '11px Segoe UI';
+            ctx.textAlign = 'right';
+            ctx.fillText('30%', padding.left - 8, padding.top + 5);
+            ctx.fillText('20%', padding.left - 8, padding.top + chartHeight * 0.33 + 4);
+            ctx.fillText('10%', padding.left - 8, padding.top + chartHeight * 0.67 + 4);
+            ctx.fillText('0%', padding.left - 8, height - padding.bottom + 4);
 
-            if (lossHistory.length < 2) return;
+            // Draw X-axis label
+            ctx.textAlign = 'center';
+            ctx.fillText('Runda →', padding.left + chartWidth / 2, height - 8);
 
-            // Draw loss curve
-            const maxLoss = Math.max(...lossHistory, 2.5);
-            const minLoss = 0;
+            // Get first word's history length to determine data points
+            const firstWord = validWords[0];
+            const dataPoints = probabilityHistory[firstWord] ? probabilityHistory[firstWord].length : 0;
 
-            ctx.strokeStyle = '#ff7043';
-            ctx.lineWidth = 3;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.beginPath();
+            if (dataPoints < 1) return;
 
-            lossHistory.forEach((loss, i) => {
-                const x = padding + (i / Math.max(lossHistory.length - 1, 1)) * (width - 2 * padding);
-                const y = padding + ((maxLoss - loss) / (maxLoss - minLoss)) * (height - 2 * padding);
+            const maxProb = 0.30;  // 30% max for y-axis
 
-                if (i === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
+            // Colors for lines
+            const validColor = '#9bc269';  // Green for valid words
+            const nonsenseColor = '#6a7490';  // Gray for nonsense words
+
+            // Draw lines for each word
+            const allWords = [...validWords, ...nonsenseWords];
+
+            allWords.forEach((word, wordIndex) => {
+                const history = probabilityHistory[word];
+                if (!history || history.length < 1) return;
+
+                const isValid = validWords.includes(word);
+                ctx.strokeStyle = isValid ? validColor : nonsenseColor;
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.beginPath();
+
+                history.forEach((prob, i) => {
+                    const x = padding.left + (i / Math.max(dataPoints - 1, 1)) * chartWidth;
+                    const y = padding.top + (1 - prob / maxProb) * chartHeight;
+                    const clampedY = Math.max(padding.top, Math.min(height - padding.bottom, y));
+
+                    if (i === 0) {
+                        ctx.moveTo(x, clampedY);
+                    } else {
+                        ctx.lineTo(x, clampedY);
+                    }
+                });
+
+                ctx.stroke();
+
+                // Draw label at end of line
+                if (history.length > 0) {
+                    const lastProb = history[history.length - 1];
+                    const lastX = padding.left + ((history.length - 1) / Math.max(dataPoints - 1, 1)) * chartWidth;
+                    const lastY = padding.top + (1 - lastProb / maxProb) * chartHeight;
+                    const clampedLastY = Math.max(padding.top, Math.min(height - padding.bottom, lastY));
+
+                    ctx.fillStyle = isValid ? validColor : nonsenseColor;
+                    ctx.font = '10px Segoe UI';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(word, lastX + 8, clampedLastY + 3);
                 }
             });
-
-            ctx.stroke();
-
-            // Draw current point
-            if (lossHistory.length > 0) {
-                const lastX = padding + ((lossHistory.length - 1) / Math.max(lossHistory.length - 1, 1)) * (width - 2 * padding);
-                const lastY = padding + ((maxLoss - lossHistory[lossHistory.length - 1]) / (maxLoss - minLoss)) * (height - 2 * padding);
-
-                ctx.fillStyle = '#ff7043';
-                ctx.beginPath();
-                ctx.arc(lastX, lastY, 6, 0, Math.PI * 2);
-                ctx.fill();
-            }
         }
 
         function reset() {
             stopAutoTrain();
             iteration = 0;
-            lossHistory = [];
-            currentExample = (currentExample + 1) % examples.length;
-            loadExample(currentExample);
             initProbabilities();
+            recordHistory();  // Record initial state
+            renderTrainingSentences();
             updateDisplay();
-            drawLossChart();
+            drawProbabilityChart();
         }
 
         function toggleAutoTrain() {
@@ -729,7 +718,10 @@
             document.getElementById('btn-train').disabled = true;
 
             autoTrainInterval = setInterval(async () => {
-                if (probabilities[examples[currentExample].target] > 0.95) {
+                // Stoppa när alla valid-ord har hög sannolikhet och nonsens är lågt
+                const validSum = validWords.reduce((sum, w) => sum + probabilities[w], 0);
+                const nonsenseSum = nonsenseWords.reduce((sum, w) => sum + probabilities[w], 0);
+                if (validSum > 0.92 && nonsenseSum < 0.08) {
                     stopAutoTrain();
                     return;
                 }
@@ -755,7 +747,7 @@
         document.getElementById('btn-reset').addEventListener('click', reset);
 
         // Handle window resize
-        window.addEventListener('resize', drawLossChart);
+        window.addEventListener('resize', drawProbabilityChart);
 
         // Initialize
         init();
