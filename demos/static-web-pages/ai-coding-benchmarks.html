@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Kodning & Agent Benchmarks - Utveckling över tid</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #1e1f1c;
+            --color-surface: #272822;
+            --color-section-bg: #2e2f2b;
+            --color-text-primary: #f8f8f2;
+            --color-text-secondary: #cfcfc2;
+            --color-text-muted: #a8a897;
+            --color-border: #3e3d32;
+            --color-accent: #7ba3b0;
+            --color-accent-light: #3d5a5e;
+            --color-success: #9bc269;
+            --color-warning: #d4c68d;
+            --color-chart-1: #7ba3b0;
+            --color-chart-2: #a89cc8;
+            --color-chart-3: #9bc269;
+            --color-chart-4: #d98594;
+            --color-chart-5: #d9a066;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text-primary);
+            line-height: 1.75;
+            padding: 4rem 2rem;
+            font-size: 17px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--color-text-primary);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+            padding-bottom: 3rem;
+            border-bottom: 3px solid var(--color-border);
+        }
+
+        .subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1.35rem;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+
+        .stat-card {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            padding: 2.25rem 1.75rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-accent);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--color-accent);
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        /* Chart Sections */
+        .chart-section {
+            background: var(--color-section-bg);
+            border: 2px solid var(--color-border);
+            padding: 3rem;
+            margin-bottom: 4rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .chart-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--color-text-primary);
+            line-height: 1.3;
+        }
+
+        .chart-description {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.7;
+            max-width: 850px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 420px;
+        }
+
+        /* Info Button */
+        .info-btn {
+            background: var(--color-surface);
+            border: 2px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        .info-btn:hover {
+            background: var(--color-accent);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .info-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            max-width: 750px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal-header {
+            padding: 2rem 2.5rem;
+            border-bottom: 2px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--color-surface);
+            z-index: 1;
+        }
+
+        .modal-title {
+            font-size: 1.75rem;
+            color: var(--color-text-primary);
+        }
+
+        .modal-close {
+            background: transparent;
+            border: 1.5px solid var(--color-border);
+            color: var(--color-text-secondary);
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-weight: 300;
+        }
+
+        .modal-close:hover {
+            background: var(--color-border);
+            color: var(--color-text-primary);
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .modal-section h4 {
+            color: var(--color-accent);
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        .modal-section p {
+            color: var(--color-text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-section li {
+            color: var(--color-text-secondary);
+            padding: 0.6rem 0;
+            padding-left: 1.75rem;
+            position: relative;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .modal-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-size: 1.3rem;
+        }
+
+        .modal-section strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        .modal-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-accent-light);
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            padding: 0.75rem 1.25rem;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .modal-link:hover {
+            background: var(--color-accent);
+            color: white;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .modal-stat {
+            background: var(--color-bg);
+            padding: 1.25rem;
+            text-align: center;
+            border: 1px solid var(--color-border);
+        }
+
+        .modal-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-stat-label {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            margin-top: 5rem;
+            background: var(--color-section-bg);
+            border: 2px solid var(--color-border);
+            padding: 3rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 2.5rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: var(--color-border);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: calc(50% + 35px);
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: calc(50% + 35px);
+        }
+
+        .timeline-content {
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            padding: 1.75rem 2rem;
+            max-width: 480px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: var(--color-accent);
+            border: 3px solid var(--color-surface);
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 50%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -38px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -38px;
+        }
+
+        .timeline-date {
+            color: var(--color-accent);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .timeline-title {
+            color: var(--color-text-primary);
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            font-size: 1.15rem;
+            line-height: 1.4;
+        }
+
+        .timeline-desc {
+            color: var(--color-text-secondary);
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: var(--color-accent-light);
+            border-left: 5px solid var(--color-accent);
+            padding: 2.5rem 3rem;
+            margin-top: 4rem;
+        }
+
+        .insight-title {
+            color: var(--color-text-primary);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-list {
+            list-style: none;
+        }
+
+        .insight-list li {
+            padding: 0.8rem 0;
+            padding-left: 2.25rem;
+            position: relative;
+            color: var(--color-text-secondary);
+            line-height: 1.75;
+            font-size: 1.05rem;
+        }
+
+        .insight-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .insight-list li strong {
+            color: var(--color-text-primary);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 5rem;
+            padding-top: 2.5rem;
+            border-top: 3px solid var(--color-border);
+            color: var(--color-text-muted);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            border-bottom-color: var(--color-accent);
+        }
+
+        /* Model Selector */
+        .model-selector select {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            color: var(--color-text-primary);
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 300px;
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        .model-selector select:hover {
+            border-color: var(--color-accent);
+        }
+
+        .model-selector select:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            box-shadow: 0 0 0 3px var(--color-accent-light);
+        }
+
+        .model-selector select option,
+        .model-selector select optgroup {
+            background: var(--color-surface);
+            color: var(--color-text-primary);
+        }
+
+        .model-selector label {
+            color: var(--color-text-secondary);
+            margin-right: 1rem;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .model-info-box {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 2rem;
+        }
+
+        .model-info-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .model-info-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .model-info-value.best {
+            color: var(--color-success);
+        }
+
+        .model-info-value.na {
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+        }
+
+        .model-info-label {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.6rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .model-info-comparison {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            margin-top: 0.4rem;
+            line-height: 1.4;
+            font-weight: 500;
+        }
+
+        /* Sources Container */
+        .sources-container {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .sources-section {
+            background: var(--color-bg);
+            border: 2px solid var(--color-border);
+            padding: 1.75rem;
+        }
+
+        .sources-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--color-text-primary);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--color-border);
+        }
+
+        .sources-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+
+        .sources-links a {
+            display: inline-block;
+            padding: 0.7rem 1.25rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .sources-links a:hover {
+            background: var(--color-accent-light);
+            border-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 2rem 1rem;
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            h2 {
+                font-size: 1.65rem;
+            }
+
+            .chart-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .chart-header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .stat-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .timeline::before {
+                left: 25px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+
+            .timeline-content::before,
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -43px;
+                right: auto;
+            }
+
+            .modal-body {
+                padding: 2rem;
+            }
+
+            .insight-box {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .chart-section,
+            .timeline-section {
+                break-inside: avoid;
+            }
+
+            .info-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Kodning & Agent Benchmarks</h1>
+            <p class="subtitle">Utvecklingen 2019-2025: Tillväxt i AI-förmågor</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">0% → 96%</div>
+                <div class="stat-label">HumanEval (GPT-3 → o1)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">~2% → 81%</div>
+                <div class="stat-label">SWE-bench Verified</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">50% → 97%</div>
+                <div class="stat-label">TAU-bench pass@1</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2 min → 5 tim</div>
+                <div class="stat-label">METR Time Horizon</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">~7 mån</div>
+                <div class="stat-label">Fördubblingstid</div>
+            </div>
+        </div>
+
+        <!-- HumanEval Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">1.</span>Kodgenerering: HumanEval Benchmark</h2>
+                    <p class="chart-description">Pass@1 resultat över tid. Visar hur AI gått från att inte kunna lösa ett enda problem till att överträffa de flesta programmerare.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('humaneval-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om HumanEval
+                </button>
+            </div>
+            <div class="chart-container">
+                <canvas id="humanEvalChart"></canvas>
+            </div>
+        </div>
+
+        <!-- SWE-bench Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">2.</span>Software Engineering: SWE-bench</h2>
+                    <p class="chart-description">Förmågan att lösa riktiga GitHub-issues. Ett mycket svårare test än isolerad kodgenerering.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('swebench-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om SWE-bench
+                </button>
+            </div>
+            <div class="chart-container">
+                <canvas id="sweBenchChart"></canvas>
+            </div>
+        </div>
+
+        <!-- TAU-bench Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">3.</span>Konsistens: τ²-bench (Telecom)</h2>
+                    <p class="chart-description">Hur pålitliga är AI-agenter i komplexa telekomscenarier? τ²-bench testar verktygsanvändning och koordination i svåra kundtjänstfall.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('taubench-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om τ²-bench
+                </button>
+            </div>
+            <div class="chart-container">
+                <canvas id="tauBenchChart"></canvas>
+            </div>
+        </div>
+
+        <!-- METR Time Horizon Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">4.</span>Uppgiftslängd: METR Time Horizon</h2>
+                    <p class="chart-description">Hur långa uppgifter (mätt i mänsklig tid) kan AI klara med 50% framgång? Exponentiell tillväxt med ~7 månaders fördubblingstid.</p>
+                </div>
+                <button class="info-btn" onclick="openModal('metr-modal')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    Om METR
+                </button>
+            </div>
+            <div class="chart-container">
+                <canvas id="metrChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Combined Chart -->
+        <div class="chart-section">
+            <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">5.</span>Jämförelse: Procent-baserade Benchmarks</h2>
+            <p class="chart-description">Jämför framsteg över tid för benchmarks som mäter andel lösta uppgifter (%). METR exkluderat då det mäter tid.</p>
+            <div class="chart-container">
+                <canvas id="combinedChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Model Comparison Section -->
+        <div class="chart-section">
+            <div class="chart-header">
+                <div>
+                    <h2 class="chart-title"><span style="color: #718096; font-weight: 500; margin-right: 0.5rem;">6.</span>Modellöversikt</h2>
+                    <p class="chart-description">Välj en modell för att se dess prestanda på alla benchmarks. METR visas som procent av SOTA (289 min = 100%).</p>
+                </div>
+                <div class="model-selector">
+                    <label for="modelSelect">Välj modell:</label>
+                    <select id="modelSelect" onchange="updateModelChart()">
+                        <!-- Options will be dynamically populated from JSON data -->
+                    </select>
+                </div>
+            </div>
+            <div class="chart-container" style="height: 400px;">
+                <canvas id="modelCompareChart"></canvas>
+            </div>
+            <div id="modelInfo" class="model-info-box"></div>
+            <div class="sources-container">
+                <div class="sources-section">
+                    <div class="sources-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        Benchmark Leaderboards
+                    </div>
+                    <div class="sources-links">
+                        <a href="https://www.swebench.com/" target="_blank">SWE-bench</a>
+                        <a href="https://scale.com/leaderboard/swe_bench_pro_public" target="_blank">SWE-bench Pro</a>
+                        <a href="https://github.com/openai/human-eval" target="_blank">HumanEval</a>
+                        <a href="https://github.com/sierra-research/tau2-bench" target="_blank">τ²-bench</a>
+                        <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank">METR</a>
+                        <a href="https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard" target="_blank">Open LLM Leaderboard</a>
+                    </div>
+                </div>
+                <div class="sources-section">
+                    <div class="sources-title">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                        Officiella modell-lanseringar
+                    </div>
+                    <div class="sources-links">
+                        <a href="https://openai.com/index/introducing-gpt-5-2/" target="_blank">GPT-5.2</a>
+                        <a href="https://www.anthropic.com/claude/opus-4-5" target="_blank">Claude 4.5 Opus</a>
+                        <a href="https://mistral.ai/news/devstral-2-vibe-cli" target="_blank">Devstral 2</a>
+                        <a href="https://openai.com/index/introducing-gpt-oss/" target="_blank">GPT-OSS</a>
+                        <a href="https://deepseek.com/research/deepseek-v3" target="_blank">DeepSeek V3</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-section">
+            <h2 class="chart-title" style="text-align: center; margin-bottom: 2rem;">Viktiga Milstolpar</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Juli 2021</div>
+                        <div class="timeline-title">Codex & HumanEval lanseras</div>
+                        <div class="timeline-desc">OpenAI introducerar Codex med 28.8% på HumanEval. GPT-3 klarar 0%.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">November 2022</div>
+                        <div class="timeline-title">ChatGPT förändrar allt</div>
+                        <div class="timeline-desc">ChatGPT lanseras och visar att AI kan vara en användbar kodningsassistent.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mars 2023</div>
+                        <div class="timeline-title">GPT-4 sätter ny standard</div>
+                        <div class="timeline-desc">GPT-4 når 67% på HumanEval, ett enormt språng från tidigare modeller.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Oktober 2023</div>
+                        <div class="timeline-title">SWE-bench introduceras</div>
+                        <div class="timeline-desc">Nytt benchmark för riktiga software engineering-uppgifter. Tidiga modeller klarar bara ~2%.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mars 2024</div>
+                        <div class="timeline-title">Claude 3 Opus</div>
+                        <div class="timeline-desc">Anthropic släpper Claude 3-familjen. Opus når ~22% på SWE-bench.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Juni 2024</div>
+                        <div class="timeline-title">Claude 3.5 Sonnet dominerar</div>
+                        <div class="timeline-desc">Blir den mest använda modellen för kodningsagenter. ~43% på SWE-bench.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">September 2024</div>
+                        <div class="timeline-title">OpenAI o1 - Reasoning breakthrough</div>
+                        <div class="timeline-desc">o1-preview når 96.3% på HumanEval genom extended thinking.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Mars 2025</div>
+                        <div class="timeline-title">METR publicerar Time Horizon-analys</div>
+                        <div class="timeline-desc">Visar exponentiell tillväxt i uppgiftslängd med ~7 månaders fördubblingstid.</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">November 2025</div>
+                        <div class="timeline-title">80%+ på SWE-bench, ~5h time horizon</div>
+                        <div class="timeline-desc">Claude 4.5 Opus når 80.9% på SWE-bench och ~5 timmars time horizon på METR.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <h3 class="insight-title">Viktiga Insikter</h3>
+            <ul class="insight-list">
+                <li><strong>Exponentiell förbättring:</strong> HumanEval gick från 0% till 96% på ~3.5 år (234% förbättring från Codex)</li>
+                <li><strong>Benchmark-mättnad:</strong> HumanEval är nu nästan "löst" - nya svårare benchmarks behövs</li>
+                <li><strong>Från kod till engineering:</strong> Fokus har skiftat från isolerad kodgenerering till att lösa riktiga problem</li>
+                <li><strong>Time Horizon fördubblas var 7:e månad:</strong> Om trenden håller i sig kan AI klara månadslånga projekt före 2030</li>
+                <li><strong>Agent-paradigmet:</strong> 2024-2025 handlar om AI som kan använda verktyg, inte bara generera text</li>
+                <li><strong>Konsistens är svårt:</strong> 80%-time horizon är mycket kortare än 50%-horizon, modeller är opålitliga på långa uppgifter</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Data sammanställd från
+            <a href="https://www.swebench.com/" target="_blank">SWE-bench</a>,
+            <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank">METR</a>,
+            <a href="https://github.com/sierra-research/tau2-bench" target="_blank">τ²-bench</a>,
+            <a href="https://github.com/openai/human-eval" target="_blank">HumanEval</a>, och
+            <a href="https://hai.stanford.edu/ai-index/2025-ai-index-report/technical-performance" target="_blank">Stanford AI Index</a></p>
+            <p style="margin-top: 0.5rem;">Genererad januari 2026</p>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+
+    <!-- HumanEval Modal -->
+    <div class="modal-overlay" id="humaneval-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">HumanEval Benchmark</h3>
+                <button class="modal-close" onclick="closeModal('humaneval-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är HumanEval?</h4>
+                    <p>HumanEval är ett benchmark-dataset utvecklat av OpenAI 2021 för att utvärdera stora språkmodellers förmåga att generera kod. Det introducerades tillsammans med Codex-modellen som driver GitHub Copilot.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Hur fungerar det?</h4>
+                    <ul>
+                        <li><strong>164 handskrivna programmeringsproblem</strong> i Python</li>
+                        <li>Varje problem innehåller en funktionssignatur och docstring</li>
+                        <li>Modellen ska generera funktionskroppen</li>
+                        <li>Genomsnitt 7.7 enhetstester per problem för verifiering</li>
+                        <li>Täcker strängmanipulation, listhantering, algoritmer och matematik</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Mätmetoden: pass@k</h4>
+                    <p><strong>pass@1</strong> mäter sannolikheten att en enda genererad lösning är korrekt. <strong>pass@10</strong> och <strong>pass@100</strong> mäter sannolikheten att minst en av k försök är korrekt. Detta speglar hur programmerare faktiskt arbetar - vi itererar och förfinar.</p>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">164</div>
+                        <div class="modal-stat-label">Problem</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">0% → 96%</div>
+                        <div class="modal-stat-label">Framsteg 2021-2024</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~3.5 år</div>
+                        <div class="modal-stat-label">Till mättnad</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Begränsningar</h4>
+                    <p>HumanEval testar bara enkel funktionsgenerering, inte verklig software engineering. Benchmarket är nu nästan "löst" med 96%+ resultat, vilket gör det svårt att skilja mellan toppmodeller.</p>
+                </div>
+
+                <a href="https://github.com/openai/human-eval" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    GitHub: openai/human-eval
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SWE-bench Modal -->
+    <div class="modal-overlay" id="swebench-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">SWE-bench</h3>
+                <button class="modal-close" onclick="closeModal('swebench-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är SWE-bench?</h4>
+                    <p>SWE-bench är ett benchmark för att utvärdera språkmodeller på verkliga software engineering-uppgifter. Till skillnad från HumanEval som testar isolerad kodgenerering, kräver SWE-bench att modellen löser riktiga GitHub-issues i stora kodbaser.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Hur fungerar det?</h4>
+                    <ul>
+                        <li><strong>2,294 uppgifter</strong> från riktiga GitHub pull requests</li>
+                        <li>Baserat på 12 populära Python-repositorier</li>
+                        <li>Modellen får issue-texten och ska generera en patch</li>
+                        <li>Verifieras genom att köra "fail-to-pass" tester</li>
+                        <li>Kräver navigation i stora kodbaser, inte bara skriva ny kod</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>SWE-bench Verified</h4>
+                    <p>I augusti 2024 släppte OpenAI SWE-bench Verified - en delmängd av 500 problem som mänskliga experter har validerat som lösbara. Detta ger mer pålitliga mätningar och är nu standardversionen.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>SWE-bench Pro</h4>
+                    <p>Scale AI:s svårare variant som testar <strong>multi-språk</strong> (Python, JavaScript, TypeScript, Go) och längre uppgifter. Även toppmodeller ligger under 60%, jämfört med 80%+ på Verified.</p>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">80.9%</div>
+                        <div class="modal-stat-label">Verified SOTA</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">55.6%</div>
+                        <div class="modal-stat-label">Pro SOTA</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">4 språk</div>
+                        <div class="modal-stat-label">Pro: multi-språk</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför är det viktigt?</h4>
+                    <p>SWE-bench representerar skiftet från "kan modellen koda?" till "kan modellen vara ingenjör?". Pro-varianten visar att verklig multi-språk software engineering fortfarande är svårt för AI.</p>
+                </div>
+
+                <a href="https://www.swebench.com/" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    swebench.com - Officiell leaderboard
+                </a>
+                <br>
+                <a href="https://scale.com/leaderboard/swe_bench_pro_public" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    Scale AI - SWE-bench Pro Leaderboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- τ²-bench Modal -->
+    <div class="modal-overlay" id="taubench-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">τ²-bench (Telecom)</h3>
+                <button class="modal-close" onclick="closeModal('taubench-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är τ²-bench?</h4>
+                    <p>τ²-bench (tau-squared bench) är Sierra Research's uppföljare till TAU-bench, släppt 2025. Det testar AI-agenters förmåga att hantera <strong>komplexa kundtjänstscenarier</strong> där både agent och användare använder verktyg i koordinerade interaktioner. Telecom-domänen är den svåraste.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Domäner</h4>
+                    <ul>
+                        <li><strong>Retail</strong> - E-handelskundtjänst (enklast)</li>
+                        <li><strong>Airline</strong> - Flygbolags kundtjänst (medium)</li>
+                        <li><strong>Telecom</strong> - Telekomfelsökning (svårast, visas i grafen)</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför Telecom är svårast</h4>
+                    <p>Telecom-domänen kräver att AI-agenter:</p>
+                    <ul>
+                        <li>Koordinerar med simulerade kunder som också använder verktyg</li>
+                        <li>Felsöker komplexa tekniska problem (router, nätverk, tjänster)</li>
+                        <li>Följer strikta policyer medan de hjälper användaren</li>
+                        <li>Hanterar flera beroende system samtidigt</li>
+                    </ul>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">98.2%</div>
+                        <div class="modal-stat-label">Claude Opus 4.5 (bäst)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">94.5%</div>
+                        <div class="modal-stat-label">GPT-5.2 Thinking</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">85.4%</div>
+                        <div class="modal-stat-label">Gemini 3 Pro</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför viktigt?</h4>
+                    <p>τ²-bench avslöjar stora skillnader mellan toppmodeller som annars presterar likartat. Claude Opus 4.5 (98.2%) dominerar över GPT-5.2 (94.5%) och Gemini 3 Pro (85.4%). Claude 3.7 Sonnet når bara 49% - telecom är verkligt svårt!</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Källor</h4>
+                    <a href="https://github.com/sierra-research/tau2-bench" target="_blank" class="modal-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        τ²-bench GitHub
+                    </a>
+                    <br>
+                    <a href="https://arxiv.org/abs/2506.07982" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        τ²-bench Paper (arXiv)
+                    </a>
+                    <br>
+                    <a href="https://taubench.com" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        Officiell Leaderboard
+                    </a>
+                    <br>
+                    <a href="https://www.vellum.ai/blog/gpt-5-2-benchmarks" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        Vellum Benchmarks
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- METR Modal -->
+    <div class="modal-overlay" id="metr-modal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">METR Time Horizon</h3>
+                <button class="modal-close" onclick="closeModal('metr-modal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h4>Vad är METR Time Horizon?</h4>
+                    <p>METR (Model Evaluation and Threat Research) mäter AI-förmåga på ett unikt sätt: <strong>hur långa uppgifter</strong> (i mänsklig tid) kan en AI-agent slutföra autonomt? Time Horizon är den uppgiftslängd där modellen har 50% chans att lyckas.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Hur mäts det?</h4>
+                    <ul>
+                        <li><strong>180+ uppgifter</strong> inom ML, cybersäkerhet, och software engineering</li>
+                        <li>Uppgifterna tar människor mellan 1 minut och 8+ timmar</li>
+                        <li>Mäter P50 (50% framgång) och P80 (80% framgång) time horizons</li>
+                        <li>Benchmarks: HCAST, SWAA, RE-Bench</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Den exponentiella trenden</h4>
+                    <p>METR visar att time horizon har <strong>fördubblats ungefär var 7:e månad</strong> de senaste 6 åren. Under 2024-2025 har takten accelererat till fördubbling var 4:e månad.</p>
+                </div>
+
+                <div class="modal-stats">
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~2 min</div>
+                        <div class="modal-stat-label">GPT-2 (2019)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~1 tim</div>
+                        <div class="modal-stat-label">Claude 3.7 (2025)</div>
+                    </div>
+                    <div class="modal-stat">
+                        <div class="modal-stat-value">~5 tim</div>
+                        <div class="modal-stat-label">Claude 4.5 Opus</div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Framtidsprognoser</h4>
+                    <ul>
+                        <li>Om trenden fortsätter: <strong>veckolånga uppgifter</strong> möjliga inom 2-4 år</li>
+                        <li>Före 2030: potentiellt <strong>månadslånga projekt</strong> autonomt</li>
+                        <li>OBS: P80-horizon är mycket kortare (~27 min för Opus 4.5) - pålitlighet är fortfarande en utmaning</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Varför viktigt?</h4>
+                    <p>Time Horizon är kanske det mest intuitiva måttet på AI-agentförmåga. Det svarar direkt på frågan "hur mycket kan AI göra själv?" och visar tydligt den exponentiella utvecklingen mot mer autonoma system.</p>
+                </div>
+
+                <a href="https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" target="_blank" class="modal-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    METR: Measuring AI Ability to Complete Long Tasks
+                </a>
+                <br>
+                <a href="https://theaidigest.org/time-horizons" target="_blank" class="modal-link" style="margin-top: 0.5rem;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    AI Digest: A New Moore's Law for AI Agents
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                    modal.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Color palette for charts - professional educational colors
+        const colors = {
+            cyan: '#7ba3b0',
+            purple: '#a89cc8',
+            green: '#9bc269',
+            pink: '#d98594',
+            orange: '#d9a066',
+            red: '#d98594'
+        };
+
+        // Data loader module - embedded benchmark data (static version - no server required)
+        const DataLoader = {
+            cache: null,
+
+            async loadBenchmarkData() {
+                if (this.cache) return this.cache;
+
+                // Embedded benchmark data
+                const data = {
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-01-05",
+    "description": "AI coding model benchmark data with source attribution"
+  },
+  "benchmarks": {
+    "definitions": [
+      {
+        "id": "humaneval",
+        "label": "HumanEval",
+        "color": "#7ba3b0",
+        "unit": "percentage",
+        "sourceUrl": "https://github.com/openai/human-eval"
+      },
+      {
+        "id": "swebench_verified",
+        "label": "SWE-bench Verified",
+        "color": "#9bc269",
+        "unit": "percentage",
+        "sourceUrl": "https://www.swebench.com/"
+      },
+      {
+        "id": "swebench_pro",
+        "label": "SWE-bench Pro",
+        "color": "#d9a066",
+        "unit": "percentage",
+        "sourceUrl": "https://scale.com/leaderboard/swe_bench_pro_public"
+      },
+      {
+        "id": "tau2bench_telecom",
+        "label": "τ²-bench pass^1 (Telecom)",
+        "color": "#7ba3b0",
+        "unit": "percentage",
+        "sourceUrl": "https://github.com/sierra-research/tau2-bench"
+      },
+      {
+        "id": "metr",
+        "label": "METR (minuter)",
+        "color": "#a89cc8",
+        "unit": "minutes",
+        "sourceUrl": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/"
+      }
+    ],
+    "bestScores": {
+      "humaneval": {
+        "value": 96.3,
+        "modelId": "o1preview",
+        "modelName": "o1-preview"
+      },
+      "swebench_verified": {
+        "value": 80.9,
+        "modelId": "claude45opus",
+        "modelName": "Claude 4.5 Opus"
+      },
+      "swebench_pro": {
+        "value": 55.6,
+        "modelId": "gpt52",
+        "modelName": "GPT-5.2 Thinking"
+      },
+      "tau2bench_telecom": {
+        "value": 98.2,
+        "modelId": "claude45opus",
+        "modelName": "Claude 4.5 Opus"
+      },
+      "metr": {
+        "value": 289,
+        "modelId": "claude45opus",
+        "modelName": "Claude 4.5 Opus"
+      }
+    }
+  },
+  "companies": [
+    { "id": "openai", "name": "OpenAI", "category": "proprietary" },
+    { "id": "anthropic", "name": "Anthropic", "category": "proprietary" },
+    { "id": "google", "name": "Google", "category": "proprietary" },
+    { "id": "meta", "name": "Meta (Open Source)", "category": "open_source" },
+    { "id": "deepseek", "name": "DeepSeek (Open Source)", "category": "open_source" },
+    { "id": "alibaba", "name": "Alibaba (Open Source)", "category": "open_source" },
+    { "id": "mistral", "name": "Mistral (Open Source)", "category": "open_source" },
+    { "id": "openai_oss", "name": "OpenAI (Open Source)", "category": "open_source" }
+  ],
+  "models": [
+    {
+      "id": "gpt4", "name": "GPT-4", "displayName": "GPT-4 (Mars 2023)", "date": "Mars 2023",
+      "releaseDate": "2023-03-14", "companyId": "openai", "company": "OpenAI",
+      "scores": { "humaneval": { "value": 67, "source": "https://github.com/openai/human-eval" }, "swebench_verified": null, "swebench_pro": null, "tau2bench_telecom": null, "metr": { "value": 55, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "gpt4o", "name": "GPT-4o", "displayName": "GPT-4o (Maj 2024)", "date": "Maj 2024",
+      "releaseDate": "2024-05-13", "companyId": "openai", "company": "OpenAI",
+      "scores": { "humaneval": { "value": 88, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 33.2, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 5, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "o1preview", "name": "o1-preview", "displayName": "o1-preview (Sep 2024)", "date": "Sep 2024",
+      "releaseDate": "2024-09-12", "companyId": "openai", "company": "OpenAI",
+      "scores": { "humaneval": { "value": 96.3, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 53, "source": "https://www.swebench.com/" }, "swebench_pro": null, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "gpt5", "name": "GPT-5", "displayName": "GPT-5 (Aug 2025)", "date": "Aug 2025",
+      "releaseDate": "2025-08-07", "companyId": "openai", "company": "OpenAI",
+      "scores": { "humaneval": { "value": 95, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 74.9, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 23, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 137, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "gpt52", "name": "GPT-5.2 Thinking", "displayName": "GPT-5.2 Thinking (Dec 2025)", "date": "Dec 2025",
+      "releaseDate": "2025-12-11", "companyId": "openai", "company": "OpenAI",
+      "scores": { "humaneval": { "value": 96, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 80, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 55.6, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": { "value": 94.5, "source": "https://www.vellum.ai/blog/gpt-5-2-benchmarks" }, "metr": null }
+    },
+    {
+      "id": "gemini_ultra_10", "name": "Gemini Ultra 1.0", "displayName": "Gemini Ultra 1.0 (Feb 2024)", "date": "Feb 2024",
+      "releaseDate": "2024-02-08", "companyId": "google", "company": "Google",
+      "scores": { "humaneval": { "value": 74.4, "source": "https://github.com/openai/human-eval" }, "swebench_verified": null, "swebench_pro": null, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "claude3opus", "name": "Claude 3 Opus", "displayName": "Claude 3 Opus (Mars 2024)", "date": "Mars 2024",
+      "releaseDate": "2024-03-04", "companyId": "anthropic", "company": "Anthropic",
+      "scores": { "humaneval": { "value": 84.9, "source": "https://github.com/openai/human-eval" }, "swebench_verified": null, "swebench_pro": null, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "claude35sonnet", "name": "Claude 3.5 Sonnet", "displayName": "Claude 3.5 Sonnet (Juni 2024)", "date": "Juni 2024",
+      "releaseDate": "2024-06-20", "companyId": "anthropic", "company": "Anthropic",
+      "scores": { "humaneval": { "value": 92, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 48.9, "source": "https://www.swebench.com/" }, "swebench_pro": null, "tau2bench_telecom": null, "metr": { "value": 60, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "claude37sonnet", "name": "Claude 3.7 Sonnet", "displayName": "Claude 3.7 Sonnet (Feb 2025)", "date": "Feb 2025",
+      "releaseDate": "2025-02-24", "companyId": "anthropic", "company": "Anthropic",
+      "scores": { "humaneval": { "value": 93.7, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 62, "source": "https://www.swebench.com/" }, "swebench_pro": null, "tau2bench_telecom": { "value": 49, "source": "https://arxiv.org/pdf/2506.07982" }, "metr": { "value": 120, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "claude4sonnet", "name": "Claude Sonnet 4", "displayName": "Claude Sonnet 4 (May 2025)", "date": "May 2025",
+      "releaseDate": "2025-05-22", "companyId": "anthropic", "company": "Anthropic",
+      "scores": { "humaneval": { "value": 94, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 72.7, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 18, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 180, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "claude45opus", "name": "Claude 4.5 Opus", "displayName": "Claude 4.5 Opus (Nov 2025)", "date": "Nov 2025",
+      "releaseDate": "2025-11-24", "companyId": "anthropic", "company": "Anthropic",
+      "scores": { "humaneval": { "value": 95.5, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 80.9, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 46, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": { "value": 98.2, "source": "https://www.vellum.ai/blog/gpt-5-2-benchmarks" }, "metr": { "value": 289, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "gemini25pro", "name": "Gemini 2.5 Pro", "displayName": "Gemini 2.5 Pro (Mar 2025)", "date": "Mar 2025",
+      "releaseDate": "2025-03-25", "companyId": "google", "company": "Google",
+      "scores": { "humaneval": { "value": 90, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 63, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 14, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "gemini3pro", "name": "Gemini 3 Pro", "displayName": "Gemini 3 Pro (Nov 2025)", "date": "Nov 2025",
+      "releaseDate": "2025-11-18", "companyId": "google", "company": "Google",
+      "scores": { "humaneval": { "value": 94, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 76.2, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 43, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": { "value": 85.4, "source": "https://www.vellum.ai/blog/gpt-5-2-benchmarks" }, "metr": { "value": 200, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "llama31_405b", "name": "Llama 3.1 405B", "displayName": "Llama 3.1 405B (Jul 2024)", "date": "Jul 2024",
+      "releaseDate": "2024-07-23", "companyId": "meta", "company": "Meta (Open Source)",
+      "scores": { "humaneval": { "value": 89, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 33, "source": "https://www.swebench.com/" }, "swebench_pro": null, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "llama33_70b", "name": "Llama 3.3 70B", "displayName": "Llama 3.3 70B (Dec 2024)", "date": "Dec 2024",
+      "releaseDate": "2024-12-10", "companyId": "meta", "company": "Meta (Open Source)",
+      "scores": { "humaneval": { "value": 88.4, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 37, "source": "https://www.swebench.com/" }, "swebench_pro": null, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "deepseek_v3", "name": "DeepSeek V3", "displayName": "DeepSeek V3 (Dec 2024)", "date": "Dec 2024",
+      "releaseDate": "2024-12-10", "companyId": "deepseek", "company": "DeepSeek (Open Source)",
+      "scores": { "humaneval": { "value": 91.6, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 42, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 8, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 45, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "qwen25_coder", "name": "Qwen 2.5 Coder 32B", "displayName": "Qwen 2.5 Coder 32B (Nov 2024)", "date": "Nov 2024",
+      "releaseDate": "2024-11-15", "companyId": "alibaba", "company": "Alibaba (Open Source)",
+      "scores": { "humaneval": { "value": 92.7, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 38.5, "source": "https://www.swebench.com/" }, "swebench_pro": null, "tau2bench_telecom": null, "metr": null }
+    },
+    {
+      "id": "mistral_large3", "name": "Mistral Large 3", "displayName": "Mistral Large 3 (Dec 2 2025)", "date": "Dec 2025",
+      "releaseDate": "2025-12-02", "companyId": "mistral", "company": "Mistral (Open Source)",
+      "scores": { "humaneval": { "value": 92, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 62, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 28, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 110, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "devstral2", "name": "Devstral 2 123B", "displayName": "Devstral 2 123B (Dec 2025)", "date": "Dec 2025",
+      "releaseDate": "2025-12-09", "companyId": "mistral", "company": "Mistral (Open Source)",
+      "scores": { "humaneval": { "value": 94, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 72.2, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 35, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 130, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "devstral_small2", "name": "Devstral Small 2 24B", "displayName": "Devstral Small 2 24B (Dec 2025)", "date": "Dec 2025",
+      "releaseDate": "2025-12-09", "companyId": "mistral", "company": "Mistral (Open Source)",
+      "scores": { "humaneval": { "value": 88, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 68.0, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 15, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 60, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "gpt_oss_120b", "name": "GPT-OSS 120B", "displayName": "GPT-OSS 120B (Aug 2025)", "date": "Aug 2025",
+      "releaseDate": "2025-08-05", "companyId": "openai_oss", "company": "OpenAI (Open Source)",
+      "scores": { "humaneval": { "value": 93, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 58, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 18, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 95, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    },
+    {
+      "id": "gpt_oss_20b", "name": "GPT-OSS 20B", "displayName": "GPT-OSS 20B (Aug 2025)", "date": "Aug 2025",
+      "releaseDate": "2025-08-05", "companyId": "openai_oss", "company": "OpenAI (Open Source)",
+      "scores": { "humaneval": { "value": 87, "source": "https://github.com/openai/human-eval" }, "swebench_verified": { "value": 42, "source": "https://www.swebench.com/" }, "swebench_pro": { "value": 10, "source": "https://scale.com/leaderboard/swe_bench_pro_public" }, "tau2bench_telecom": null, "metr": { "value": 55, "source": "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/" } }
+    }
+  ]
+};
+
+                this.cache = data;
+                return data;
+            },
+
+            transformToLegacyFormat(data) {
+                const modelData = {};
+                const bestScores = {};
+                const benchmarkLabels = {};
+                const benchmarkColors = {};
+
+                // Transform benchmarks
+                data.benchmarks.definitions.forEach(bench => {
+                    benchmarkLabels[bench.id] = bench.label;
+                    benchmarkColors[bench.id] = bench.color;
+                });
+
+                // Transform best scores
+                Object.keys(data.benchmarks.bestScores).forEach(benchId => {
+                    const best = data.benchmarks.bestScores[benchId];
+                    bestScores[benchId] = {
+                        value: best.value,
+                        model: best.modelName
+                    };
+                });
+
+                // Transform models
+                data.models.forEach(model => {
+                    modelData[model.id] = {
+                        name: model.name,
+                        date: model.date,
+                        company: model.company,
+                        humaneval: model.scores.humaneval?.value ?? null,
+                        swebench_verified: model.scores.swebench_verified?.value ?? null,
+                        swebench_pro: model.scores.swebench_pro?.value ?? null,
+                        tau2bench_telecom: model.scores.tau2bench_telecom?.value ?? null,
+                        metr: model.scores.metr?.value ?? null
+                    };
+                });
+
+                return { modelData, bestScores, benchmarkLabels, benchmarkColors };
+            }
+        };
+
+        // Generate model dropdown from JSON data
+        function generateModelDropdown(data) {
+            const select = document.getElementById('modelSelect');
+            select.innerHTML = '';
+
+            // Group models by company
+            const grouped = data.models.reduce((acc, model) => {
+                const companyId = model.companyId;
+                if (!acc[companyId]) acc[companyId] = [];
+                acc[companyId].push(model);
+                return acc;
+            }, {});
+
+            // Get proprietary companies dynamically from data
+            const proprietaryCompanies = data.companies
+                .filter(c => c.category === 'proprietary')
+                .map(c => c.id);
+
+            // Add proprietary companies as individual optgroups
+            proprietaryCompanies.forEach(companyId => {
+                if (!grouped[companyId]) return;
+                const company = data.companies.find(c => c.id === companyId);
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = company.name;
+
+                grouped[companyId]
+                    .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate))
+                    .forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.id;
+                        option.textContent = model.displayName;
+                        optgroup.appendChild(option);
+                    });
+
+                select.appendChild(optgroup);
+            });
+
+            // Get open source companies dynamically from data
+            const openSourceCompanies = data.companies
+                .filter(c => c.category === 'open_source')
+                .map(c => c.id);
+
+            // Open source group
+            const openSourceModels = openSourceCompanies.flatMap(companyId => grouped[companyId] || []);
+            if (openSourceModels.length > 0) {
+                const optgroup = document.createElement('optgroup');
+                optgroup.label = 'Open Source';
+
+                openSourceModels
+                    .sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate))
+                    .forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.id;
+                        option.textContent = model.displayName;
+                        optgroup.appendChild(option);
+                    });
+
+                select.appendChild(optgroup);
+            }
+        }
+
+        // Initialize application with async data loading
+        async function initializeApp() {
+            try {
+                // Load data
+                const jsonData = await DataLoader.loadBenchmarkData();
+                const legacy = DataLoader.transformToLegacyFormat(jsonData);
+
+                // Assign to global scope (backward compatibility)
+                window.modelData = legacy.modelData;
+                window.bestScores = legacy.bestScores;
+                window.benchmarkLabels = legacy.benchmarkLabels;
+                window.benchmarkColors = legacy.benchmarkColors;
+
+                // Generate dropdown
+                generateModelDropdown(jsonData);
+
+                // Initialize charts with first model
+                updateModelChart();
+
+            } catch (error) {
+                console.error('Failed to load benchmark data:', error);
+                alert('Kunde inte ladda benchmark-data.');
+            }
+        }
+
+        // Common x-axis range for all charts
+        const xAxisMin = '2021-01-01';
+        const xAxisMax = '2026-01-01';
+
+        // Plugin to highlight 100% line
+        const highlight100Plugin = {
+            id: 'highlight100',
+            afterDatasetsDraw(chart) {
+                const { ctx, chartArea: { left, right }, scales: { y } } = chart;
+                if (!y || y.max !== 100) return; // Only for percentage charts
+
+                const yPos = y.getPixelForValue(100);
+
+                ctx.save();
+                ctx.strokeStyle = '#64748b';
+                ctx.lineWidth = 2.5;
+                ctx.setLineDash([8, 4]);
+                ctx.beginPath();
+                ctx.moveTo(left, yPos);
+                ctx.lineTo(right, yPos);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // Add label
+                ctx.fillStyle = '#64748b';
+                ctx.font = '600 13px IBM Plex Sans, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText('100% (mättnad)', left + 10, yPos - 5);
+                ctx.restore();
+            }
+        };
+
+        // Common chart options with educational styling
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#f8f8f2',
+                        font: {
+                            size: 16,
+                            family: "'IBM Plex Sans', sans-serif",
+                            weight: '600'
+                        },
+                        padding: 18
+                    }
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(46, 47, 43, 0.98)',
+                    titleColor: '#f8f8f2',
+                    bodyColor: '#cfcfc2',
+                    borderColor: '#3e3d32',
+                    borderWidth: 1,
+                    padding: 14,
+                    displayColors: true,
+                    titleFont: {
+                        size: 15,
+                        weight: '600',
+                        family: "'IBM Plex Sans', sans-serif"
+                    },
+                    bodyFont: {
+                        size: 14,
+                        family: "'IBM Plex Sans', sans-serif"
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time',
+                    min: xAxisMin,
+                    max: xAxisMax,
+                    time: {
+                        unit: 'year',
+                        displayFormats: {
+                            year: 'yyyy'
+                        }
+                    },
+                    grid: {
+                        color: '#3e3d32',
+                        lineWidth: 1
+                    },
+                    ticks: {
+                        color: '#cfcfc2',
+                        font: {
+                            size: 14,
+                            family: "'IBM Plex Sans', sans-serif",
+                            weight: '600'
+                        }
+                    }
+                },
+                y: {
+                    min: 0,
+                    max: 100,
+                    grid: {
+                        color: '#3e3d32',
+                        lineWidth: 1
+                    },
+                    ticks: {
+                        color: '#cfcfc2',
+                        font: {
+                            size: 15,
+                            family: "'IBM Plex Sans', sans-serif",
+                            weight: '600'
+                        },
+                        stepSize: 25,
+                        callback: value => value + '%'
+                    }
+                }
+            }
+        };
+
+        // HumanEval Chart
+        const humanEvalCtx = document.getElementById('humanEvalChart').getContext('2d');
+        new Chart(humanEvalCtx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'HumanEval Pass@1',
+                    data: [
+                        { x: '2021-07-01', y: 0, model: 'GPT-3' },
+                        { x: '2021-07-15', y: 28.8, model: 'Codex' },
+                        { x: '2021-08-01', y: 37.7, model: 'Codex-S' },
+                        { x: '2022-03-01', y: 47, model: 'InstructGPT' },
+                        { x: '2022-11-15', y: 48, model: 'ChatGPT (3.5)' },
+                        { x: '2023-03-14', y: 67, model: 'GPT-4' },
+                        { x: '2023-06-01', y: 73.2, model: 'WizardCoder 34B' },
+                        { x: '2023-08-01', y: 76, model: 'Code Llama 34B' },
+                        { x: '2023-11-01', y: 85.7, model: 'GPT-4 Turbo' },
+                        { x: '2024-03-01', y: 84.9, model: 'Claude 3 Opus' },
+                        { x: '2024-06-01', y: 92, model: 'Claude 3.5 Sonnet' },
+                        { x: '2024-09-12', y: 96.3, model: 'o1-preview' },
+                        { x: '2024-12-01', y: 95, model: 'Gemini 2.0' },
+                        { x: '2025-02-01', y: 93.7, model: 'Claude 3.7 Sonnet' },
+                        { x: '2025-11-01', y: 95.5, model: 'Claude 4.5 Opus' }
+                    ],
+                    borderColor: colors.cyan,
+                    backgroundColor: 'rgba(123, 163, 176, 0.15)',
+                    fill: true,
+                    tension: 0.2,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    pointBackgroundColor: colors.cyan,
+                    borderWidth: 2.5
+                }]
+            },
+            plugins: [highlight100Plugin],
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${point.model}: ${point.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // SWE-bench Chart
+        const sweBenchCtx = document.getElementById('sweBenchChart').getContext('2d');
+        new Chart(sweBenchCtx, {
+            type: 'line',
+            plugins: [highlight100Plugin],
+            data: {
+                datasets: [
+                    {
+                        label: 'SWE-bench (original)',
+                        data: [
+                            { x: '2023-10-01', y: 1.96, model: 'GPT-4 baseline' },
+                            { x: '2024-04-01', y: 12.5, model: 'SWE-agent + GPT-4' },
+                            { x: '2024-04-15', y: 22, model: 'Claude 3 Opus' },
+                            { x: '2024-06-01', y: 33.6, model: 'Devin' },
+                            { x: '2024-07-01', y: 45, model: 'Claude 3.5 Sonnet' }
+                        ],
+                        borderColor: colors.purple,
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.purple,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'SWE-bench Verified',
+                        data: [
+                            { x: '2024-08-01', y: 33.2, model: 'GPT-4o (baseline)' },
+                            { x: '2024-08-15', y: 48.9, model: 'Claude 3.5 Sonnet' },
+                            { x: '2024-10-01', y: 53, model: 'o1-preview' },
+                            { x: '2024-11-01', y: 56, model: 'Devlo + Claude 3.5' },
+                            { x: '2025-01-01', y: 63.8, model: 'o1 + TRAE' },
+                            { x: '2025-06-01', y: 75.2, model: 'Claude 4 Sonnet' },
+                            { x: '2025-11-01', y: 80.9, model: 'Claude 4.5 Opus' },
+                            { x: '2025-11-15', y: 77.4, model: 'Gemini 3 Pro' },
+                            { x: '2025-12-11', y: 80.0, model: 'GPT-5.2 Thinking' }
+                        ],
+                        borderColor: colors.green,
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.green,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'SWE-bench Pro',
+                        data: [
+                            { x: '2024-11-01', y: 5, model: 'GPT-4o' },
+                            { x: '2025-05-01', y: 14, model: 'Gemini 2.5 Pro' },
+                            { x: '2025-05-15', y: 18, model: 'Claude Sonnet 4' },
+                            { x: '2025-08-01', y: 23, model: 'GPT-5' },
+                            { x: '2025-08-15', y: 23, model: 'Claude Opus 4.1' },
+                            { x: '2025-10-01', y: 43, model: 'Gemini 3 Pro' },
+                            { x: '2025-11-01', y: 46, model: 'Claude Opus 4.5' },
+                            { x: '2025-11-15', y: 46, model: 'Claude Sonnet 4.5' },
+                            { x: '2025-12-11', y: 55.6, model: 'GPT-5.2 Thinking' }
+                        ],
+                        borderColor: colors.orange,
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.orange,
+                        borderWidth: 2.5
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${context.dataset.label} - ${point.model}: ${point.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // τ²-bench Telecom Chart
+        const tauBenchCtx = document.getElementById('tauBenchChart').getContext('2d');
+        new Chart(tauBenchCtx, {
+            type: 'line',
+            plugins: [highlight100Plugin],
+            data: {
+                datasets: [
+                    {
+                        label: 'pass^1 (Telecom)',
+                        data: [
+                            { x: '2025-02-24', y: 49, model: 'Claude 3.7 Sonnet' },
+                            { x: '2025-11-18', y: 85.4, model: 'Gemini 3 Pro' },
+                            { x: '2025-11-24', y: 98.2, model: 'Claude Opus 4.5' },
+                            { x: '2025-12-11', y: 94.5, model: 'GPT-5.2 Thinking' }
+                        ],
+                        borderColor: colors.cyan,
+                        backgroundColor: 'rgba(123, 163, 176, 0.15)',
+                        fill: false,
+                        tension: 0.2,
+                        pointRadius: 5,
+                        pointBackgroundColor: colors.cyan,
+                        borderWidth: 2.5
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                plugins: {
+                    ...commonOptions.plugins,
+                    tooltip: {
+                        ...commonOptions.plugins.tooltip,
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${context.dataset.label} - ${point.model}: ${point.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // METR Time Horizon Chart (linear scale for minutes)
+        const metrCtx = document.getElementById('metrChart').getContext('2d');
+        new Chart(metrCtx, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: 'METR Time Horizon (P50)',
+                    data: [
+                        { x: '2019-02-14', y: 2.4, model: 'GPT-2', display: '2.4 min' },
+                        { x: '2020-05-28', y: 9, model: 'davinci-002', display: '9 min' },
+                        { x: '2022-03-15', y: 36, model: 'GPT-3.5 Turbo Instruct', display: '36 min' },
+                        { x: '2023-03-14', y: 55, model: 'GPT-4', display: '55 min' },
+                        { x: '2023-11-06', y: 85, model: 'GPT-4 (1106)', display: '1h 25min' },
+                        { x: '2024-06-20', y: 60, model: 'Claude 3.5 Sonnet', display: '1h' },
+                        { x: '2024-10-22', y: 90, model: 'Claude 3.5 Sonnet (Oct)', display: '1.5h' },
+                        { x: '2025-02-24', y: 120, model: 'Claude 3.7 Sonnet', display: '2h' },
+                        { x: '2025-06-01', y: 137, model: 'GPT-5', display: '2h 17min' },
+                        { x: '2025-11-24', y: 289, model: 'Claude 4.5 Opus', display: '4h 49min' }
+                    ],
+                    borderColor: colors.orange,
+                    backgroundColor: 'rgba(217, 160, 102, 0.15)',
+                    fill: true,
+                    tension: 0.2,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    pointBackgroundColor: colors.orange,
+                    borderWidth: 2.5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#f8f8f2',
+                            font: {
+                                size: 16,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            },
+                            padding: 18
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(46, 47, 43, 0.98)',
+                        titleColor: '#f8f8f2',
+                        bodyColor: '#cfcfc2',
+                        borderColor: '#3e3d32',
+                        borderWidth: 1,
+                        padding: 14,
+                        titleFont: {
+                            size: 15,
+                            weight: '600',
+                            family: "'IBM Plex Sans', sans-serif"
+                        },
+                        bodyFont: {
+                            size: 14,
+                            family: "'IBM Plex Sans', sans-serif"
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                const point = context.raw;
+                                return `${point.model}: ${point.display}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        min: xAxisMin,
+                        max: xAxisMax,
+                        time: {
+                            unit: 'year',
+                            displayFormats: {
+                                year: 'yyyy'
+                            }
+                        },
+                        grid: {
+                            color: '#3e3d32',
+                            lineWidth: 1
+                        },
+                        ticks: {
+                            color: '#cfcfc2',
+                            font: {
+                                size: 14,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            }
+                        }
+                    },
+                    y: {
+                        min: 0,
+                        max: 300,
+                        grid: {
+                            color: '#3e3d32',
+                            lineWidth: 1
+                        },
+                        ticks: {
+                            color: '#cfcfc2',
+                            font: {
+                                size: 15,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            },
+                            stepSize: 60,
+                            callback: function(value) {
+                                if (value === 0) return '0';
+                                return (value / 60) + ' tim';
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Time Horizon',
+                            color: '#cfcfc2',
+                            font: {
+                                size: 15,
+                                family: "'IBM Plex Sans', sans-serif",
+                                weight: '600'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Combined Chart
+        const combinedCtx = document.getElementById('combinedChart').getContext('2d');
+        new Chart(combinedCtx, {
+            type: 'line',
+            plugins: [highlight100Plugin],
+            data: {
+                datasets: [
+                    {
+                        label: 'HumanEval',
+                        data: [
+                            { x: '2021-07-01', y: 0 },
+                            { x: '2021-07-15', y: 28.8 },
+                            { x: '2022-11-15', y: 48 },
+                            { x: '2023-03-14', y: 67 },
+                            { x: '2023-11-01', y: 85.7 },
+                            { x: '2024-06-01', y: 92 },
+                            { x: '2024-09-12', y: 96.3 },
+                            { x: '2025-11-01', y: 95.5 }
+                        ],
+                        borderColor: colors.cyan,
+                        tension: 0.2,
+                        pointRadius: 4,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'SWE-bench Verified',
+                        data: [
+                            { x: '2024-08-01', y: 33.2 },
+                            { x: '2024-08-15', y: 48.9 },
+                            { x: '2024-10-01', y: 53 },
+                            { x: '2025-01-01', y: 63.8 },
+                            { x: '2025-06-01', y: 75.2 },
+                            { x: '2025-11-01', y: 80.9 }
+                        ],
+                        borderColor: colors.green,
+                        tension: 0.2,
+                        pointRadius: 4,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'TAU-bench pass@1',
+                        data: [
+                            { x: '2024-06-01', y: 50 },
+                            { x: '2024-10-01', y: 62 },
+                            { x: '2025-02-01', y: 74 },
+                            { x: '2025-03-01', y: 78 },
+                            { x: '2025-09-01', y: 85 },
+                            { x: '2025-12-01', y: 97 }
+                        ],
+                        borderColor: colors.pink,
+                        tension: 0.2,
+                        pointRadius: 4,
+                        borderWidth: 2.5
+                    }
+                ]
+            },
+            options: commonOptions
+        });
+
+        // Model data is now loaded from JSON file via DataLoader
+
+        // Initialize model comparison chart
+        let modelCompareChart = null;
+        const modelCompareCtx = document.getElementById('modelCompareChart').getContext('2d');
+
+        function createModelChart(modelKey) {
+            const model = modelData[modelKey];
+            const benchmarks = ['humaneval', 'swebench_verified', 'swebench_pro', 'tau2bench_telecom', 'metr'];
+
+            const labels = benchmarks.map(b => {
+                if (b === 'metr') return 'METR (% av SOTA)';
+                return benchmarkLabels[b];
+            });
+
+            // For METR, convert to percentage of SOTA (289 min = 100%)
+            const data = benchmarks.map(b => {
+                if (model[b] === null) return null;
+                if (b === 'metr') {
+                    return Math.round((model[b] / bestScores[b].value) * 100 * 10) / 10;
+                }
+                return model[b];
+            });
+
+            const bestData = benchmarks.map(b => {
+                if (b === 'metr') return 100; // SOTA is always 100%
+                return bestScores[b].value;
+            });
+
+            const backgroundColors = benchmarks.map(b => {
+                if (model[b] === null) return 'rgba(80, 80, 80, 0.4)';
+                if (b === 'metr') {
+                    if (model[b] >= bestScores[b].value) return 'rgba(155, 194, 105, 0.85)';
+                } else {
+                    if (model[b] >= bestScores[b].value) return 'rgba(155, 194, 105, 0.85)';
+                }
+                return benchmarkColors[b] + 'cc';
+            });
+
+            if (modelCompareChart) {
+                modelCompareChart.destroy();
+            }
+
+            modelCompareChart = new Chart(modelCompareCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: model.name,
+                            data: data,
+                            backgroundColor: backgroundColors,
+                            borderColor: benchmarks.map(b => benchmarkColors[b]),
+                            borderWidth: 1.5,
+                            borderRadius: 4,
+                            barPercentage: 0.7
+                        },
+                        {
+                            label: 'SOTA',
+                            data: bestData,
+                            backgroundColor: 'rgba(62, 61, 50, 0.6)',
+                            borderColor: 'rgba(168, 168, 151, 0.5)',
+                            borderWidth: 1,
+                            borderRadius: 4,
+                            barPercentage: 0.7,
+                            sotaModels: benchmarks.map(b => bestScores[b].model)
+                        }
+                    ]
+                },
+                plugins: [{
+                    id: 'sotaLabels',
+                    afterDatasetsDraw: function(chart) {
+                        const ctx = chart.ctx;
+                        const meta = chart.getDatasetMeta(1); // SOTA dataset
+                        const sotaModels = chart.data.datasets[1].sotaModels;
+
+                        ctx.save();
+                        ctx.font = '600 14px IBM Plex Sans, system-ui, sans-serif';
+                        ctx.fillStyle = '#a8a897';
+                        ctx.textAlign = 'right';
+                        ctx.textBaseline = 'middle';
+
+                        meta.data.forEach((bar, index) => {
+                            const model = sotaModels[index];
+                            const x = bar.x - 10;
+                            const y = bar.y;
+                            ctx.fillText(model, x, y);
+                        });
+                        ctx.restore();
+                    }
+                }],
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#f8f8f2',
+                                font: {
+                                    size: 16,
+                                    family: "'IBM Plex Sans', sans-serif",
+                                    weight: '600'
+                                },
+                                padding: 18
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(46, 47, 43, 0.98)',
+                            titleColor: '#f8f8f2',
+                            bodyColor: '#cfcfc2',
+                            borderColor: '#3e3d32',
+                            borderWidth: 1,
+                            padding: 14,
+                            titleFont: {
+                                size: 15,
+                                weight: '600',
+                                family: "'IBM Plex Sans', sans-serif"
+                            },
+                            bodyFont: {
+                                size: 14,
+                                family: "'IBM Plex Sans', sans-serif"
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const benchmarkKey = benchmarks[context.dataIndex];
+                                    if (value === null) return 'Ingen data';
+
+                                    if (context.dataset.label === 'SOTA' && context.dataset.sotaModels) {
+                                        const modelName = context.dataset.sotaModels[context.dataIndex];
+                                        if (benchmarkKey === 'metr') {
+                                            const mins = bestScores.metr.value;
+                                            const hours = Math.floor(mins / 60);
+                                            const m = mins % 60;
+                                            return `SOTA: ${hours}h ${m}m (${modelName})`;
+                                        }
+                                        return `SOTA: ${value}% (${modelName})`;
+                                    }
+
+                                    if (benchmarkKey === 'metr') {
+                                        const actualMins = model[benchmarkKey];
+                                        if (actualMins) {
+                                            const hours = Math.floor(actualMins / 60);
+                                            const m = actualMins % 60;
+                                            const timeStr = hours > 0 ? `${hours}h ${m}m` : `${m} min`;
+                                            return `${context.dataset.label}: ${value}% (${timeStr})`;
+                                        }
+                                    }
+                                    return `${context.dataset.label}: ${value}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            min: 0,
+                            max: 100,
+                            grid: {
+                                color: '#3e3d32',
+                                lineWidth: 1
+                            },
+                            ticks: {
+                                color: '#cfcfc2',
+                                font: {
+                                    size: 14,
+                                    family: "'IBM Plex Sans', sans-serif",
+                                    weight: '600'
+                                },
+                                stepSize: 25,
+                                callback: value => value + '%'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#f8f8f2',
+                                font: {
+                                    size: 14,
+                                    family: "'IBM Plex Sans', sans-serif",
+                                    weight: '600'
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateModelInfo(modelKey) {
+            const model = modelData[modelKey];
+            const infoBox = document.getElementById('modelInfo');
+
+            const items = [
+                { label: 'HumanEval', value: model.humaneval, best: bestScores.humaneval },
+                { label: 'SWE-bench Verified', value: model.swebench_verified, best: bestScores.swebench_verified },
+                { label: 'SWE-bench Pro', value: model.swebench_pro, best: bestScores.swebench_pro },
+                { label: 'τ²-bench (Telecom)', value: model.tau2bench_telecom, best: bestScores.tau2bench_telecom },
+                { label: 'METR Time Horizon', value: model.metr, best: bestScores.metr, isTime: true }
+            ];
+
+            infoBox.innerHTML = items.map(item => {
+                let valueClass = 'model-info-value';
+                let valueText, comparison;
+
+                if (item.value === null) {
+                    valueClass += ' na';
+                    valueText = 'N/A';
+                    comparison = 'Ingen data tillgänglig';
+                } else if (item.isTime) {
+                    if (item.value >= item.best.value) {
+                        valueClass += ' best';
+                    }
+                    const hours = Math.floor(item.value / 60);
+                    const mins = item.value % 60;
+                    valueText = hours > 0 ? `${hours}h ${mins}m` : `${mins} min`;
+                    const bestHours = Math.floor(item.best.value / 60);
+                    const bestMins = item.best.value % 60;
+                    const bestText = bestHours > 0 ? `${bestHours}h ${bestMins}m` : `${bestMins} min`;
+                    comparison = item.value >= item.best.value ?
+                        'State of the Art' :
+                        `SOTA: ${bestText} (${item.best.model})`;
+                } else {
+                    if (item.value >= item.best.value) {
+                        valueClass += ' best';
+                    }
+                    valueText = item.value + '%';
+                    comparison = item.value >= item.best.value ?
+                        'State of the Art' :
+                        `SOTA: ${item.best.value}% (${item.best.model})`;
+                }
+
+                return `
+                    <div class="model-info-item">
+                        <div class="${valueClass}">${valueText}</div>
+                        <div class="model-info-label">${item.label}</div>
+                        <div class="model-info-comparison">${comparison}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateModelChart() {
+            const select = document.getElementById('modelSelect');
+            const modelKey = select.value;
+            createModelChart(modelKey);
+            updateModelInfo(modelKey);
+        }
+
+        // Initialize application when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+    </script>
+</body>
+</html>
